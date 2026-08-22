@@ -28,7 +28,7 @@
 
 ##  起動・インストール方法 (How to Use)
 
-https://github.com/nagisinnra/NagisinnraLinux　
+https://github.com/nagisinnra/NagisinnraLinux
 のreleasesからダウンロードしてください。
 
 ##  開発者について (Developer)
