@@ -123,7 +123,6 @@
             text-decoration: underline;
         }
 
-        /* 言語切り替えボタン */
         .lang-switch {
             text-align: right;
             margin-bottom: 20px;
@@ -145,6 +144,11 @@
                 el.innerText = el.getAttribute("data-" + lang);
             });
         }
+
+        // 初期表示は日本語
+        document.addEventListener("DOMContentLoaded", () => {
+            switchLang("ja");
+        });
     </script>
 </head>
 
@@ -157,7 +161,6 @@
     </div>
 
     <header>
-        <!-- しんらの希望：ここは画像なし -->
         <h1 data-ja="NagisinnraLinux" data-en="NagisinnraLinux"></h1>
         <div class="tagline"
              data-ja="13歳が開発した、日常使いのためのDebianベース超軽量Linux"
@@ -175,7 +178,6 @@
         <h2 data-ja="主な特徴 (Features)" data-en="Main Features"></h2>
         <div class="grid">
 
-            <!-- fastfetch：画像あり -->
             <div class="card">
                 <h3 data-ja="超軽量設計" data-en="Ultra Lightweight Design"></h3>
                 <img src="fastfetch.png" class="feature-img" alt="NSL Fastfetch Screenshot">
@@ -187,14 +189,12 @@
                 </p>
             </div>
 
-            <!-- mozc：NSL.png を入れる -->
             <div class="card">
                 <h3 data-ja="快適な日本語環境" data-en="Comfortable Japanese Input"></h3>
                 <img src="NSL.png" class="feature-img" alt="NagisinnraLinux Logo">
                 <p data-ja="fcitx5 + mozc を初期状態で標準搭載。" data-en="fcitx5 + mozc included by default."></p>
             </div>
 
-            <!-- zram：画像なし -->
             <div class="card">
                 <h3 data-ja="メモリ最適化" data-en="Memory Optimization"></h3>
                 <p data-ja="zram によるメモリ圧縮技術を最適化構成。" data-en="Optimized zram memory compression."></p>
