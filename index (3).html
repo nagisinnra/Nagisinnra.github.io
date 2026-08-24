@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NagisinnraLinux</title>
+
+    <style>
+        .feature-img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        }
+
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+        }
+
+        .badge {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #8b949e;
+        }
+
+        h2 {
+            color: #ffffff;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            margin-top: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        .stats {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .lang-switch button {
+            background: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll("[data-ja]").forEach(el => {
+                el.innerText = el.getAttribute("data-" + lang);
+            });
+        }
+
+        // 初期表示は日本語
+        document.addEventListener("DOMContentLoaded", () => {
+            switchLang("ja");
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="lang-switch">
+        <button onclick="switchLang('ja')">日本語</button>
+        <button onclick="switchLang('en')">English</button>
+    </div>
+
+    <header>
+        <h1 data-ja="NagisinnraLinux" data-en="NagisinnraLinux"></h1>
+        <div class="tagline"
+             data-ja="13歳が開発した、日常使いのためのDebianベース超軽量Linux"
+             data-en="A super-lightweight Debian-based Linux made by a 13-year-old developer">
+        </div>
+
+        <div style="margin-top: 15px;">
+            <span class="badge" data-ja="Version: v1.0.2 stable" data-en="Version: v1.0.2 stable"></span>
+            <span class="badge" data-ja="Released: 2026.08" data-en="Released: 2026.08"></span>
+            <span class="badge" data-ja="Architecture: x86_64" data-en="Architecture: x86_64"></span>
+        </div>
+    </header>
+
+    <section>
+        <h2 data-ja="主な特徴 (Features)" data-en="Main Features"></h2>
+        <div class="grid">
+
+            <div class="card">
+                <h3 data-ja="超軽量設計" data-en="Ultra Lightweight Design"></h3>
+                <img src="fastfetch.png" class="feature-img" alt="NSL Fastfetch Screenshot">
+                <p data-ja="起動直後のRAM使用量: " data-en="RAM usage after boot: ">
+                    <span class="stats" data-ja="約476MB" data-en="~476MB"></span>
+                </p>
+                <p data-ja="ディスク使用量: " data-en="Disk usage: ">
+                    <span class="stats" data-ja="約2.45GB" data-en="~2.45GB"></span>
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 data-ja="快適な日本語環境" data-en="Comfortable Japanese Input"></h3>
+                <img src="NSL.png" class="feature-img" alt="NagisinnraLinux Logo">
+                <p data-ja="fcitx5 + mozc を初期状態で標準搭載。" data-en="fcitx5 + mozc included by default."></p>
+            </div>
+
+            <div class="card">
+                <h3 data-ja="メモリ最適化" data-en="Memory Optimization"></h3>
+                <p data-ja="zram によるメモリ圧縮技術を最適化構成。" data-en="Optimized zram memory compression."></p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2 data-ja="技術情報 (Technical Details)" data-en="Technical Details"></h2>
+        <ul>
+            <li data-ja="Base Distribution: Debian GNU/Linux" data-en="Base Distribution: Debian GNU/Linux"></li>
+            <li data-ja="Memory Optimization: zram" data-en="Memory Optimization: zram"></li>
+            <li data-ja="Input Framework: fcitx5" data-en="Input Framework: fcitx5"></li>
+            <li data-ja="Input Method: mozc" data-en="Input Method: mozc"></li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 data-ja="各種リンク (Links)" data-en="Links"></h2>
+        <ul>
+            <li>
+                <strong data-ja="Downloads:" data-en="Downloads:"></strong>
+                <a href="https://sourceforge.net/projects/nagisinnralinux/files/" target="_blank">
+                    NagisinnraLinux v1.0.2 stable
+                </a>
+            </li>
+
+            <li>
+                <strong data-ja="NagisinnraLinux Mist Edition:" data-en="NagisinnraLinux Mist Edition:"></strong>
+                <a href="https://sourceforge.net/projects/nagisinnralinux-mist/" target="_blank">
+                    Mist Edition ISO (2026-08-23)
+                </a>
+            </li>
+
+            <li>
+                <strong data-ja="Official Discord:" data-en="Official Discord:"></strong>
+                <a href="https://discord.gg/g6xf3GRUkN" target="_blank">
+                    Join the Community
+                </a>
+            </li>
+
+            <li>
+                <strong data-ja="GitHub Repository:" data-en="GitHub Repository:"></strong>
+                <a href="https://github.com/nagisinnra" target="_blank">
+                    nagisinnra on GitHub
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <footer>
+        <p data-ja="© 2026 nagisinnra. All rights reserved." data-en="© 2026 nagisinnra. All rights reserved."></p>
+        <p data-ja="Built for efficiency and daily use." data-en="Built for efficiency and daily use."></p>
+    </footer>
+
+</div>
+</body>
+</html>
