@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>NagisinnraLinux | 13歳が開発したDebianベース超軽量Linux</title>
-    <meta name="description" content="13歳の開発者「nagisinnra」が2026年8月に発表した、zram・fcitx5・mozc標準搭載のDebianベース超軽量カスタムLinux「NagisinnraLinux」の公式ページです。">
-    <meta name="keywords" content="NagisinnraLinux,nagisinnra,13歳,Linux,軽量Linux,Debian,zram,fcitx5,mozc,自作OS">
+
+    <title>NagisinnraLinux</title>
 
     <style>
         .feature-img {
@@ -124,87 +122,123 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* 言語切り替えボタン */
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .lang-switch button {
+            background: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
     </style>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll("[data-ja]").forEach(el => {
+                el.innerText = el.getAttribute("data-" + lang);
+            });
+        }
+    </script>
 </head>
 
 <body>
 <div class="container">
 
+    <div class="lang-switch">
+        <button onclick="switchLang('ja')">日本語</button>
+        <button onclick="switchLang('en')">English</button>
+    </div>
+
     <header>
         <!-- しんらの希望：ここは画像なし -->
-        <h1>NagisinnraLinux</h1>
-        <div class="tagline">13歳が開発した、日常使いのためのDebianベース超軽量Linux</div>
+        <h1 data-ja="NagisinnraLinux" data-en="NagisinnraLinux"></h1>
+        <div class="tagline"
+             data-ja="13歳が開発した、日常使いのためのDebianベース超軽量Linux"
+             data-en="A super-lightweight Debian-based Linux made by a 13-year-old developer">
+        </div>
+
         <div style="margin-top: 15px;">
-            <span class="badge">Version: v1.0.2 stable</span>
-            <span class="badge">Released: 2026.08</span>
-            <span class="badge">Architecture: x86_64</span>
+            <span class="badge" data-ja="Version: v1.0.2 stable" data-en="Version: v1.0.2 stable"></span>
+            <span class="badge" data-ja="Released: 2026.08" data-en="Released: 2026.08"></span>
+            <span class="badge" data-ja="Architecture: x86_64" data-en="Architecture: x86_64"></span>
         </div>
     </header>
 
     <section>
-        <h2>主な特徴 (Features)</h2>
+        <h2 data-ja="主な特徴 (Features)" data-en="Main Features"></h2>
         <div class="grid">
 
             <!-- fastfetch：画像あり -->
             <div class="card">
-                <h3>超軽量設計</h3>
+                <h3 data-ja="超軽量設計" data-en="Ultra Lightweight Design"></h3>
                 <img src="fastfetch.png" class="feature-img" alt="NSL Fastfetch Screenshot">
-                <p>起動直後のRAM使用量: <span class="stats">約476MB</span></p>
-                <p>ディスク使用量: <span class="stats">約2.45GB</span></p>
+                <p data-ja="起動直後のRAM使用量: " data-en="RAM usage after boot: ">
+                    <span class="stats" data-ja="約476MB" data-en="~476MB"></span>
+                </p>
+                <p data-ja="ディスク使用量: " data-en="Disk usage: ">
+                    <span class="stats" data-ja="約2.45GB" data-en="~2.45GB"></span>
+                </p>
             </div>
 
             <!-- mozc：NSL.png を入れる -->
             <div class="card">
-                <h3>快適な日本語環境</h3>
+                <h3 data-ja="快適な日本語環境" data-en="Comfortable Japanese Input"></h3>
                 <img src="NSL.png" class="feature-img" alt="NagisinnraLinux Logo">
-                <p><strong>fcitx5 + mozc</strong> を初期状態で標準搭載。</p>
+                <p data-ja="fcitx5 + mozc を初期状態で標準搭載。" data-en="fcitx5 + mozc included by default."></p>
             </div>
 
             <!-- zram：画像なし -->
             <div class="card">
-                <h3>メモリ最適化</h3>
-                <p><strong>zram</strong> によるメモリ圧縮技術を最適化構成。</p>
+                <h3 data-ja="メモリ最適化" data-en="Memory Optimization"></h3>
+                <p data-ja="zram によるメモリ圧縮技術を最適化構成。" data-en="Optimized zram memory compression."></p>
             </div>
 
         </div>
     </section>
 
     <section>
-        <h2>技術情報 (Technical Details)</h2>
+        <h2 data-ja="技術情報 (Technical Details)" data-en="Technical Details"></h2>
         <ul>
-            <li><strong>Base Distribution:</strong> Debian GNU/Linux</li>
-            <li><strong>Memory Optimization:</strong> zram</li>
-            <li><strong>Input Framework:</strong> fcitx5</li>
-            <li><strong>Input Method:</strong> mozc</li>
+            <li data-ja="Base Distribution: Debian GNU/Linux" data-en="Base Distribution: Debian GNU/Linux"></li>
+            <li data-ja="Memory Optimization: zram" data-en="Memory Optimization: zram"></li>
+            <li data-ja="Input Framework: fcitx5" data-en="Input Framework: fcitx5"></li>
+            <li data-ja="Input Method: mozc" data-en="Input Method: mozc"></li>
         </ul>
     </section>
 
     <section>
-        <h2>各種リンク (Links)</h2>
+        <h2 data-ja="各種リンク (Links)" data-en="Links"></h2>
         <ul>
             <li>
-                <strong>Downloads:</strong>
+                <strong data-ja="Downloads:" data-en="Downloads:"></strong>
                 <a href="https://sourceforge.net/projects/nagisinnralinux/files/" target="_blank">
                     NagisinnraLinux v1.0.2 stable
                 </a>
             </li>
 
             <li>
-                <strong>NagisinnraLinux Mist Edition:</strong>
+                <strong data-ja="NagisinnraLinux Mist Edition:" data-en="NagisinnraLinux Mist Edition:"></strong>
                 <a href="https://sourceforge.net/projects/nagisinnralinux-mist/" target="_blank">
                     Mist Edition ISO (2026-08-23)
                 </a>
             </li>
 
             <li>
-                <strong>Official Discord:</strong>
+                <strong data-ja="Official Discord:" data-en="Official Discord:"></strong>
                 <a href="https://discord.gg/g6xf3GRUkN" target="_blank">
                     Join the Community
                 </a>
             </li>
 
             <li>
-                <strong>GitHub Repository:</strong>
+                <strong data-ja="GitHub Repository:" data-en="GitHub Repository:"></strong>
                 <a href="https://github.com/nagisinnra" target="_blank">
                     nagisinnra on GitHub
                 </a>
@@ -213,8 +247,8 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 nagisinnra. All rights reserved.</p>
-        <p>Built for efficiency and daily use.</p>
+        <p data-ja="© 2026 nagisinnra. All rights reserved." data-en="© 2026 nagisinnra. All rights reserved."></p>
+        <p data-ja="Built for efficiency and daily use." data-en="Built for efficiency and daily use."></p>
     </footer>
 
 </div>
