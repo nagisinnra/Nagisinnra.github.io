@@ -100,4 +100,122 @@
         }
 
         footer {
-            text-align: center
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <header>
+        <!-- ロゴ（main直下に置く） -->
+        <img src="NSL.png" alt="NagisinnraLinux Logo" style="width:180px; margin-bottom:20px;">
+        <h1>NagisinnraLinux</h1>
+        <div class="tagline">13歳が開発した、日常使いのためのDebianベース超軽量Linux</div>
+        <div style="margin-top: 15px;">
+            <span class="badge">Version: v1.0.2 stable</span>
+            <span class="badge">Released: 2026.08</span>
+            <span class="badge">Architecture: x86_64</span>
+        </div>
+    </header>
+
+    <section>
+        <h2>主な特徴 (Features)</h2>
+        <div class="grid">
+
+            <div class="card">
+                <h3>超軽量設計</h3>
+                <img src="fastfetch.png" class="feature-img" alt="NSL Fastfetch Screenshot">
+                <p>起動直後のRAM使用量: <span class="stats">約476MB</span></p>
+                <p>ディスク使用量: <span class="stats">約2.45GB</span></p>
+            </div>
+
+            <div class="card">
+                <h3>快適な日本語環境</h3>
+                <img src="mozc.png" class="feature-img" alt="NSL Mozc Screenshot">
+                <p><strong>fcitx5 + mozc</strong> を初期状態で標準搭載。</p>
+            </div>
+
+            <div class="card">
+                <h3>メモリ最適化</h3>
+                <img src="zram.png" class="feature-img" alt="NSL zram Screenshot">
+                <p><strong>zram</strong> によるメモリ圧縮技術を最適化構成。</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>技術情報 (Technical Details)</h2>
+        <ul>
+            <li><strong>Base Distribution:</strong> Debian GNU/Linux</li>
+            <li><strong>Memory Optimization:</strong> zram</li>
+            <li><strong>Input Framework:</strong> fcitx5</li>
+            <li><strong>Input Method:</strong> mozc</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>各種リンク (Links)</h2>
+        <ul>
+            <li>
+                <strong>Downloads:</strong>
+                <a href="https://sourceforge.net/projects/nagisinnralinux/files/" target="_blank">
+                    NagisinnraLinux v1.0.2 stable
+                </a>
+            </li>
+
+            <li>
+                <strong>NagisinnraLinux Mist Edition:</strong>
+                <a href="https://sourceforge.net/projects/nagisinnralinux-mist/" target="_blank">
+                    Mist Edition ISO (2026-08-23)
+                </a>
+            </li>
+
+            <li>
+                <strong>Official Discord:</strong>
+                <a href="https://discord.gg/g6xf3GRUkN" target="_blank">
+                    Join the Community
+                </a>
+            </li>
+
+            <li>
+                <strong>GitHub Repository:</strong>
+                <a href="https://github.com/nagisinnra" target="_blank">
+                    nagisinnra on GitHub
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 nagisinnra. All rights reserved.</p>
+        <p>Built for efficiency and daily use.</p>
+    </footer>
+
+</div>
+</body>
+</html>
