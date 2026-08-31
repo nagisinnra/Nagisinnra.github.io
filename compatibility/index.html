@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>NagisinnraLinux Compatibility</title>
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    line-height: 1.7;
+  }
+  h1 {
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 10px;
+  }
+  nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #4a90e2;
+  }
+  h2 {
+    margin-top: 40px;
+    color: #4a90e2;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  .ok { color: #2ecc71; }
+  .warn { color: #f1c40f; }
+  .ng { color: #e74c3c; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Home</a>
+  <a href="/download/">Download</a>
+  <a href="/install/">Install Guide</a>
+  <a href="/support/">Support</a>
+  <a href="/faq/">FAQ</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/about/">About</a>
+</nav>
+
+<h1>互換性情報（Compatibility）</h1>
+
+<p>
+NagisinnraLinux がどの PC で動作するかをまとめています。  
+ジャンクPC・古いノートPC・企業向けPCなど、幅広い環境で動作確認を行っています。
+</p>
+
+<h2>NEC</h2>
+<ul>
+  <li class="ok">LAVIE（2012〜2020）… 起動・Wi-Fi・サウンド正常</li>
+  <li class="warn">古い Celeron モデル … 起動はするが動作が重い</li>
+</ul>
+
+<h2>Dynabook（東芝）</h2>
+<ul>
+  <li class="ok">2013〜2019年モデル … 問題なし</li>
+  <li class="warn">一部の Realtek Wi-Fi … ドライバ追加が必要</li>
+</ul>
+
+<h2>富士通（FMV）</h2>
+<ul>
+  <li class="ok">LIFEBOOK シリーズ … 起動・Wi-Fi・サウンド正常</li>
+  <li class="warn">古いモデル … UEFI 設定変更が必要な場合あり</li>
+</ul>
+
+<h2>Lenovo</h2>
+<ul>
+  <li class="ok">ThinkPad シリーズ … Linux との相性が非常に良い</li>
+  <li class="ok">IdeaPad … 基本的に問題なし</li>
+</ul>
+
+<h2>CFD（玄人志向）</h2>
+<ul>
+  <li class="ok">SSD / NVMe … 完全対応</li>
+  <li class="ok">メモリ … 問題なし</li>
+</ul>
+
+<h2>その他の環境</h2>
+<ul>
+  <li class="ok">VirtualBox / VMware / QEMU … 動作確認済み</li>
+  <li class="ok">古いジャンクPC … 軽量モードで動作可能</li>
+  <li class="warn">32bit CPU … 非対応</li>
+</ul>
+
+<h2>互換性に問題がある場合</h2>
+<p>
+→ <a href="/support/">サポートページ</a> を参照してください。  
+Wi-Fi・画面表示・起動トラブルなどの対処法を掲載しています。
+</p>
+
+</body>
+</html>
