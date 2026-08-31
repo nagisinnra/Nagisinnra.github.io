@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>NagisinnraLinux Install Guide</title>
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    line-height: 1.7;
+  }
+  h1 {
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 10px;
+  }
+  nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #4a90e2;
+  }
+  h2 {
+    margin-top: 40px;
+    color: #4a90e2;
+  }
+  ul {
+    padding-left: 20px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Home</a>
+  <a href="/download/">Download</a>
+  <a href="/install/">Install Guide</a>
+  <a href="/support/">Support</a>
+  <a href="/faq/">FAQ</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/about/">About</a>
+</nav>
+
+<h1>NagisinnraLinux インストールガイド</h1>
+
+<p>
+NagisinnraLinux を PC にインストールするための手順をまとめています。  
+USB ブートの作成からインストール完了まで、初心者でも迷わないように構成しています。
+</p>
+
+<h2>1. 必要なもの</h2>
+<ul>
+  <li>USBメモリ（8GB以上推奨）</li>
+  <li>NagisinnraLinux の ISO イメージ</li>
+  <li>USB書き込みツール（Rufus / balenaEtcher など）</li>
+</ul>
+
+<h2>2. ISO をダウンロードする</h2>
+<p>
+最新の ISO は以下からダウンロードできます。  
+→ <a href="/download/">ダウンロードページへ</a>
+</p>
+
+<h2>3. USB ブートメディアを作成する</h2>
+<p>Windows の場合（Rufus 推奨）</p>
+<ul>
+  <li>Rufus を起動</li>
+  <li>USBメモリを選択</li>
+  <li>「選択」から ISO を指定</li>
+  <li>パーティション：MBR / ターゲット：BIOS or UEFI</li>
+  <li>「スタート」を押す</li>
+</ul>
+
+<p>macOS / Linux の場合（balenaEtcher 推奨）</p>
+<ul>
+  <li>Etcher を起動</li>
+  <li>ISO を選択</li>
+  <li>USB を選択</li>
+  <li>「Flash」を押す</li>
+</ul>
+
+<h2>4. PC を USB から起動する</h2>
+<ul>
+  <li>PC の電源を入れる</li>
+  <li>起動直後に F12 / ESC / F2 などを押してブートメニューへ</li>
+  <li>USB を選択して起動</li>
+</ul>
+
+<h2>5. インストーラーの操作</h2>
+<ul>
+  <li>「Install NagisinnraLinux」を選択</li>
+  <li>言語・キーボードを選択</li>
+  <li>インストール先ディスクを選択</li>
+  <li>ユーザー名・パスワードを設定</li>
+  <li>インストール開始</li>
+</ul>
+
+<h2>6. インストール完了後</h2>
+<ul>
+  <li>USB を抜く</li>
+  <li>PC を再起動</li>
+  <li>NagisinnraLinux が起動すれば成功</li>
+</ul>
+
+<h2>トラブルが起きたら</h2>
+<p>
+→ <a href="/support/">サポートページへ</a>  
+起動しない・Wi-Fiが繋がらないなどの対処法を掲載しています。
+</p>
+
+</body>
+</html>
