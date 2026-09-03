@@ -1,936 +1,3336 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NagisinnraLinux — Small. Fast. Lovely.</title>
+<title>NagisinnraLinux — Designed to be light.</title>
 
-<meta name="description"
-      content="NagisinnraLinux — 小さくて、速くて、ちゃんと使えるLinux。">
+<meta
+    name="description"
+    content="NagisinnraLinux — 軽く、速く、美しく。毎日のためのLinux."
+>
+
+<meta name="theme-color" content="#f5f5f1">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
+
+/* =========================================================
+   NAGISINNRALINUX
+   Alternate Edition
+   Design System
+========================================================= */
+
+@import url(
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap'
+);
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
 
 :root {
-    --bg: #f7f7f4;
-    --surface: rgba(255,255,255,.72);
-    --text: #181818;
-    --muted: #777;
-    --line: #e7e7e2;
-    --accent: #8fae91;
-    --accent-dark: #66806a;
-    --shadow: 0 20px 60px rgba(0,0,0,.08);
+
+    --background: #f5f5f1;
+
+    --background-soft: #eeeeea;
+
+    --surface: rgba(255,255,255,0.68);
+
+    --surface-solid: #ffffff;
+
+    --surface-dark: #171817;
+
+    --text: #171817;
+
+    --text-soft: #555753;
+
+    --text-muted: #858780;
+
+    --line: rgba(30,32,29,0.09);
+
+    --line-dark: rgba(255,255,255,0.12);
+
+    --green: #78987d;
+
+    --green-light: #dce7dd;
+
+    --green-dark: #48634d;
+
+    --cream: #e9e2d3;
+
+    --shadow-small:
+        0 8px 25px rgba(0,0,0,0.05);
+
+    --shadow:
+        0 25px 70px rgba(0,0,0,0.08);
+
+    --shadow-large:
+        0 50px 120px rgba(0,0,0,0.13);
+
+    --radius-small: 14px;
+
+    --radius: 24px;
+
+    --radius-large: 36px;
+
+    --max-width: 1180px;
+
 }
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
+
+    margin: 0;
+
+    padding: 0;
+
     box-sizing: border-box;
+
 }
+
 
 html {
+
     scroll-behavior: smooth;
+
 }
 
+
 body {
-    margin: 0;
-    color: var(--text);
+
+    min-height: 100vh;
+
     background:
-        radial-gradient(circle at 10% 10%, rgba(143,174,145,.14), transparent 28%),
-        radial-gradient(circle at 90% 25%, rgba(210,190,160,.12), transparent 25%),
-        var(--bg);
+
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(151,177,153,0.14),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 95% 20%,
+            rgba(210,195,165,0.12),
+            transparent 30%
+        ),
+
+        var(--background);
+
+    color: var(--text);
+
     font-family:
         "Inter",
         "Noto Sans JP",
         sans-serif;
+
+    line-height: 1.6;
+
     overflow-x: hidden;
+
 }
+
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    opacity: .025;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+
+}
+
 
 a {
+
     color: inherit;
+
     text-decoration: none;
+
 }
 
-/* =========================
-   NAVIGATION
-========================= */
 
-.nav {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
+button {
 
-    width: min(1080px, calc(100% - 32px));
-    height: 64px;
+    font: inherit;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 22px;
-
-    background: rgba(255,255,255,.72);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
-    border: 1px solid rgba(255,255,255,.8);
-    border-radius: 20px;
-
-    box-shadow: 0 10px 35px rgba(0,0,0,.06);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    letter-spacing: -.04em;
-}
 
-.logo-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 11px;
+img {
 
-    background:
-        linear-gradient(135deg, #b6ccb7, #76927a);
+    max-width: 100%;
 
-    display: grid;
-    place-items: center;
-
-    color: white;
-    font-size: 15px;
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.7),
-        0 5px 15px rgba(102,128,106,.2);
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-
-    font-size: 13px;
-    color: #666;
-}
-
-.nav-links a {
-    transition: .25s;
-}
-
-.nav-links a:hover {
-    color: var(--text);
-}
-
-.nav-download {
-    padding: 10px 16px;
-    border-radius: 13px;
-
-    background: #191919;
-    color: white !important;
-
-    font-weight: 600;
-
-    transition: .25s;
-}
-
-.nav-download:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,.15);
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    min-height: 100vh;
-
-    padding:
-        150px 24px
-        80px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-inner {
-    width: min(1120px, 100%);
-    text-align: center;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 8px 13px;
-
-    background: rgba(255,255,255,.72);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-
-    color: #666;
-    font-size: 12px;
-    font-weight: 600;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,.04);
-
-    animation: float 5s ease-in-out infinite;
-}
-
-.eyebrow-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-    background: #83a686;
-
-    box-shadow: 0 0 0 5px rgba(131,166,134,.12);
-}
-
-.hero h1 {
-    margin: 28px auto 20px;
-
-    max-width: 900px;
-
-    font-size:
-        clamp(52px, 9vw, 108px);
-
-    line-height: .94;
-    letter-spacing: -.075em;
-
-    font-weight: 800;
-}
-
-.hero h1 span {
     display: block;
 
-    background:
-        linear-gradient(
-            120deg,
-            #181818,
-            #718a74
+}
+
+
+/* =========================================================
+   GLOBAL CONTAINER
+========================================================= */
+
+.container {
+
+    width:
+        min(
+            var(--max-width),
+            calc(100% - 48px)
         );
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    margin-inline: auto;
+
 }
 
-.hero-description {
-    max-width: 570px;
-    margin: 0 auto;
 
-    color: #707070;
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-    font-size: 16px;
-    line-height: 1.9;
-}
+.site-nav {
 
-.hero-actions {
+    position: fixed;
+
+    top: 18px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 1000;
+
+    width:
+        min(
+            1120px,
+            calc(100% - 32px)
+        );
+
+    height: 68px;
+
     display: flex;
-    justify-content: center;
-    gap: 12px;
 
-    margin-top: 34px;
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 10px 0 20px;
+
+    background:
+        rgba(255,255,255,.66);
+
+    backdrop-filter:
+        blur(24px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(150%);
+
+    border:
+        1px solid
+        rgba(255,255,255,.82);
+
+    border-radius: 21px;
+
+    box-shadow:
+        0 12px 40px
+        rgba(0,0,0,.055);
+
 }
 
-.button {
-    display: inline-flex;
+
+.brand {
+
+    display: flex;
+
     align-items: center;
-    justify-content: center;
 
-    min-width: 145px;
-    padding: 14px 22px;
+    gap: 11px;
 
-    border-radius: 15px;
+    font-weight: 800;
+
+    letter-spacing: -.045em;
+
+}
+
+
+.brand-symbol {
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 12px;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #b8ceb9,
+            #6f8f75
+        );
+
+    color: white;
 
     font-size: 14px;
+
+    box-shadow:
+
+        inset 0 1px
+        rgba(255,255,255,.65),
+
+        0 7px 18px
+        rgba(80,110,85,.18);
+
+}
+
+
+.brand-name {
+
+    font-size: 15px;
+
+}
+
+
+.nav-center {
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+
+.nav-center a {
+
+    position: relative;
+
+    color: #72746f;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition: .25s;
+
+}
+
+
+.nav-center a::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -6px;
+
+    width: 0;
+
+    height: 1px;
+
+    background: var(--text);
+
+    transition: .25s;
+
+}
+
+
+.nav-center a:hover {
+
+    color: var(--text);
+
+}
+
+
+.nav-center a:hover::after {
+
+    width: 100%;
+
+}
+
+
+.nav-action {
+
+    padding: 11px 18px;
+
+    background: var(--text);
+
+    color: white;
+
+    border-radius: 14px;
+
+    font-size: 12px;
+
     font-weight: 700;
 
     transition: .3s;
+
 }
 
-.button-primary {
-    background: #191919;
-    color: white;
 
-    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+.nav-action:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.15);
+
 }
 
-.button-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 35px rgba(0,0,0,.17);
-}
 
-.button-secondary {
-    background: white;
-    border: 1px solid var(--line);
-}
+/* =========================================================
+   HERO
+========================================================= */
 
-.button-secondary:hover {
-    transform: translateY(-3px);
-}
+.hero {
 
-/* =========================
-   DESKTOP MOCKUP
-========================= */
-
-.desktop-wrap {
     position: relative;
 
-    width: min(940px, 94vw);
-    margin: 90px auto 0;
+    min-height: 100vh;
 
-    animation: desktopFloat 7s ease-in-out infinite;
+    padding:
+        170px 0
+        110px;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
 }
 
+
+.hero-orb {
+
+    position: absolute;
+
+    width: 480px;
+
+    height: 480px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(139,170,143,.2),
+            rgba(139,170,143,0)
+        );
+
+    filter: blur(10px);
+
+    pointer-events: none;
+
+}
+
+
+.orb-one {
+
+    top: 5%;
+
+    left: -200px;
+
+}
+
+
+.orb-two {
+
+    right: -240px;
+
+    bottom: -100px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(218,197,164,.2),
+            rgba(218,197,164,0)
+        );
+
+}
+
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+}
+
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 13px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.65);
+
+    box-shadow:
+        var(--shadow-small);
+
+    color: var(--text-soft);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    animation:
+        appear .8s ease both;
+
+}
+
+
+.status-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 0 5px
+        rgba(120,152,125,.12);
+
+}
+
+
+.hero-title {
+
+    max-width: 1050px;
+
+    margin:
+        28px auto
+        24px;
+
+    font-size:
+        clamp(
+            58px,
+            10vw,
+            128px
+        );
+
+    font-weight: 900;
+
+    line-height: .88;
+
+    letter-spacing:
+        -.085em;
+
+    animation:
+        titleIn 1s .1s ease both;
+
+}
+
+
+.hero-title .light {
+
+    display: block;
+
+    color: #8c8e88;
+
+    font-weight: 500;
+
+}
+
+
+.hero-title .accent {
+
+    display: block;
+
+    background:
+
+        linear-gradient(
+            115deg,
+            #1a1c1a 0%,
+            #658269 70%,
+            #8fa991 100%
+        );
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+}
+
+
+.hero-copy {
+
+    max-width: 580px;
+
+    margin: 0 auto;
+
+    color: var(--text-muted);
+
+    font-size: 15px;
+
+    line-height: 2;
+
+    animation:
+        appear 1s .3s ease both;
+
+}
+
+
+.hero-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 34px;
+
+    animation:
+        appear 1s .45s ease both;
+
+}
+
+
+.button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    min-width: 150px;
+
+    padding: 15px 22px;
+
+    border-radius: 15px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition:
+        transform .3s,
+        box-shadow .3s,
+        background .3s;
+
+}
+
+
+.button-dark {
+
+    background: var(--text);
+
+    color: white;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.12);
+
+}
+
+
+.button-dark:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 20px 40px
+        rgba(0,0,0,.16);
+
+}
+
+
+.button-light {
+
+    background:
+        rgba(255,255,255,.75);
+
+    border:
+        1px solid var(--line);
+
+}
+
+
+.button-light:hover {
+
+    transform:
+        translateY(-3px);
+
+    background: white;
+
+}
+
+
+/* =========================================================
+   HERO PRODUCT PREVIEW
+========================================================= */
+
+.hero-preview {
+
+    position: relative;
+
+    width:
+        min(
+            1030px,
+            92vw
+        );
+
+    margin:
+        90px auto
+        0;
+
+    animation:
+        previewIn 1.2s .55s ease both;
+
+}
+
+
+.preview-shadow {
+
+    position: absolute;
+
+    left: 8%;
+
+    right: 8%;
+
+    bottom: -35px;
+
+    height: 100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,0,0,.13);
+
+    filter: blur(35px);
+
+}
+
+
 .desktop {
+
     position: relative;
 
     aspect-ratio: 16 / 9;
 
     overflow: hidden;
 
-    background:
-        radial-gradient(circle at 70% 20%, rgba(180,205,183,.9), transparent 25%),
-        radial-gradient(circle at 20% 80%, rgba(210,195,170,.7), transparent 30%),
-        #e9e9e3;
+    border:
+        7px solid
+        rgba(255,255,255,.9);
 
-    border: 7px solid white;
-    border-radius: 25px;
+    border-radius: 29px;
+
+    background:
+
+        radial-gradient(
+            circle at 72% 18%,
+            rgba(188,213,190,.85),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 18% 78%,
+            rgba(224,210,181,.75),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #e6e9e2,
+            #dfe2dc
+        );
 
     box-shadow:
-        0 45px 100px rgba(0,0,0,.16),
-        0 10px 25px rgba(0,0,0,.08);
+        var(--shadow-large);
+
 }
 
-.desktop::before {
+
+.desktop::after {
+
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     background:
+
         linear-gradient(
-            120deg,
-            transparent 40%,
-            rgba(255,255,255,.25),
+            115deg,
+            transparent 30%,
+            rgba(255,255,255,.28) 45%,
             transparent 60%
         );
 
-    animation: shine 7s infinite;
+    transform:
+        translateX(-100%);
+
+    animation:
+        screenShine 8s 2s infinite;
+
 }
 
-.window {
+
+/* =========================================================
+   MOCK DESKTOP UI
+========================================================= */
+
+.desktop-top {
+
     position: absolute;
 
-    width: 58%;
-    height: 67%;
+    top: 0;
 
-    left: 21%;
-    top: 16%;
+    left: 0;
 
-    background: rgba(255,255,255,.88);
+    right: 0;
 
-    border-radius: 17px;
-
-    box-shadow: 0 20px 50px rgba(0,0,0,.12);
-
-    overflow: hidden;
-}
-
-.window-bar {
-    height: 38px;
+    height: 42px;
 
     display: flex;
+
     align-items: center;
 
-    padding: 0 13px;
+    justify-content: space-between;
 
-    border-bottom: 1px solid #eee;
+    padding: 0 17px;
 
-    gap: 6px;
+    background:
+        rgba(255,255,255,.52);
+
+    backdrop-filter:
+        blur(15px);
+
+    border-bottom:
+        1px solid
+        rgba(0,0,0,.05);
+
 }
 
-.circle {
+
+.desktop-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.desktop-circle {
+
     width: 9px;
+
     height: 9px;
 
     border-radius: 50%;
 
-    background: #d5d5d0;
+    background: #c9cbc6;
+
 }
 
-.window-content {
-    padding: 25px;
+
+.desktop-time {
+
+    color: #74766f;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
 }
 
-.fake-title {
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -.05em;
+
+.app-window {
+
+    position: absolute;
+
+    left: 20%;
+
+    top: 17%;
+
+    width: 60%;
+
+    height: 65%;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,.89);
+
+    border:
+        1px solid
+        rgba(255,255,255,.9);
+
+    border-radius: 19px;
+
+    box-shadow:
+        0 25px 55px
+        rgba(0,0,0,.12);
+
 }
 
-.fake-subtitle {
-    margin-top: 7px;
 
-    color: #888;
-    font-size: 11px;
-}
+.app-header {
 
-.fake-boxes {
+    height: 40px;
+
     display: flex;
-    gap: 10px;
 
-    margin-top: 28px;
+    align-items: center;
+
+    padding: 0 15px;
+
+    border-bottom:
+        1px solid #ecece8;
+
 }
 
-.fake-box {
-    flex: 1;
 
-    height: 70px;
+.app-header-title {
 
-    border-radius: 13px;
-
-    background: #f0f1ec;
-}
-
-/* =========================
-   INTRO
-========================= */
-
-.section {
-    width: min(1080px, calc(100% - 40px));
     margin: auto;
-    padding: 130px 0;
+
+    color: #777a73;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
 }
 
-.section-label {
-    color: #78917b;
 
-    font-size: 12px;
-    font-weight: 800;
-
-    letter-spacing: .12em;
-    text-transform: uppercase;
-}
-
-.section h2 {
-    margin: 15px 0 0;
-
-    font-size: clamp(38px, 6vw, 70px);
-    line-height: 1.02;
-
-    letter-spacing: -.065em;
-}
-
-/* =========================
-   FEATURE CARDS
-========================= */
-
-.features {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
-
-    margin-top: 55px;
-}
-
-.card {
-    min-height: 300px;
+.app-content {
 
     padding: 28px;
 
+}
+
+
+.app-small {
+
+    color: #8b8e87;
+
+    font-size: 9px;
+
+}
+
+
+.app-heading {
+
+    margin-top: 6px;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    letter-spacing: -.06em;
+
+}
+
+
+.app-line {
+
+    width: 65%;
+
+    height: 6px;
+
+    margin-top: 11px;
+
+    border-radius: 999px;
+
+    background: #e6e8e2;
+
+}
+
+
+.app-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 9px;
+
+    margin-top: 28px;
+
+}
+
+
+.app-card {
+
+    height: 85px;
+
+    padding: 12px;
+
+    border-radius: 13px;
+
     background:
-        rgba(255,255,255,.75);
+        #f0f2ed;
 
-    border: 1px solid rgba(220,220,215,.8);
-    border-radius: 25px;
+}
 
-    box-shadow: 0 12px 40px rgba(0,0,0,.04);
+
+.app-card-line {
+
+    width: 60%;
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    background: #d9ddd5;
+
+}
+
+
+.app-card-line.small {
+
+    width: 38%;
+
+    margin-top: 8px;
+
+}
+
+
+.bottom-dock {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 17px;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    background:
+        rgba(255,255,255,.65);
+
+    backdrop-filter:
+        blur(20px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.9);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.08);
+
+}
+
+
+.dock-item {
+
+    width: 27px;
+
+    height: 27px;
+
+    border-radius: 8px;
+
+    background:
+        #e5e8e1;
+
+}
+
+
+.dock-item.active {
+
+    background:
+        #a8bba9;
+
+}
+
+
+/* =========================================================
+   FLOATING METRICS
+========================================================= */
+
+.metric {
+
+    position: absolute;
+
+    z-index: 5;
+
+    padding: 15px 18px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.9);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.09);
+
+}
+
+
+.metric-one {
+
+    left: -35px;
+
+    bottom: 16%;
+
+    animation:
+        metricFloat 5s ease-in-out infinite;
+
+}
+
+
+.metric-two {
+
+    right: -30px;
+
+    top: 13%;
+
+    animation:
+        metricFloat 6s 1s ease-in-out infinite;
+
+}
+
+
+.metric-number {
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    letter-spacing: -.05em;
+
+}
+
+
+.metric-label {
+
+    margin-top: 2px;
+
+    color: #8a8c86;
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+
+    position: relative;
+
+    padding:
+        145px 0;
+
+}
+
+
+.section-head {
+
+    max-width: 720px;
+
+}
+
+
+.kicker {
+
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: var(--green-dark);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+
+    text-transform: uppercase;
+
+}
+
+
+.section-title {
+
+    font-size:
+        clamp(
+            42px,
+            6vw,
+            76px
+        );
+
+    line-height: 1;
+
+    letter-spacing: -.075em;
+
+    font-weight: 800;
+
+}
+
+
+.section-description {
+
+    max-width: 570px;
+
+    margin-top: 24px;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+    line-height: 2;
+
+}
+
+
+/* =========================================================
+   FEATURE GRID
+========================================================= */
+
+.feature-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12,1fr);
+
+    gap: 16px;
+
+    margin-top: 60px;
+
+}
+
+
+.feature-card {
+
+    position: relative;
+
+    min-height: 330px;
+
+    padding: 31px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,.64);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        var(--radius);
+
+    box-shadow:
+        var(--shadow-small);
 
     transition:
-        transform .35s,
-        box-shadow .35s;
+        transform .4s,
+        box-shadow .4s;
+
 }
 
-.card:hover {
-    transform: translateY(-7px);
-    box-shadow: var(--shadow);
+
+.feature-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        var(--shadow);
+
 }
 
-.card-icon {
+
+.feature-card:nth-child(1) {
+
+    grid-column:
+        span 7;
+
+}
+
+
+.feature-card:nth-child(2) {
+
+    grid-column:
+        span 5;
+
+}
+
+
+.feature-card:nth-child(3) {
+
+    grid-column:
+        span 5;
+
+}
+
+
+.feature-card:nth-child(4) {
+
+    grid-column:
+        span 7;
+
+}
+
+
+.feature-number {
+
+    position: absolute;
+
+    top: 24px;
+
+    right: 27px;
+
+    color: #c5c8c1;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: .1em;
+
+}
+
+
+.feature-mark {
+
     width: 46px;
+
     height: 46px;
 
     display: grid;
+
     place-items: center;
 
     border-radius: 15px;
 
-    background: #eef2eb;
-
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .05em;
-}
-
-.card h3 {
-    margin-top: 45px;
-
-    font-size: 22px;
-    letter-spacing: -.04em;
-}
-
-.card p {
-    color: #777;
-
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-/* =========================
-   BIG NUMBER
-========================= */
-
-.memory {
-    position: relative;
-
-    margin-top: 30px;
-
-    padding: 70px 40px;
-
-    text-align: center;
-
-    overflow: hidden;
-
     background:
-        linear-gradient(
-            135deg,
-            #e9eee8,
-            #f8f8f5
-        );
+        var(--green-light);
 
-    border-radius: 32px;
+    color:
+        var(--green-dark);
 
-    border: 1px solid #e0e4dd;
+    font-size: 10px;
+
+    font-weight: 800;
+
 }
 
-.memory::after {
-    content: "476";
+
+.feature-card h3 {
+
+    margin-top: 52px;
+
+    font-size: 24px;
+
+    letter-spacing: -.055em;
+
+}
+
+
+.feature-card p {
+
+    max-width: 450px;
+
+    margin-top: 10px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+.feature-decoration {
 
     position: absolute;
 
-    right: -30px;
-    bottom: -100px;
+    right: -50px;
 
-    font-size: 260px;
-    font-weight: 800;
+    bottom: -70px;
 
-    color: rgba(100,120,100,.05);
+    width: 230px;
 
-    pointer-events: none;
+    height: 230px;
+
+    border:
+        1px solid
+        rgba(100,130,105,.13);
+
+    border-radius: 50%;
+
 }
 
-.memory-number {
-    position: relative;
-    z-index: 1;
 
-    font-size: clamp(80px, 14vw, 160px);
+.feature-decoration::before {
 
-    line-height: .8;
-
-    font-weight: 800;
-    letter-spacing: -.09em;
-}
-
-.memory-unit {
-    position: relative;
-    z-index: 1;
-
-    margin-top: 25px;
-
-    color: #6d7f6f;
-
-    font-weight: 700;
-}
-
-.memory-text {
-    position: relative;
-    z-index: 1;
-
-    max-width: 550px;
-
-    margin: 15px auto 0;
-
-    color: #777;
-
-    line-height: 1.8;
-}
-
-/* =========================
-   SPEC
-========================= */
-
-.spec {
-    margin-top: 50px;
-
-    border-top: 1px solid var(--line);
-}
-
-.spec-row {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    padding: 19px 5px;
-
-    border-bottom: 1px solid var(--line);
-
-    font-size: 14px;
-}
-
-.spec-row span:first-child {
-    color: #999;
-}
-
-.spec-row span:last-child {
-    text-align: right;
-    font-weight: 600;
-}
-
-/* =========================
-   DOWNLOAD
-========================= */
-
-.download {
-    position: relative;
-
-    margin-top: 60px;
-
-    padding: 90px 30px;
-
-    text-align: center;
-
-    border-radius: 35px;
-
-    overflow: hidden;
-
-    background: #191919;
-    color: white;
-
-    box-shadow: 0 30px 80px rgba(0,0,0,.16);
-}
-
-.download::before,
-.download::after {
     content: "";
 
     position: absolute;
 
-    width: 250px;
-    height: 250px;
+    inset: 35px;
+
+    border:
+        1px solid
+        rgba(100,130,105,.11);
 
     border-radius: 50%;
 
-    border: 1px solid rgba(255,255,255,.08);
 }
 
-.download::before {
-    top: -120px;
-    left: -80px;
+
+.feature-decoration::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 70px;
+
+    border:
+        1px solid
+        rgba(100,130,105,.1);
+
+    border-radius: 50%;
+
 }
 
-.download::after {
+
+/* =========================================================
+   DARK PHILOSOPHY SECTION
+========================================================= */
+
+.dark-section {
+
+    padding:
+        150px 0;
+
+}
+
+
+.dark-panel {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        100px 70px;
+
+    background:
+        #191b19;
+
+    color: white;
+
+    border-radius:
+        var(--radius-large);
+
+    box-shadow:
+        var(--shadow-large);
+
+}
+
+
+.dark-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 550px;
+
+    height: 550px;
+
+    right: -180px;
+
+    top: -220px;
+
+    border:
+        1px solid
+        rgba(160,190,165,.14);
+
+    border-radius: 50%;
+
+}
+
+
+.dark-panel::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 390px;
+
+    height: 390px;
+
     right: -100px;
-    bottom: -150px;
+
+    top: -140px;
+
+    border:
+        1px solid
+        rgba(160,190,165,.1);
+
+    border-radius: 50%;
+
 }
 
-.download h2 {
+
+.dark-kicker {
+
     position: relative;
 
-    margin: 0;
+    z-index: 2;
 
-    font-size: clamp(40px, 7vw, 75px);
+    color: #9db49f;
 
-    letter-spacing: -.07em;
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+
 }
 
-.download p {
+
+.dark-title {
+
     position: relative;
 
-    max-width: 500px;
+    z-index: 2;
 
-    margin: 20px auto;
+    max-width: 850px;
 
-    color: #aaa;
+    margin-top: 20px;
 
-    line-height: 1.8;
+    font-size:
+        clamp(
+            44px,
+            7vw,
+            86px
+        );
+
+    line-height: .98;
+
+    letter-spacing: -.075em;
+
 }
 
-.download .button {
+
+.dark-title span {
+
+    color: #849d88;
+
+}
+
+
+.dark-text {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 550px;
+
+    margin-top: 30px;
+
+    color: #a7aaa5;
+
+    font-size: 14px;
+
+    line-height: 2;
+
+}
+
+
+/* =========================================================
+   MEMORY SECTION
+========================================================= */
+
+.memory-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 80px;
+
+    align-items: center;
+
+    margin-top: 70px;
+
+}
+
+
+.memory-display {
+
+    position: relative;
+
+    padding:
+        70px 50px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #e8eee7,
+            #f7f7f3
+        );
+
+    border:
+        1px solid
+        #dde3dc;
+
+    border-radius:
+        var(--radius-large);
+
+    overflow: hidden;
+
+}
+
+
+.memory-display::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+
+    height: 300px;
+
+    left: -100px;
+
+    bottom: -160px;
+
+    border:
+        1px solid
+        rgba(80,110,85,.12);
+
+    border-radius: 50%;
+
+}
+
+
+.memory-number {
+
+    position: relative;
+
+    font-size:
+        clamp(
+            100px,
+            14vw,
+            180px
+        );
+
+    font-weight: 900;
+
+    line-height: .75;
+
+    letter-spacing: -.1em;
+
+}
+
+
+.memory-unit {
+
+    position: relative;
+
+    margin-top: 30px;
+
+    color: var(--green-dark);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: .12em;
+
+    text-transform: uppercase;
+
+}
+
+
+.memory-caption {
+
     position: relative;
 
     margin-top: 15px;
 
-    background: white;
-    color: #191919;
+    max-width: 400px;
+
+    color: #777b74;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
 }
 
-/* =========================
-   FOOTER
-========================= */
 
-footer {
-    width: min(1080px, calc(100% - 40px));
+.memory-info h3 {
 
-    margin: auto;
-    padding: 35px 0 50px;
+    font-size: 30px;
+
+    line-height: 1.1;
+
+    letter-spacing: -.055em;
+
+}
+
+
+.memory-info p {
+
+    margin-top: 18px;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+    line-height: 2;
+
+}
+
+
+.progress-list {
+
+    margin-top: 38px;
+
+}
+
+
+.progress-item {
+
+    margin-top: 21px;
+
+}
+
+
+.progress-top {
 
     display: flex;
+
     justify-content: space-between;
 
-    color: #999;
+    color: #777a73;
+
+    font-size: 11px;
+
+}
+
+
+.progress-bar {
+
+    height: 5px;
+
+    margin-top: 8px;
+
+    overflow: hidden;
+
+    background:
+        #e3e4df;
+
+    border-radius: 999px;
+
+}
+
+
+.progress-fill {
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        var(--green);
+
+}
+
+
+.fill-one {
+
+    width: 84%;
+
+}
+
+
+.fill-two {
+
+    width: 72%;
+
+}
+
+
+.fill-three {
+
+    width: 91%;
+
+}
+
+
+/* =========================================================
+   TECH SPECIFICATION
+========================================================= */
+
+.spec-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        .7fr 1.3fr;
+
+    gap: 80px;
+
+    margin-top: 70px;
+
+}
+
+
+.spec-intro {
+
+    position: sticky;
+
+    top: 120px;
+
+    align-self: start;
+
+}
+
+
+.spec-intro h3 {
+
+    font-size: 32px;
+
+    line-height: 1.1;
+
+    letter-spacing: -.06em;
+
+}
+
+
+.spec-intro p {
+
+    margin-top: 18px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 2;
+
+}
+
+
+.spec-table {
+
+    border-top:
+        1px solid
+        var(--line);
+
+}
+
+
+.spec-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 20px;
+
+    padding:
+        22px 5px;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+}
+
+
+.spec-key {
+
+    color: #999c95;
 
     font-size: 12px;
+
 }
 
-footer strong {
-    color: #555;
+
+.spec-value {
+
+    text-align: right;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
 
-@keyframes float {
-    0%,100% {
-        transform: translateY(0);
-    }
+/* =========================================================
+   TIMELINE
+========================================================= */
 
-    50% {
-        transform: translateY(-5px);
-    }
+.timeline {
+
+    position: relative;
+
+    margin-top: 75px;
+
+    padding-left: 30px;
+
 }
 
-@keyframes desktopFloat {
-    0%,100% {
-        transform: translateY(0) rotateX(0deg);
-    }
 
-    50% {
-        transform: translateY(-10px) rotateX(1deg);
-    }
+.timeline::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    bottom: 0;
+
+    left: 4px;
+
+    width: 1px;
+
+    background:
+        var(--line);
+
 }
 
-@keyframes shine {
+
+.timeline-item {
+
+    position: relative;
+
+    padding:
+        0 0 65px 40px;
+
+}
+
+
+.timeline-item:last-child {
+
+    padding-bottom: 0;
+
+}
+
+
+.timeline-dot {
+
+    position: absolute;
+
+    left: -1px;
+
+    top: 5px;
+
+    width: 11px;
+
+    height: 11px;
+
+    border-radius: 50%;
+
+    background:
+        var(--background);
+
+    border:
+        2px solid
+        var(--green);
+
+}
+
+
+.timeline-year {
+
+    color: var(--green-dark);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .12em;
+
+}
+
+
+.timeline-item h3 {
+
+    margin-top: 8px;
+
+    font-size: 25px;
+
+    letter-spacing: -.05em;
+
+}
+
+
+.timeline-item p {
+
+    max-width: 580px;
+
+    margin-top: 8px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.quote-section {
+
+    padding:
+        130px 0;
+
+}
+
+
+.quote {
+
+    max-width: 920px;
+
+    margin: auto;
+
+    text-align: center;
+
+}
+
+
+.quote-mark {
+
+    color: #b9c9bb;
+
+    font-size: 50px;
+
+    line-height: 1;
+
+}
+
+
+.quote-text {
+
+    margin-top: 20px;
+
+    font-size:
+        clamp(
+            34px,
+            5vw,
+            60px
+        );
+
+    line-height: 1.08;
+
+    letter-spacing: -.07em;
+
+    font-weight: 700;
+
+}
+
+
+.quote-small {
+
+    margin-top: 30px;
+
+    color: #969891;
+
+    font-size: 11px;
+
+    letter-spacing: .08em;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+.download-section {
+
+    padding:
+        100px 0 150px;
+
+}
+
+
+.download-panel {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        100px 50px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dfe9df,
+            #f5f3ec
+        );
+
+    border:
+        1px solid
+        #d9e0d8;
+
+    border-radius:
+        var(--radius-large);
+
+}
+
+
+.download-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+
+    height: 500px;
+
+    top: -350px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border:
+        1px solid
+        rgba(75,105,80,.1);
+
+    border-radius: 50%;
+
+}
+
+
+.download-panel::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+
+    height: 700px;
+
+    top: -450px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border:
+        1px solid
+        rgba(75,105,80,.06);
+
+    border-radius: 50%;
+
+}
+
+
+.download-label {
+
+    position: relative;
+
+    z-index: 2;
+
+    color: var(--green-dark);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+
+}
+
+
+.download-title {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 15px;
+
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            80px
+        );
+
+    line-height: .95;
+
+    letter-spacing: -.08em;
+
+}
+
+
+.download-description {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 520px;
+
+    margin: 20px auto 0;
+
+    color: #777b74;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+.download-actions {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 32px;
+
+}
+
+
+.version {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 22px;
+
+    color: #92968e;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq {
+
+    margin-top: 60px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+}
+
+
+.faq-item {
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+}
+
+
+.faq-question {
+
+    width: 100%;
+
+    padding:
+        24px 5px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border: 0;
+
+    background: none;
+
+    color: var(--text);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.faq-symbol {
+
+    width: 28px;
+
+    height: 28px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius: 50%;
+
+    color: #777;
+
+    transition:
+        transform .3s;
+
+}
+
+
+.faq-answer {
+
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition:
+        max-height .4s ease;
+
+}
+
+
+.faq-answer p {
+
+    max-width: 720px;
+
+    padding:
+        0 5px 25px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+.faq-item.active .faq-symbol {
+
+    transform:
+        rotate(45deg);
+
+}
+
+
+.faq-item.active .faq-answer {
+
+    max-height: 300px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    padding:
+        55px 0 70px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+}
+
+
+.footer-inner {
+
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr 1fr 1fr;
+
+    gap: 40px;
+
+}
+
+
+.footer-brand {
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    letter-spacing: -.04em;
+
+}
+
+
+.footer-description {
+
+    max-width: 250px;
+
+    margin-top: 12px;
+
+    color: #92948e;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+}
+
+
+.footer-column h4 {
+
+    margin-bottom: 15px;
+
+    color: #777a73;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+
+}
+
+
+.footer-column a {
+
+    display: block;
+
+    margin-top: 8px;
+
+    color: #92948e;
+
+    font-size: 11px;
+
+    transition: .2s;
+
+}
+
+
+.footer-column a:hover {
+
+    color: var(--text);
+
+}
+
+
+.footer-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 60px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+    color: #aaa;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal {
+
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+
+}
+
+
+.reveal.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   KEYFRAMES
+========================================================= */
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+@keyframes titleIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes previewIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(50px)
+            scale(.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes screenShine {
+
     0% {
-        transform: translateX(-100%);
+
+        transform:
+            translateX(-110%);
+
     }
 
-    45%,100% {
-        transform: translateX(100%);
+    45%,
+    100% {
+
+        transform:
+            translateX(110%);
+
     }
+
 }
 
-/* =========================
-   MOBILE
-========================= */
 
-@media (max-width: 760px) {
+@keyframes metricFloat {
 
-    .nav {
-        height: 58px;
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+
     }
 
-    .nav-links {
+    50% {
+
+        transform:
+            translateY(-9px);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .nav-center {
+
         display: none;
+
     }
+
+
+    .feature-card:nth-child(1),
+    .feature-card:nth-child(2),
+    .feature-card:nth-child(3),
+    .feature-card:nth-child(4) {
+
+        grid-column:
+            span 12;
+
+    }
+
+
+    .memory-layout {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 40px;
+
+    }
+
+
+    .spec-layout {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 45px;
+
+    }
+
+
+    .spec-intro {
+
+        position: static;
+
+    }
+
+
+    .footer-inner {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .container {
+
+        width:
+            calc(100% - 32px);
+
+    }
+
+
+    .site-nav {
+
+        height: 60px;
+
+    }
+
+
+    .brand-name {
+
+        font-size: 13px;
+
+    }
+
+
+    .nav-action {
+
+        padding:
+            9px 13px;
+
+        font-size: 10px;
+
+    }
+
 
     .hero {
-        padding-top: 130px;
+
+        padding:
+            135px 0
+            70px;
+
     }
 
-    .hero h1 {
-        font-size: 58px;
+
+    .hero-title {
+
+        font-size:
+            clamp(
+                55px,
+                16vw,
+                82px
+            );
+
     }
 
-    .hero-actions {
-        flex-direction: column;
 
-        width: 100%;
-        max-width: 300px;
+    .hero-copy {
 
-        margin-left: auto;
-        margin-right: auto;
+        font-size: 13px;
+
     }
 
-    .desktop-wrap {
-        margin-top: 60px;
+
+    .hero-buttons {
+
+        flex-direction:
+            column;
+
+        width:
+            min(
+                280px,
+                100%
+            );
+
+        margin-inline:
+            auto;
+
     }
+
+
+    .hero-preview {
+
+        width:
+            100%;
+
+        margin-top:
+            65px;
+
+    }
+
 
     .desktop {
-        border-width: 4px;
-        border-radius: 16px;
+
+        border-width:
+            4px;
+
+        border-radius:
+            18px;
+
     }
 
-    .window {
-        width: 65%;
+
+    .metric {
+
+        display: none;
+
+    }
+
+
+    .app-window {
+
+        left: 15%;
+
+        top: 18%;
+
+        width: 70%;
+
         height: 62%;
 
-        left: 17.5%;
-        top: 19%;
     }
 
-    .window-content {
-        padding: 14px;
+
+    .app-content {
+
+        padding: 16px;
+
     }
 
-    .fake-title {
-        font-size: 13px;
+
+    .app-heading {
+
+        font-size: 15px;
+
     }
 
-    .fake-boxes {
+
+    .app-grid {
+
         margin-top: 15px;
+
     }
 
-    .fake-box {
-        height: 35px;
+
+    .app-card {
+
+        height: 42px;
+
     }
+
 
     .section {
-        padding: 90px 0;
+
+        padding:
+            90px 0;
+
     }
 
-    .features {
-        grid-template-columns: 1fr;
+
+    .section-title {
+
+        font-size:
+            45px;
+
     }
 
-    .card {
-        min-height: auto;
+
+    .feature-card {
+
+        min-height:
+            270px;
+
+        padding:
+            25px;
+
     }
 
-    .card h3 {
-        margin-top: 30px;
+
+    .dark-panel {
+
+        padding:
+            65px 25px;
+
+        border-radius:
+            27px;
+
     }
 
-    .memory {
-        padding: 60px 20px;
+
+    .dark-title {
+
+        font-size:
+            46px;
+
     }
+
+
+    .memory-display {
+
+        padding:
+            60px 25px;
+
+    }
+
+
+    .memory-number {
+
+        font-size:
+            100px;
+
+    }
+
 
     .spec-row {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
         gap: 5px;
+
     }
 
-    .spec-row span:last-child {
-        text-align: left;
+
+    .spec-value {
+
+        text-align:
+            left;
+
     }
 
-    footer {
-        flex-direction: column;
-        gap: 10px;
+
+    .download-panel {
+
+        padding:
+            70px 22px;
+
+        border-radius:
+            27px;
+
     }
+
+
+    .download-actions {
+
+        flex-direction:
+            column;
+
+        width:
+            min(
+                280px,
+                100%
+            );
+
+        margin-inline:
+            auto;
+
+    }
+
+
+    .footer-inner {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .footer-bottom {
+
+        flex-direction:
+            column;
+
+        gap: 8px;
+
+    }
+
 }
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+
+        scroll-behavior:
+            auto !important;
+
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<nav class="nav">
 
-    <a href="#" class="logo">
-        <span class="logo-mark">N</span>
-        <span>NagisinnraLinux</span>
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav class="site-nav">
+
+    <a href="#" class="brand">
+
+        <span class="brand-symbol">
+            N
+        </span>
+
+        <span class="brand-name">
+            NagisinnraLinux
+        </span>
+
     </a>
 
-    <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#features">Features</a>
-        <a href="#spec">Specifications</a>
-        <a href="#download" class="nav-download">
-            Download
+
+    <div class="nav-center">
+
+        <a href="#about">
+            About
         </a>
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#technology">
+            Technology
+        </a>
+
+        <a href="#faq">
+            FAQ
+        </a>
+
     </div>
+
+
+    <a
+        href="#download"
+        class="nav-action">
+
+        Download
+
+    </a>
 
 </nav>
 
 
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
 <header class="hero">
 
-    <div class="hero-inner">
+    <div class="hero-orb orb-one"></div>
 
-        <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            v1.0.3 · Stable
-        </div>
+    <div class="hero-orb orb-two"></div>
 
-        <h1>
-            Linux,
-            <span>but lighter.</span>
-        </h1>
 
-        <p class="hero-description">
-            小さくて、速くて、ちゃんと使える。
-            <br>
-            NagisinnraLinuxは、
-            必要なものを丁寧にまとめたLinuxディストリビューションです。
-        </p>
+    <div class="container">
 
-        <div class="hero-actions">
+        <div class="hero-content">
 
-            <a
-                class="button button-primary"
-                href="#download">
-                使ってみる →
-            </a>
 
-            <a
-                class="button button-secondary"
-                href="#about">
-                もっと見る
-            </a>
+            <div class="status">
 
-        </div>
+                <span class="status-dot"></span>
 
-        <div class="desktop-wrap">
+                NagisinnraLinux
+                v1.0.2 · Stable
 
-            <div class="desktop">
+            </div>
 
-                <div class="window">
 
-                    <div class="window-bar">
+            <h1 class="hero-title">
 
-                        <span class="circle"></span>
-                        <span class="circle"></span>
-                        <span class="circle"></span>
+                <span class="light">
+                    Small by nature.
+                </span>
+
+                <span class="accent">
+                    Beautiful by design.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-copy">
+
+                NagisinnraLinuxは、
+                必要なものを丁寧にまとめた
+                軽量Linuxディストリビューション。
+
+                <br>
+
+                軽さだけではなく、
+                毎日使いたくなる体験を目指しています。
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#download"
+                    class="button button-dark">
+
+                    Download
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#about"
+                    class="button button-light">
+
+                    Explore NagisinnraLinux
+
+                </a>
+
+            </div>
+
+
+            <!-- PRODUCT PREVIEW -->
+
+            <div class="hero-preview">
+
+                <div class="preview-shadow"></div>
+
+
+                <div class="desktop">
+
+
+                    <div class="desktop-top">
+
+                        <div class="desktop-left">
+
+                            <span class="desktop-circle"></span>
+
+                            <span class="desktop-circle"></span>
+
+                            <span class="desktop-circle"></span>
+
+                        </div>
+
+
+                        <span class="desktop-time">
+
+                            NagisinnraLinux
+
+                        </span>
 
                     </div>
 
-                    <div class="window-content">
 
-                        <div class="fake-title">
-                            Welcome.
+
+                    <div class="app-window">
+
+
+                        <div class="app-header">
+
+                            <span class="desktop-circle"></span>
+
+                            <span class="app-header-title">
+                                NagisinnraLinux
+                            </span>
+
                         </div>
 
-                        <div class="fake-subtitle">
-                            NagisinnraLinux
+
+                        <div class="app-content">
+
+                            <div class="app-small">
+                                Welcome to
+                            </div>
+
+
+                            <div class="app-heading">
+                                NagisinnraLinux
+                            </div>
+
+
+                            <div class="app-line"></div>
+
+
+                            <div class="app-grid">
+
+                                <div class="app-card">
+
+                                    <div class="app-card-line"></div>
+
+                                    <div class="app-card-line small"></div>
+
+                                </div>
+
+
+                                <div class="app-card">
+
+                                    <div class="app-card-line"></div>
+
+                                    <div class="app-card-line small"></div>
+
+                                </div>
+
+
+                                <div class="app-card">
+
+                                    <div class="app-card-line"></div>
+
+                                    <div class="app-card-line small"></div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="fake-boxes">
-                            <div class="fake-box"></div>
-                            <div class="fake-box"></div>
-                            <div class="fake-box"></div>
-                        </div>
+                    </div>
 
+
+
+                    <div class="bottom-dock">
+
+                        <div class="dock-item active"></div>
+
+                        <div class="dock-item"></div>
+
+                        <div class="dock-item"></div>
+
+                        <div class="dock-item"></div>
+
+                        <div class="dock-item"></div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="metric metric-one">
+
+                    <div class="metric-number">
+                        476 MB
+                    </div>
+
+                    <div class="metric-label">
+                        Lightweight
+                    </div>
+
+                </div>
+
+
+                <div class="metric metric-two">
+
+                    <div class="metric-number">
+                        Debian
+                    </div>
+
+                    <div class="metric-label">
+                        Base system
                     </div>
 
                 </div>
@@ -944,150 +3344,934 @@ footer strong {
 </header>
 
 
-<section class="section" id="about">
 
-    <div class="section-label">
-        The idea
-    </div>
+<!-- =======================================================
+     ABOUT
+======================================================= -->
 
-    <h2>
-        小さいことは、<br>
-        弱いことじゃない。
-    </h2>
+<section
+    class="section reveal"
+    id="about">
 
-    <div class="features" id="features">
+    <div class="container">
 
-        <article class="card">
+        <div class="section-head">
 
-            <div class="card-icon">
-                01
+            <div class="kicker">
+                The idea
             </div>
 
-            <h3>
-                軽快に。
-            </h3>
+            <h2 class="section-title">
 
-            <p>
-                余計なものをできるだけ減らし、
-                PCのリソースを本当に必要なことへ。
+                Linuxを、
+                <br>
+                もっと自然に。
+
+            </h2>
+
+
+            <p class="section-description">
+
+                OSは、目立つためにあるものではありません。
+
+                <br>
+
+                使っていることを意識しないほど自然で、
+                必要なときにはしっかり応えてくれる。
+
+                <br>
+
+                NagisinnraLinuxは、
+                そんなコンピューティング体験を目指しています。
+
             </p>
 
-        </article>
+        </div>
 
 
-        <article class="card">
+        <div class="feature-grid" id="features">
 
-            <div class="card-icon">
-                02
+
+            <article class="feature-card">
+
+                <span class="feature-number">
+                    01
+                </span>
+
+
+                <div class="feature-mark">
+                    FAST
+                </div>
+
+
+                <h3>
+                    軽快に動く。
+                </h3>
+
+
+                <p>
+
+                    システムを必要以上に大きくせず、
+                    PCのリソースをできるだけ
+                    ユーザーのために残します。
+
+                </p>
+
+
+                <div class="feature-decoration"></div>
+
+            </article>
+
+
+
+            <article class="feature-card">
+
+                <span class="feature-number">
+                    02
+                </span>
+
+
+                <div class="feature-mark">
+                    CLEAN
+                </div>
+
+
+                <h3>
+                    余計なものを減らす。
+                </h3>
+
+
+                <p>
+
+                    シンプルな構成だからこそ、
+                    OSの動作や仕組みを
+                    より理解しやすく。
+
+                </p>
+
+
+                <div class="feature-decoration"></div>
+
+            </article>
+
+
+
+            <article class="feature-card">
+
+                <span class="feature-number">
+                    03
+                </span>
+
+
+                <div class="feature-mark">
+                    JP
+                </div>
+
+
+                <h3>
+                    日本語を、最初から。
+                </h3>
+
+
+                <p>
+
+                    日本語入力環境を整え、
+                    インストール直後から
+                    普段使いへ移れる構成を目指します。
+
+                </p>
+
+
+                <div class="feature-decoration"></div>
+
+            </article>
+
+
+
+            <article class="feature-card">
+
+                <span class="feature-number">
+                    04
+                </span>
+
+
+                <div class="feature-mark">
+                    OPEN
+                </div>
+
+
+                <h3>
+                    オープンな世界へ。
+                </h3>
+
+
+                <p>
+
+                    Linuxという自由な基盤を使い、
+                    自分のPCを自分で選び、
+                    自分で育てられる環境を。
+
+                </p>
+
+
+                <div class="feature-decoration"></div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     PHILOSOPHY
+======================================================= -->
+
+<section class="dark-section reveal">
+
+    <div class="container">
+
+        <div class="dark-panel">
+
+
+            <div class="dark-kicker">
+                OUR PHILOSOPHY
             </div>
 
-            <h3>
-                シンプルに。
-            </h3>
 
-            <p>
-                複雑さを増やすのではなく、
-                必要な機能を丁寧に組み合わせています。
+            <h2 class="dark-title">
+
+                Less system.
+                <br>
+
+                More <span>you.</span>
+
+            </h2>
+
+
+            <p class="dark-text">
+
+                高機能であることだけを目標にするのではなく、
+                必要なものを必要なだけ。
+
+                <br><br>
+
+                NagisinnraLinuxは、
+                PCそのものの性能を引き出し、
+                ユーザーが本当にやりたいことへ
+                リソースを使えるOSを目指します。
+
             </p>
 
-        </article>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-        <article class="card">
 
-            <div class="card-icon">
-                03
+<!-- =======================================================
+     MEMORY
+======================================================= -->
+
+<section class="section reveal">
+
+    <div class="container">
+
+
+        <div class="section-head">
+
+            <div class="kicker">
+                Lightweight
             </div>
 
-            <h3>
-                日本語で。
-            </h3>
+            <h2 class="section-title">
 
-            <p>
-                日本語入力環境を最初から用意。
-                インストールした瞬間から普段使いへ。
+                軽さを、
+                <br>
+                数字に。
+
+            </h2>
+
+        </div>
+
+
+        <div class="memory-layout">
+
+
+            <div class="memory-display">
+
+
+                <div class="memory-number">
+                    476
+                </div>
+
+
+                <div class="memory-unit">
+                    MB approximately
+                </div>
+
+
+                <p class="memory-caption">
+
+                    軽量な構成を目指した
+                    NagisinnraLinux。
+
+                    <br>
+
+                    小さなシステムだからこそ、
+                    古いPCでも新しいPCでも
+                    軽快な環境を目指せます。
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="memory-info">
+
+
+                <h3>
+
+                    リソースを、
+                    <br>
+                    OSだけのものにしない。
+
+                </h3>
+
+
+                <p>
+
+                    PCのメモリやCPUは、
+                    OSを動かすためだけに
+                    存在するわけではありません。
+
+                    <br><br>
+
+                    アプリケーション、
+                    ブラウザ、
+                    開発環境、
+                    そしてユーザー自身の作業へ。
+
+                </p>
+
+
+                <div class="progress-list">
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Lightweight design
+                            </span>
+
+                            <span>
+                                optimized
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill fill-one"></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Japanese environment
+                            </span>
+
+                            <span>
+                                ready
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill fill-two"></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Everyday usability
+                            </span>
+
+                            <span>
+                                balanced
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill fill-three"></div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     TECHNOLOGY
+======================================================= -->
+
+<section
+    class="section reveal"
+    id="technology">
+
+    <div class="container">
+
+
+        <div class="section-head">
+
+            <div class="kicker">
+                Technology
+            </div>
+
+            <h2 class="section-title">
+
+                中身は、
+                <br>
+                ちゃんとLinux。
+
+            </h2>
+
+
+            <p class="section-description">
+
+                見た目だけではありません。
+
+                <br>
+
+                NagisinnraLinuxは、
+                Linuxの柔軟性を活かしながら、
+                日常利用に必要な環境をまとめています。
+
             </p>
 
-        </article>
+        </div>
+
+
+        <div class="spec-layout">
+
+
+            <div class="spec-intro">
+
+                <h3>
+                    Technical
+                    <br>
+                    specification.
+                </h3>
+
+
+                <p>
+
+                    システムの基本構成。
+
+                    <br><br>
+
+                    実際のリリース内容に合わせて
+                    このセクションを更新できます。
+
+                </p>
+
+            </div>
+
+
+
+            <div class="spec-table">
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Distribution
+                    </span>
+
+                    <span class="spec-value">
+                        NagisinnraLinux
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Version
+                    </span>
+
+                    <span class="spec-value">
+                        1.0.2 Stable
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Base
+                    </span>
+
+                    <span class="spec-value">
+                        Debian GNU/Linux
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Architecture
+                    </span>
+
+                    <span class="spec-value">
+                        x86_64
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Compression
+                    </span>
+
+                    <span class="spec-value">
+                        zram
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Input Method
+                    </span>
+
+                    <span class="spec-value">
+                        fcitx5 + Mozc
+                    </span>
+
+                </div>
+
+
+                <div class="spec-row">
+
+                    <span class="spec-key">
+                        Release type
+                    </span>
+
+                    <span class="spec-value">
+                        Stable
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
 
     </div>
 
 </section>
 
 
-<section class="section">
 
-    <div class="section-label">
-        Lightweight
-    </div>
+<!-- =======================================================
+     DEVELOPMENT
+======================================================= -->
 
-    <h2>
-        軽さを、<br>
-        数字に。
-    </h2>
+<section class="section reveal">
 
-    <div class="memory">
+    <div class="container">
 
-        <div class="memory-number">
-            476
+
+        <div class="section-head">
+
+            <div class="kicker">
+                Development
+            </div>
+
+            <h2 class="section-title">
+
+                少しずつ、
+                <br>
+                進化する。
+
+            </h2>
+
         </div>
 
-        <div class="memory-unit">
-            MB · approximately
-        </div>
 
-        <p class="memory-text">
-            軽量な構成を目指したNagisinnraLinux。
-            小さなサイズだからこそ、
-            古いPCから新しいPCまで幅広く活用できます。
-        </p>
+        <div class="timeline">
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-year">
+                    PHASE 01
+                </div>
+
+                <h3>
+                    The beginning
+                </h3>
+
+                <p>
+
+                    NagisinnraLinuxの
+                    最初のアイデア。
+
+                    <br>
+
+                    「軽くて、自分が使いたいLinuxを作る」
+                    というシンプルな考えから始まりました。
+
+                </p>
+
+            </div>
+
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-year">
+                    PHASE 02
+                </div>
+
+                <h3>
+                    Lightweight
+                </h3>
+
+                <p>
+
+                    不要な構成を見直し、
+                    より小さく、
+                    より扱いやすいシステムへ。
+
+                </p>
+
+            </div>
+
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-year">
+                    PHASE 03
+                </div>
+
+                <h3>
+                    Everyday Linux
+                </h3>
+
+                <p>
+
+                    軽量さだけではなく、
+                    日本語環境や普段使いまで含めて
+                    「ちゃんと使えるOS」を目指します。
+
+                </p>
+
+            </div>
+
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-year">
+                    NEXT
+                </div>
+
+                <h3>
+                    What's next?
+                </h3>
+
+                <p>
+
+                    まだ完成ではありません。
+
+                    <br>
+
+                    NagisinnraLinuxは、
+                    これからも少しずつ進化していきます。
+
+                </p>
+
+            </div>
+
+
+        </div>
 
     </div>
 
 </section>
 
 
-<section class="section" id="spec">
 
-    <div class="section-label">
-        Technical
+<!-- =======================================================
+     QUOTE
+======================================================= -->
+
+<section class="quote-section reveal">
+
+    <div class="container">
+
+
+        <div class="quote">
+
+            <div class="quote-mark">
+                “
+            </div>
+
+
+            <div class="quote-text">
+
+                Linuxは、
+                難しくなくていい。
+
+                <br>
+
+                自由であればいい。
+
+            </div>
+
+
+            <div class="quote-small">
+
+                NAGISINNRALINUX
+
+            </div>
+
+        </div>
+
+
     </div>
 
-    <h2>
-        中身は、<br>
-        ちゃんとLinux。
-    </h2>
+</section>
 
-    <div class="spec">
 
-        <div class="spec-row">
-            <span>Distribution</span>
-            <span>NagisinnraLinux</span>
+
+<!-- =======================================================
+     FAQ
+======================================================= -->
+
+<section
+    class="section reveal"
+    id="faq">
+
+    <div class="container">
+
+
+        <div class="section-head">
+
+            <div class="kicker">
+                Questions
+            </div>
+
+            <h2 class="section-title">
+                よくある質問。
+            </h2>
+
         </div>
 
-        <div class="spec-row">
-            <span>Version</span>
-            <span>1.0.3 Stable</span>
-        </div>
 
-        <div class="spec-row">
-            <span>Base</span>
-            <span>Debian GNU/Linux</span>
-        </div>
+        <div class="faq">
 
-        <div class="spec-row">
-            <span>Architecture</span>
-            <span>x86_64</span>
-        </div>
 
-        <div class="spec-row">
-            <span>Memory technology</span>
-            <span>zram</span>
-        </div>
+            <div class="faq-item">
 
-        <div class="spec-row">
-            <span>Input Method</span>
-            <span>fcitx5 + Mozc</span>
+                <button
+                    class="faq-question">
+
+                    <span>
+                        NagisinnraLinuxとは？
+                    </span>
+
+                    <span class="faq-symbol">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        NagisinnraLinuxは、
+                        軽量さと普段使いやすい環境の
+                        バランスを目指して開発している
+                        Linuxディストリビューションです。
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question">
+
+                    <span>
+                        どのPCで使えますか？
+                    </span>
+
+                    <span class="faq-symbol">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        現在の構成では
+                        x86_64環境を対象としています。
+
+                        <br>
+
+                        実際の対応ハードウェアについては、
+                        各リリースの仕様をご確認ください。
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question">
+
+                    <span>
+                        日本語入力は使えますか？
+                    </span>
+
+                    <span class="faq-symbol">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        日本語環境として
+                        fcitx5とMozcを使用する構成を
+                        採用しています。
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question">
+
+                    <span>
+                        無料で使えますか？
+                    </span>
+
+                    <span class="faq-symbol">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        NagisinnraLinuxは
+                        Linuxをベースとした
+                        オープンなプロジェクトです。
+
+                        <br>
+
+                        配布条件については
+                        各リリースのライセンス情報を
+                        ご確認ください。
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1095,43 +4279,457 @@ footer strong {
 </section>
 
 
-<section class="section" id="download">
 
-    <div class="download">
+<!-- =======================================================
+     DOWNLOAD
+======================================================= -->
 
-        <h2>
-            Ready?
-        </h2>
+<section
+    class="download-section reveal"
+    id="download">
 
-        <p>
-            NagisinnraLinuxを、
-            あなたのPCで試してみよう。
-        </p>
+    <div class="container">
 
-        <a
-            class="button"
-            href="https://sourceforge.net/projects/nagisinnralinux/files/egg-of-debian-trixie-nagisinnraos-amd64-2026-09-01_1727.iso/download">
-            Download NagisinnraLinux →
-        </a>
+
+        <div class="download-panel">
+
+
+            <div class="download-label">
+                GET NAGISINNRALINUX
+            </div>
+
+
+            <h2 class="download-title">
+
+                Ready
+                <br>
+                when you are.
+
+            </h2>
+
+
+            <p class="download-description">
+
+                NagisinnraLinuxを
+                あなたのPCで試してみませんか。
+
+                <br>
+
+                小さくて、速くて、
+                ちゃんと使えるLinuxを。
+
+            </p>
+
+
+            <div class="download-actions">
+
+
+                <!--
+                    実際のISOのURLへ変更してください
+                -->
+
+                <a
+                    href="https://sourceforge.net/projects/nagisinnralinux/files/egg-of-debian-trixie-nagisinnraos-amd64-2026-09-01_1727.iso/download"
+                    class="button button-dark">
+
+                    Download ISO
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#technology"
+                    class="button button-light">
+
+                    Specifications
+
+                </a>
+
+
+            </div>
+
+
+            <div class="version">
+
+                NagisinnraLinux v1.0.2 · Stable
+
+            </div>
+
+
+        </div>
 
     </div>
 
 </section>
 
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
-    <div>
-        <strong>NagisinnraLinux</strong>
-        · Open source Linux project
-    </div>
+    <div class="container">
 
-    <div>
-        v1.0.3 Stable
+
+        <div class="footer-inner">
+
+
+            <div>
+
+                <div class="footer-brand">
+                    NagisinnraLinux
+                </div>
+
+
+                <p class="footer-description">
+
+                    Small by nature.
+                    Beautiful by design.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="#features">
+                    Features
+                </a>
+
+                <a href="#technology">
+                    Technology
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Project
+                </h4>
+
+                <a href="#download">
+                    Download
+                </a>
+
+                <a href="#faq">
+                    FAQ
+                </a>
+
+                <a href="#">
+                    Releases
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Links
+                </h4>
+
+                <a href="#">
+                    GitHub
+                </a>
+
+                <a href="#">
+                    Documentation
+                </a>
+
+                <a href="#">
+                    Community
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 NagisinnraLinux
+            </span>
+
+            <span>
+                Linux for everyone.
+            </span>
+
+        </div>
+
+
     </div>
 
 </footer>
 
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const revealObserver =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+revealElements.forEach(
+    (element) => {
+
+        revealObserver.observe(
+            element
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+const faqItems =
+    document.querySelectorAll(
+        ".faq-item"
+    );
+
+
+faqItems.forEach(
+    (item) => {
+
+        const button =
+            item.querySelector(
+                ".faq-question"
+            );
+
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const wasActive =
+                    item.classList.contains(
+                        "active"
+                    );
+
+
+                faqItems.forEach(
+                    (other) => {
+
+                        other.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                if (!wasActive) {
+
+                    item.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SMOOTH NAVIGATION
+========================================================= */
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        (link) => {
+
+            link.addEventListener(
+                "click",
+                (event) => {
+
+                    const targetId =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        targetId === "#"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) {
+
+                        return;
+
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   SMALL PARALLAX EFFECT
+========================================================= */
+
+const preview =
+    document.querySelector(
+        ".hero-preview"
+    );
+
+
+window.addEventListener(
+    "mousemove",
+    (event) => {
+
+        if (
+            window.innerWidth < 800
+        ) {
+
+            return;
+
+        }
+
+
+        const x =
+            (event.clientX /
+                window.innerWidth -
+                .5) * 2;
+
+
+        const y =
+            (event.clientY /
+                window.innerHeight -
+                .5) * 2;
+
+
+        preview.style.transform =
+            `translate(${x * 4}px, ${y * 3}px)`;
+
+    }
+);
+
+
+/* =========================================================
+   NAV SCROLL STATE
+========================================================= */
+
+const nav =
+    document.querySelector(
+        ".site-nav"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (
+            window.scrollY > 30
+        ) {
+
+            nav.style.boxShadow =
+                "0 16px 45px rgba(0,0,0,.09)";
+
+        } else {
+
+            nav.style.boxShadow =
+                "0 12px 40px rgba(0,0,0,.055)";
+
+        }
+
+    }
+);
+
+</script>
+
+
 </body>
 </html>
-
