@@ -3057,6 +3057,107 @@ footer {
 
 </style>
 
+
+<style id="related-links-added">
+.related-links-list{
+    margin-top:60px;
+    border-top:1px solid var(--line);
+}
+
+.related-link-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    padding:28px 5px;
+    border-bottom:1px solid var(--line);
+    color:var(--text);
+    text-decoration:none;
+    transition:
+        padding .3s ease,
+        background .3s ease;
+}
+
+.related-link-item:hover{
+    padding-left:18px;
+    padding-right:18px;
+    background:rgba(120,152,125,.045);
+}
+
+.related-link-text{
+    min-width:0;
+}
+
+.related-link-kicker{
+    display:block;
+    margin-bottom:7px;
+    color:var(--green-dark);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.15em;
+}
+
+.related-link-item h3{
+    margin:0;
+    font-size:22px;
+    line-height:1.3;
+    letter-spacing:-.045em;
+}
+
+.related-link-item p{
+    margin-top:7px;
+    color:var(--text-muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+.related-link-arrow{
+    width:36px;
+    height:36px;
+    flex:none;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--line);
+    border-radius:50%;
+    color:var(--text);
+    font-size:17px;
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        color .3s ease;
+}
+
+.related-link-item:hover .related-link-arrow{
+    transform:translate(3px,-3px);
+    background:var(--text);
+    color:white;
+    border-color:var(--text);
+}
+
+@media (max-width:650px){
+    .related-links-list{
+        margin-top:45px;
+    }
+
+    .related-link-item{
+        padding:24px 3px;
+    }
+
+    .related-link-item:hover{
+        padding-left:9px;
+        padding-right:9px;
+    }
+
+    .related-link-item h3{
+        font-size:18px;
+    }
+
+    .related-link-item p{
+        font-size:11px;
+    }
+}
+</style>
+
 </head>
 
 
@@ -3100,7 +3201,12 @@ footer {
             FAQ
         </a>
 
-    </div>
+    
+
+        <a href="#related-links">
+            Related Links
+        </a>
+</div>
 
 
     <a
@@ -4371,6 +4477,216 @@ footer {
 <!-- =======================================================
      FOOTER
 ======================================================= -->
+
+
+<!-- =======================================================
+     RELATED LINKS
+======================================================= -->
+
+<section class="section reveal" id="related-links">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div class="kicker">
+                Related Links
+            </div>
+
+            <h2 class="section-title">
+                もっと、<br>
+                Nagisinnraへ。
+            </h2>
+
+            <p class="section-description">
+                NagisinnraLinuxの開発、技術発信、配布、
+                お問い合わせなどの関連ページをまとめています。
+            </p>
+
+        </div>
+
+        <div class="related-links-list">
+
+            <!--
+                ==================================================
+                関連リンクを追加するときは、このブロックを
+                コピーして中身を書き換えてください。
+
+                href   = リンク先
+                kicker = カテゴリ
+                h3     = サービス名
+                p      = 説明
+                ==================================================
+            -->
+
+            <a class="related-link-item"
+               href="https://github.com/nagisinnra/NagisinnraLinux"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        DEVELOPMENT
+                    </span>
+
+                    <h3>
+                        GitHub
+                    </h3>
+
+                    <p>
+                        ソースコード・開発情報・リポジトリ
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+
+            <a class="related-link-item"
+               href="https://zenn.dev/nagisinnra"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        TECHNICAL MEDIA
+                    </span>
+
+                    <h3>
+                        Zenn
+                    </h3>
+
+                    <p>
+                        技術記事・開発記録・ナレッジ
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+            <a class="related-link-item"
+               href="https://discord.gg/ADMp5druNT"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        community
+                    </span>
+
+                    <h3>
+                        discord
+                    </h3>
+
+                    <p>
+                        コミュニティー
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+            <a class="related-link-item"
+               href="https://qiita.com/nagi-sinnra"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        TECHNICAL MEDIA
+                    </span>
+
+                    <h3>
+                        Qiita
+                    </h3>
+
+                    <p>
+                        技術記事・実装メモ・開発ノート
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+
+            <a class="related-link-item"
+               href="https://sourceforge.net/projects/nagisinnralinux/files/"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        DISTRIBUTION
+                    </span>
+
+                    <h3>
+                        NagisinnraLinux Releases
+                    </h3>
+
+                    <p>
+                        NagisinnraLinuxの配布・リリースページ
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+
+            <a class="related-link-item"
+               href="mailto:sinnra.technology@outlook.jp">
+
+                <div class="related-link-text">
+
+                    <span class="related-link-kicker">
+                        CONTACT
+                    </span>
+
+                    <h3>
+                        お問い合わせ
+                    </h3>
+
+                    <p>
+                        sinnra.technology@outlook.jp
+                    </p>
+
+                </div>
+
+                <span class="related-link-arrow">
+                    ↗
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
 
 <footer>
 
