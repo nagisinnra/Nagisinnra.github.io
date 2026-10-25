@@ -378,6 +378,16 @@ img {
 
 }
 
+.nav-right-group {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
 
 .nav-action {
 
@@ -405,6 +415,101 @@ img {
     box-shadow:
         0 10px 25px
         rgba(0,0,0,.15);
+
+}
+
+
+/* =========================================================
+   LANGUAGE SWITCHER UI
+========================================================= */
+
+.lang-switch-container {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    background: rgba(30, 32, 29, 0.05);
+
+    border: 1px solid rgba(30, 32, 29, 0.08);
+
+    border-radius: 999px;
+
+    padding: 3px;
+
+    user-select: none;
+
+}
+
+
+.lang-switch-bg {
+
+    position: absolute;
+
+    top: 3px;
+
+    left: 3px;
+
+    width: 32px;
+
+    height: 24px;
+
+    background: #ffffff;
+
+    border-radius: 999px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    pointer-events: none;
+
+}
+
+
+.lang-btn {
+
+    position: relative;
+
+    z-index: 2;
+
+    border: none;
+
+    background: transparent;
+
+    padding: 3px 9px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .05em;
+
+    color: var(--text-muted);
+
+    cursor: pointer;
+
+    transition: color 0.25s ease;
+
+    border-radius: 999px;
+
+}
+
+
+.lang-btn.active {
+
+    color: var(--text);
+
+}
+
+
+/* State: JP selected (Translate active pill to second button) */
+
+.lang-switch-container[data-lang="jp"] .lang-switch-bg {
+
+    transform: translateX(32px);
 
 }
 
@@ -3185,37 +3290,61 @@ footer {
 
     <div class="nav-center">
 
-        <a href="#about">
+        <a href="#about" data-i18n
+           data-jp="About"
+           data-en="About">
             About
         </a>
 
-        <a href="#features">
+        <a href="#features" data-i18n
+           data-jp="Features"
+           data-en="Features">
             Features
         </a>
 
-        <a href="#technology">
+        <a href="#technology" data-i18n
+           data-jp="Technology"
+           data-en="Technology">
             Technology
         </a>
 
-        <a href="#faq">
+        <a href="#faq" data-i18n
+           data-jp="FAQ"
+           data-en="FAQ">
             FAQ
         </a>
 
     
 
-        <a href="#related-links">
+        <a href="#related-links" data-i18n
+           data-jp="Related Links"
+           data-en="Related Links">
             Related Links
         </a>
-</div>
+    </div>
 
 
-    <a
-        href="#download"
-        class="nav-action">
+    <div class="nav-right-group">
 
-        Download
+        <!-- Language Switcher -->
+        <div class="lang-switch-container" data-lang="jp">
+            <div class="lang-switch-bg"></div>
+            <button class="lang-btn" data-lang-btn="en">EN</button>
+            <button class="lang-btn active" data-lang-btn="jp">JP</button>
+        </div>
 
-    </a>
+        <a
+            href="#download"
+            class="nav-action"
+            data-i18n
+            data-jp="Download"
+            data-en="Download">
+
+            Download
+
+        </a>
+
+    </div>
 
 </nav>
 
@@ -3249,18 +3378,24 @@ footer {
 
             <h1 class="hero-title">
 
-                <span class="light">
+                <span class="light" data-i18n
+                      data-jp="Small by nature."
+                      data-en="Small by nature.">
                     Small by nature.
                 </span>
 
-                <span class="accent">
+                <span class="accent" data-i18n
+                      data-jp="Beautiful by design."
+                      data-en="Beautiful by design.">
                     Beautiful by design.
                 </span>
 
             </h1>
 
 
-            <p class="hero-copy">
+            <p class="hero-copy" data-i18n
+               data-jp="NagisinnraLinuxは、必要なものを丁寧にまとめた軽量Linuxディストリビューション。<br>軽さだけではなく、毎日使いたくなる体験を目指しています。"
+               data-en="NagisinnraLinux is a lightweight Linux distribution thoughtfully crafted with essentials.<br>Beyond lightness, we aim for an experience you'll love using every day.">
 
                 NagisinnraLinuxは、
                 必要なものを丁寧にまとめた
@@ -3280,7 +3415,9 @@ footer {
                     href="#download"
                     class="button button-dark">
 
-                    Download
+                    <span data-i18n
+                          data-jp="Download"
+                          data-en="Download">Download</span>
 
                     <span>
                         →
@@ -3291,7 +3428,10 @@ footer {
 
                 <a
                     href="#about"
-                    class="button button-light">
+                    class="button button-light"
+                    data-i18n
+                    data-jp="Explore NagisinnraLinux"
+                    data-en="Explore NagisinnraLinux">
 
                     Explore NagisinnraLinux
 
@@ -3349,7 +3489,9 @@ footer {
 
                         <div class="app-content">
 
-                            <div class="app-small">
+                            <div class="app-small" data-i18n
+                                 data-jp="Welcome to"
+                                 data-en="Welcome to">
                                 Welcome to
                             </div>
 
@@ -3422,7 +3564,9 @@ footer {
                         476 MB
                     </div>
 
-                    <div class="metric-label">
+                    <div class="metric-label" data-i18n
+                         data-jp="Lightweight"
+                         data-en="Lightweight">
                         Lightweight
                     </div>
 
@@ -3435,7 +3579,9 @@ footer {
                         Debian,Arch,Gentoo
                     </div>
 
-                    <div class="metric-label">
+                    <div class="metric-label" data-i18n
+                         data-jp="Base system"
+                         data-en="Base system">
                         Base system
                     </div>
 
@@ -3463,11 +3609,15 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="The idea"
+                 data-en="The idea">
                 The idea
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="Linuxを、<br>もっと自然に。"
+                data-en="Linux,<br>made seamless.">
 
                 Linuxを、
                 <br>
@@ -3476,7 +3626,9 @@ footer {
             </h2>
 
 
-            <p class="section-description">
+            <p class="section-description" data-i18n
+               data-jp="OSは、目立つためにあるものではありません。<br>使っていることを意識しないほど自然で、必要なときにはしっかり応えてくれる。<br>NagisinnraLinuxは、そんなコンピューティング体験を目指しています。"
+               data-en="An OS shouldn't get in your way.<br>It should feel so natural you barely notice it, while reliably responding when you need it.<br>NagisinnraLinux strives for that effortless computing experience.">
 
                 OSは、目立つためにあるものではありません。
 
@@ -3510,12 +3662,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="軽快に動く。"
+                    data-en="Blazing Fast.">
                     軽快に動く。
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="システムを必要以上に大きくせず、PCのリソースをできるだけユーザーのために残します。"
+                   data-en="Keeping system footprint minimal to reserve maximum resources for your work.">
 
                     システムを必要以上に大きくせず、
                     PCのリソースをできるだけ
@@ -3542,12 +3698,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="余計なものを減らす。"
+                    data-en="Pure & Minimal.">
                     余計なものを減らす。
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="シンプルな構成だからこそ、OSの動作や仕組みをより理解しやすく。"
+                   data-en="A straightforward design makes it easy to understand how your OS operates.">
 
                     シンプルな構成だからこそ、
                     OSの動作や仕組みを
@@ -3574,12 +3734,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="日本語を、最初から。"
+                    data-en="Japanese Ready.">
                     日本語を、最初から。
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="日本語入力環境を整え、インストール直後から普段使いへ移れる構成を目指します。"
+                   data-en="Pre-configured Japanese input environment for immediate everyday use out of the box.">
 
                     日本語入力環境を整え、
                     インストール直後から
@@ -3606,12 +3770,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="オープンな世界へ。"
+                    data-en="Truly Open.">
                     オープンな世界へ。
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="Linuxという自由な基盤を使い、自分のPCを自分で選び、自分で育てられる環境を。"
+                   data-en="Built on the free Linux foundation, empowering you to shape and nurture your computing environment.">
 
                     Linuxという自由な基盤を使い、
                     自分のPCを自分で選び、
@@ -3635,7 +3803,7 @@ footer {
 
 <!-- =======================================================
      PHILOSOPHY
-======================================================= -->
+========================================================= -->
 
 <section class="dark-section reveal">
 
@@ -3644,12 +3812,16 @@ footer {
         <div class="dark-panel">
 
 
-            <div class="dark-kicker">
+            <div class="dark-kicker" data-i18n
+                 data-jp="OUR PHILOSOPHY"
+                 data-en="OUR PHILOSOPHY">
                 OUR PHILOSOPHY
             </div>
 
 
-            <h2 class="dark-title">
+            <h2 class="dark-title" data-i18n
+                data-jp="Less system.<br>More <span>you.</span>"
+                data-en="Less system.<br>More <span>you.</span>">
 
                 Less system.
                 <br>
@@ -3659,7 +3831,9 @@ footer {
             </h2>
 
 
-            <p class="dark-text">
+            <p class="dark-text" data-i18n
+               data-jp="高機能であることだけを目標にするのではなく、必要なものを必要なだけ。<br><br>NagisinnraLinuxは、PCそのものの性能を引き出し、ユーザーが本当にやりたいことへリソースを使えるOSを目指します。"
+               data-en="Rather than chasing feature bloat, we focus on providing just what you need.<br><br>NagisinnraLinux unleashes your hardware's full potential so your resources stay dedicated to what truly matters.">
 
                 高機能であることだけを目標にするのではなく、
                 必要なものを必要なだけ。
@@ -3684,7 +3858,7 @@ footer {
 
 <!-- =======================================================
      MEMORY
-======================================================= -->
+========================================================= -->
 
 <section class="section reveal">
 
@@ -3693,11 +3867,15 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="Lightweight"
+                 data-en="Lightweight">
                 Lightweight
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="軽さを、<br>数字に。"
+                data-en="Lightness,<br>measured.">
 
                 軽さを、
                 <br>
@@ -3719,12 +3897,16 @@ footer {
                 </div>
 
 
-                <div class="memory-unit">
+                <div class="memory-unit" data-i18n
+                     data-jp="MB approximately"
+                     data-en="MB approximately">
                     MB approximately
                 </div>
 
 
-                <p class="memory-caption">
+                <p class="memory-caption" data-i18n
+                   data-jp="軽量な構成を目指したNagisinnraLinux。<br>小さなシステムだからこそ、古いPCでも新しいPCでも軽快な環境を目指せます。"
+                   data-en="NagisinnraLinux is built with minimal footprint in mind.<br>A lightweight system that feels smooth on both legacy hardware and modern PCs.">
 
                     軽量な構成を目指した
                     NagisinnraLinux。
@@ -3745,7 +3927,9 @@ footer {
             <div class="memory-info">
 
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="リソースを、<br>OSだけのものにしない。"
+                    data-en="Resources belong to you,<br>not the OS.">
 
                     リソースを、
                     <br>
@@ -3754,7 +3938,9 @@ footer {
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="PCのメモリやCPUは、OSを動かすためだけに存在するわけではありません。<br><br>アプリケーション、ブラウザ、開発環境、そしてユーザー自身の作業へ。"
+                   data-en="Your RAM and CPU exist for your work, not just to power the OS.<br><br>Freeing resources for your applications, web browsing, development, and creativity.">
 
                     PCのメモリやCPUは、
                     OSを動かすためだけに
@@ -3777,11 +3963,15 @@ footer {
 
                         <div class="progress-top">
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="Lightweight design"
+                                  data-en="Lightweight design">
                                 Lightweight design
                             </span>
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="optimized"
+                                  data-en="optimized">
                                 optimized
                             </span>
 
@@ -3802,11 +3992,15 @@ footer {
 
                         <div class="progress-top">
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="Japanese environment"
+                                  data-en="Japanese environment">
                                 Japanese environment
                             </span>
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="ready"
+                                  data-en="ready">
                                 ready
                             </span>
 
@@ -3827,11 +4021,15 @@ footer {
 
                         <div class="progress-top">
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="Everyday usability"
+                                  data-en="Everyday usability">
                                 Everyday usability
                             </span>
 
-                            <span>
+                            <span data-i18n
+                                  data-jp="balanced"
+                                  data-en="balanced">
                                 balanced
                             </span>
 
@@ -3872,11 +4070,15 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="Technology"
+                 data-en="Technology">
                 Technology
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="中身は、<br>ちゃんとLinux。"
+                data-en="Under the hood,<br>pure Linux.">
 
                 中身は、
                 <br>
@@ -3885,7 +4087,9 @@ footer {
             </h2>
 
 
-            <p class="section-description">
+            <p class="section-description" data-i18n
+               data-jp="見た目だけではありません。<br>NagisinnraLinuxは、Linuxの柔軟性を活かしながら、日常利用に必要な環境をまとめています。"
+               data-en="More than just aesthetics.<br>NagisinnraLinux leverages Linux flexibility while delivering a seamless out-of-the-box daily experience.">
 
                 見た目だけではありません。
 
@@ -3905,14 +4109,18 @@ footer {
 
             <div class="spec-intro">
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="Technical<br>specification."
+                    data-en="Technical<br>specification.">
                     Technical
                     <br>
                     specification.
                 </h3>
 
 
-                <p>
+                <p data-i18n
+                   data-jp="システムの基本構成。<br><br>実際のリリース内容に合わせてこのセクションを更新できます。"
+                   data-en="Core system architecture specifications.<br><br>Updated according to the latest release details.">
 
                     システムの基本構成。
 
@@ -3932,7 +4140,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Distribution"
+                          data-en="Distribution">
                         Distribution
                     </span>
 
@@ -3945,7 +4155,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Version"
+                          data-en="Version">
                         Version
                     </span>
 
@@ -3958,7 +4170,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Base"
+                          data-en="Base">
                         Base
                     </span>
 
@@ -3971,7 +4185,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Architecture"
+                          data-en="Architecture">
                         Architecture
                     </span>
 
@@ -3984,7 +4200,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Compression"
+                          data-en="Compression">
                         Compression
                     </span>
 
@@ -3997,7 +4215,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Input Method"
+                          data-en="Input Method">
                         Input Method
                     </span>
 
@@ -4010,7 +4230,9 @@ footer {
 
                 <div class="spec-row">
 
-                    <span class="spec-key">
+                    <span class="spec-key" data-i18n
+                          data-jp="Release type"
+                          data-en="Release type">
                         Release type
                     </span>
 
@@ -4042,11 +4264,15 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="Development"
+                 data-en="Development">
                 Development
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="少しずつ、<br>進化する。"
+                data-en="Evolving,<br>step by step.">
 
                 少しずつ、
                 <br>
@@ -4068,11 +4294,15 @@ footer {
                     PHASE 01
                 </div>
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="The beginning"
+                    data-en="The beginning">
                     The beginning
                 </h3>
 
-                <p>
+                <p data-i18n
+                   data-jp="NagisinnraLinuxの最初のアイデア。<br>「軽くて、自分が使いたいLinuxを作る」というシンプルな考えから始まりました。"
+                   data-en="The initial concept of NagisinnraLinux.<br>It started with a simple vision: 'Build a lightweight Linux OS I want to use every day.'">
 
                     NagisinnraLinuxの
                     最初のアイデア。
@@ -4096,11 +4326,15 @@ footer {
                     PHASE 02
                 </div>
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="Lightweight"
+                    data-en="Lightweight">
                     Lightweight
                 </h3>
 
-                <p>
+                <p data-i18n
+                   data-jp="不要な構成を見直し、より小さく、より扱いやすいシステムへ。"
+                   data-en="Streamlining configurations to create a smaller, more nimble system.">
 
                     不要な構成を見直し、
                     より小さく、
@@ -4120,11 +4354,15 @@ footer {
                     PHASE 03
                 </div>
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="Everyday Linux"
+                    data-en="Everyday Linux">
                     Everyday Linux
                 </h3>
 
-                <p>
+                <p data-i18n
+                   data-jp="軽量さだけではなく、日本語環境や普段使いまで含めて「ちゃんと使えるOS」を目指します。"
+                   data-en="Beyond lightness—aiming for a practical OS ready for daily computing and Japanese input.">
 
                     軽量さだけではなく、
                     日本語環境や普段使いまで含めて
@@ -4144,11 +4382,15 @@ footer {
                     NEXT
                 </div>
 
-                <h3>
+                <h3 data-i18n
+                    data-jp="What's next?"
+                    data-en="What's next?">
                     What's next?
                 </h3>
 
-                <p>
+                <p data-i18n
+                   data-jp="まだ完成ではありません。<br>NagisinnraLinuxは、これからも少しずつ進化していきます。"
+                   data-en="The journey continues.<br>NagisinnraLinux will keep growing and improving continuously.">
 
                     まだ完成ではありません。
 
@@ -4186,7 +4428,9 @@ footer {
             </div>
 
 
-            <div class="quote-text">
+            <div class="quote-text" data-i18n
+                 data-jp="Linuxは、難しくなくていい。<br>自由であればいい。"
+                 data-en="Linux doesn't need to be complex.<br>It just needs to be free.">
 
                 Linuxは、
                 難しくなくていい。
@@ -4226,11 +4470,15 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="Questions"
+                 data-en="Questions">
                 Questions
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="よくある質問。"
+                data-en="Frequently Asked Questions.">
                 よくある質問。
             </h2>
 
@@ -4245,7 +4493,9 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n
+                          data-jp="NagisinnraLinuxとは？"
+                          data-en="What is NagisinnraLinux?">
                         NagisinnraLinuxとは？
                     </span>
 
@@ -4258,7 +4508,9 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
+                    <p data-i18n
+                       data-jp="NagisinnraLinuxは、軽量さと普段使いやすい環境のバランスを目指して開発しているLinuxディストリビューションです。"
+                       data-en="NagisinnraLinux is a Linux distribution developed with a balance of lightweight speed and everyday usability in mind.">
 
                         NagisinnraLinuxは、
                         軽量さと普段使いやすい環境の
@@ -4278,7 +4530,9 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n
+                          data-jp="どのPCで使えますか？"
+                          data-en="What hardware is supported?">
                         どのPCで使えますか？
                     </span>
 
@@ -4291,7 +4545,9 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
+                    <p data-i18n
+                       data-jp="現在の構成ではx86_64環境を対象としています。<br>実際の対応ハードウェアについては、各リリースの仕様をご確認ください。"
+                       data-en="The current configuration targets the x86_64 architecture.<br>Please check release specifications for specific hardware details.">
 
                         現在の構成では
                         x86_64環境を対象としています。
@@ -4314,7 +4570,9 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n
+                          data-jp="日本語入力は使えますか？"
+                          data-en="Is Japanese input available?">
                         日本語入力は使えますか？
                     </span>
 
@@ -4327,7 +4585,9 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
+                    <p data-i18n
+                       data-jp="日本語環境としてfcitx5とMozcを使用する構成を採用しています。"
+                       data-en="It uses fcitx5 + Mozc for seamless Japanese input support right out of the box.">
 
                         日本語環境として
                         fcitx5とMozcを使用する構成を
@@ -4346,7 +4606,9 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n
+                          data-jp="無料で使えますか？"
+                          data-en="Is it free to use?">
                         無料で使えますか？
                     </span>
 
@@ -4359,7 +4621,9 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
+                    <p data-i18n
+                       data-jp="NagisinnraLinuxはLinuxをベースとしたオープンなプロジェクトです。<br>配布条件については各リリースのライセンス情報をご確認ください。"
+                       data-en="NagisinnraLinux is an open project based on Linux.<br>Please refer to the license information in each release for terms of distribution.">
 
                         NagisinnraLinuxは
                         Linuxをベースとした
@@ -4400,12 +4664,16 @@ footer {
         <div class="download-panel">
 
 
-            <div class="download-label">
+            <div class="download-label" data-i18n
+                 data-jp="GET NAGISINNRALINUX"
+                 data-en="GET NAGISINNRALINUX">
                 GET NAGISINNRALINUX
             </div>
 
 
-            <h2 class="download-title">
+            <h2 class="download-title" data-i18n
+                data-jp="Ready<br>when you are."
+                data-en="Ready<br>when you are.">
 
                 Ready
                 <br>
@@ -4414,7 +4682,9 @@ footer {
             </h2>
 
 
-            <p class="download-description">
+            <p class="download-description" data-i18n
+               data-jp="NagisinnraLinuxをあなたのPCで試してみませんか。<br>小さくて、速くて、ちゃんと使えるLinuxを。"
+               data-en="Experience NagisinnraLinux on your computer.<br>A small, fast, and highly reliable Linux system.">
 
                 NagisinnraLinuxを
                 あなたのPCで試してみませんか。
@@ -4438,7 +4708,9 @@ footer {
                     href="https://sourceforge.net/projects/nagisinnralinux/files/NagisinnraLinux-v1.1.1.iso/download"
                     class="button button-dark">
 
-                    Download ISO
+                    <span data-i18n
+                          data-jp="Download ISO"
+                          data-en="Download ISO">Download ISO</span>
 
                     <span>
                         →
@@ -4449,7 +4721,10 @@ footer {
 
                 <a
                     href="#technology"
-                    class="button button-light">
+                    class="button button-light"
+                    data-i18n
+                    data-jp="Specifications"
+                    data-en="Specifications">
 
                     Specifications
 
@@ -4475,11 +4750,6 @@ footer {
 
 
 <!-- =======================================================
-     FOOTER
-======================================================= -->
-
-
-<!-- =======================================================
      RELATED LINKS
 ======================================================= -->
 
@@ -4489,16 +4759,22 @@ footer {
 
         <div class="section-head">
 
-            <div class="kicker">
+            <div class="kicker" data-i18n
+                 data-jp="Related Links"
+                 data-en="Related Links">
                 Related Links
             </div>
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n
+                data-jp="もっと、<br>Nagisinnraへ。"
+                data-en="Discover more<br>Nagisinnra.">
                 もっと、<br>
                 Nagisinnraへ。
             </h2>
 
-            <p class="section-description">
+            <p class="section-description" data-i18n
+               data-jp="NagisinnraLinuxの開発、技術発信、配布、お問い合わせなどの関連ページをまとめています。"
+               data-en="Links to development repositories, technical articles, downloads, and contact channels.">
                 NagisinnraLinuxの開発、技術発信、配布、
                 お問い合わせなどの関連ページをまとめています。
             </p>
@@ -4506,18 +4782,6 @@ footer {
         </div>
 
         <div class="related-links-list">
-
-            <!--
-                ==================================================
-                関連リンクを追加するときは、このブロックを
-                コピーして中身を書き換えてください。
-
-                href   = リンク先
-                kicker = カテゴリ
-                h3     = サービス名
-                p      = 説明
-                ==================================================
-            -->
 
             <a class="related-link-item"
                href="https://github.com/nagisinnra/NagisinnraLinux"
@@ -4534,7 +4798,9 @@ footer {
                         GitHub
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="ソースコード・開発情報・リポジトリ"
+                       data-en="Source code, development updates, and repositories">
                         ソースコード・開発情報・リポジトリ
                     </p>
 
@@ -4562,7 +4828,9 @@ footer {
                         Zenn
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="技術記事・開発記録・ナレッジ"
+                       data-en="Technical articles, devlogs, and knowledge base">
                         技術記事・開発記録・ナレッジ
                     </p>
 
@@ -4582,14 +4850,16 @@ footer {
                 <div class="related-link-text">
 
                     <span class="related-link-kicker">
-                        community
+                        COMMUNITY
                     </span>
 
                     <h3>
-                        discord
+                        Discord
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="コミュニティー"
+                       data-en="Community server">
                         コミュニティー
                     </p>
 
@@ -4616,7 +4886,9 @@ footer {
                         Qiita
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="技術記事・実装メモ・開発ノート"
+                       data-en="Technical posts, implementation notes, and dev notes">
                         技術記事・実装メモ・開発ノート
                     </p>
 
@@ -4644,7 +4916,9 @@ footer {
                         NagisinnraLinux Releases
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="NagisinnraLinuxの配布・リリースページ"
+                       data-en="NagisinnraLinux file distribution & releases">
                         NagisinnraLinuxの配布・リリースページ
                     </p>
 
@@ -4666,7 +4940,9 @@ footer {
                         CONTACT
                     </span>
 
-                    <h3>
+                    <h3 data-i18n
+                        data-jp="お問い合わせ"
+                        data-en="Contact Us">
                         お問い合わせ
                     </h3>
 
@@ -4682,7 +4958,7 @@ footer {
 
             </a>
 
-              <a class="related-link-item"
+            <a class="related-link-item"
                href="https://nagisinnralinux.booth.pm/"
                target="_blank"
                rel="noopener noreferrer">
@@ -4693,11 +4969,15 @@ footer {
                         DONATE
                     </span>
 
-                    <h3>
+                    <h3 data-i18n
+                        data-jp="寄付、グッズ販売"
+                        data-en="Donations & Merchandise">
                         寄付、グッズ販売
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="寄付していただいたお金はnagisinnralinuxのサーバー維持、ドメイン維持などのお金に使わせていただきます。アマゾンギフトのコード形式でお送りいただけるとありがたいです。BOOTHにてグッズと寄付も受け付けています。"
+                       data-en="Donations are used to support server maintenance and domain fees for NagisinnraLinux. Amazon Gift codes are appreciated. Official merchandise and donations are also accepted on BOOTH.">
                         寄付していただいたお金はnagisinnralinuxのサーバー維持、ドメイン維持などのお金に使わせていただきます。
                         アマゾンギフトのコード形式でお送りいただけるとありがたいです。BOOTHにてグッズと寄付も受け付けています。
                     </p>
@@ -4725,7 +5005,9 @@ footer {
                         hamanet
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="私の友人のサイトです。あわせてどうぞ。(NagisinnraLinuxとは無関係です。)"
+                       data-en="A friend's website. Feel free to visit! (Not affiliated with NagisinnraLinux.)">
                         私の友人のサイトです。あわせてどうぞ。(NagisinnraLinuxとは無関係です。)
                     </p>
 
@@ -4749,10 +5031,12 @@ footer {
                     </span>
 
                     <h3>
-                     Youtube
+                     YouTube
                     </h3>
 
-                    <p>
+                    <p data-i18n
+                       data-jp="Nagisinnralinux公式youtubeです。"
+                       data-en="Official NagisinnraLinux YouTube channel.">
                         Nagisinnralinux公式youtubeです。
                     </p>
 
@@ -4770,6 +5054,10 @@ footer {
     </div>
 
 </section>
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
@@ -4803,15 +5091,15 @@ footer {
                     Explore
                 </h4>
 
-                <a href="#about">
+                <a href="#about" data-i18n data-jp="About" data-en="About">
                     About
                 </a>
 
-                <a href="#features">
+                <a href="#features" data-i18n data-jp="Features" data-en="Features">
                     Features
                 </a>
 
-                <a href="#technology">
+                <a href="#technology" data-i18n data-jp="Technology" data-en="Technology">
                     Technology
                 </a>
 
@@ -4825,15 +5113,15 @@ footer {
                     Project
                 </h4>
 
-                <a href="#download">
+                <a href="#download" data-i18n data-jp="Download" data-en="Download">
                     Download
                 </a>
 
-                <a href="#faq">
+                <a href="#faq" data-i18n data-jp="FAQ" data-en="FAQ">
                     FAQ
                 </a>
 
-                <a href="#">
+                <a href="#" data-i18n data-jp="Releases" data-en="Releases">
                     Releases
                 </a>
 
@@ -4890,6 +5178,42 @@ footer {
 ======================================================= -->
 
 <script>
+
+/* =========================================================
+   LANGUAGE SWITCHER LOGIC
+========================================================= */
+
+const langButtons = document.querySelectorAll('[data-lang-btn]');
+const langContainer = document.querySelector('.lang-switch-container');
+const i18nElements = document.querySelectorAll('[data-i18n]');
+
+function setLanguage(lang) {
+    langContainer.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'jp' ? 'ja' : 'en');
+
+    langButtons.forEach(btn => {
+        if (btn.getAttribute('data-lang-btn') === lang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    i18nElements.forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+            el.innerHTML = text;
+        }
+    });
+}
+
+langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const targetLang = btn.getAttribute('data-lang-btn');
+        setLanguage(targetLang);
+    });
+});
+
 
 /* =========================================================
    SCROLL REVEAL
