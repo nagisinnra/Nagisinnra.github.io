@@ -1,85 +1,462 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NagisinnraLinux Support</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Support — NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fb;
+  --text: #17191c;
+  --muted: #737982;
+  --line: #e8eaed;
+  --accent: #788c78;
+  --max: 1080px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans JP", sans-serif;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(var(--max), calc(100% - 48px));
+  margin: auto;
+}
+
+/* Navigation */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -.5px;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+nav a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--text);
+}
+
+/* Hero */
+
+.hero {
+  padding: 105px 0 85px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+h1 {
+  margin: 22px 0 16px;
+  font-size: clamp(38px, 6vw, 60px);
+  line-height: 1.15;
+  letter-spacing: -2.5px;
+  font-weight: 750;
+}
+
+.hero p {
+  max-width: 590px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2;
+}
+
+/* Main */
+
+main {
+  padding: 75px 0 110px;
+}
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  font-size: 23px;
+  letter-spacing: -.7px;
+  margin: 0 0 7px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  min-height: 205px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+  border-color: #cbd4cb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.035);
+}
+
+.card-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+  letter-spacing: -.3px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+.card-link {
+  margin-top: auto;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.card-link::after {
+  content: " →";
+}
+
+/* Troubleshooting */
+
+.troubleshooting {
+  margin-top: 85px;
+}
+
+.issue-list {
+  border-top: 1px solid var(--line);
+}
+
+.issue {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.issue span:last-child {
+  color: #a0a5ab;
+}
+
+/* Contact */
+
+.contact {
+  margin-top: 85px;
+  padding: 42px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.contact h2 {
+  margin: 0 0 10px;
+  font-size: 23px;
+  letter-spacing: -.7px;
+}
+
+.contact p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 19px;
+  background: #17191c;
+  color: white;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+
+.button:hover {
+  opacity: .8;
+}
+
+/* Footer */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 36px);
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+
+  .nav {
+    height: auto;
+    min-height: 65px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 17px 0 13px;
+    gap: 13px;
   }
-  h2 {
-    margin-top: 40px;
-    color: #4a90e2;
+
+  nav {
+    width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 3px;
+    white-space: nowrap;
   }
-  ul {
-    padding-left: 20px;
+
+  .hero {
+    padding: 70px 0 60px;
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+
+  .support-grid {
+    grid-template-columns: 1fr;
   }
+
+  .card {
+    min-height: 180px;
+  }
+
+  main {
+    padding: 55px 0 75px;
+  }
+
+  .contact {
+    padding: 28px 22px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="container nav">
+    <a class="logo" href="/">Nagisinnra<span>Linux</span></a>
 
-<h1>NagisinnraLinux サポート</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/download/">Download</a>
+      <a href="/install/">Install</a>
+      <a href="/support/" class="active">Support</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/compatibility/">Compatibility</a>
+      <a href="/about/">About</a>
+    </nav>
+  </div>
+</header>
 
-<p>
-NagisinnraLinux に関するサポート情報をまとめています。  
-インストール方法、トラブルシューティング、互換性情報など、  
-ユーザーが困ったときにすぐ参照できるよう整理しています。
-</p>
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Support Center</div>
+    <h1>How can we<br>help you?</h1>
+    <p>
+      NagisinnraLinuxの利用に関するサポート情報を掲載しています。
+      インストール、トラブルシューティング、互換性など、
+      必要な情報をこちらから確認できます。
+    </p>
+  </div>
+</section>
 
-<h2>インストールガイド</h2>
-<p>
-USBブート、ISO書き込み、推奨スペック、仮想環境での利用方法などを解説しています。  
-→ <a href="/install/">インストールガイドを見る</a>
-</p>
+<main class="container">
 
-<h2>トラブルシューティング</h2>
-<ul>
-  <li>起動しない場合の対処</li>
-  <li>Wi-Fi が繋がらない場合</li>
-  <li>日本語入力が動作しない場合</li>
-  <li>画面が真っ黒になる場合</li>
-  <li>apt が壊れた場合の復旧方法</li>
-</ul>
+  <div class="section-heading">
+    <h2>Support Resources</h2>
+    <p>必要なサポート情報を選択してください。</p>
+  </div>
 
-<h2>FAQ（よくある質問）</h2>
-<p>
-よくある質問と回答をまとめています。  
-→ <a href="/faq/">FAQを見る</a>
-</p>
+  <div class="support-grid">
 
-<h2>互換性情報</h2>
-<p>
-NEC / Dynabook / 富士通 / Lenovo / CFD などの互換性情報を掲載しています。  
-→ <a href="/compatibility/">互換性情報を見る</a>
-</p>
+    <a class="card" href="/install/">
+      <div class="card-icon">01</div>
+      <h3>インストールガイド</h3>
+      <p>USBブート、ISO書き込み、推奨スペック、仮想環境での利用方法。</p>
+      <span class="card-link">ガイドを見る</span>
+    </a>
 
-<h2>お問い合わせ</h2>
-<p>
-問題が解決しない場合は GitHub Issues からお問い合わせください。  
-→ <a href="https://github.com/nagisinnra/NagisinnraLinux/issues">GitHub Issues</a>
-</p>
+    <a class="card" href="/faq/">
+      <div class="card-icon">02</div>
+      <h3>FAQ</h3>
+      <p>インストールや日常的な利用について、よくある質問と回答を掲載しています。</p>
+      <span class="card-link">FAQを見る</span>
+    </a>
+
+    <a class="card" href="/compatibility/">
+      <div class="card-icon">03</div>
+      <h3>ハードウェア互換性</h3>
+      <p>NEC、Dynabook、富士通、Lenovoなどの動作確認情報。</p>
+      <span class="card-link">互換性情報を見る</span>
+    </a>
+
+    <a class="card" href="https://github.com/nagisinnra/NagisinnraLinux/issues">
+      <div class="card-icon">04</div>
+      <h3>GitHub Issues</h3>
+      <p>不具合の報告、改善提案、技術的な問題について確認できます。</p>
+      <span class="card-link">Issuesを開く</span>
+    </a>
+
+  </div>
+
+  <section class="troubleshooting">
+    <div class="section-heading">
+      <h2>Troubleshooting</h2>
+      <p>よくある問題とその解決方法。</p>
+    </div>
+
+    <div class="issue-list">
+      <div class="issue">
+        <span>システムが起動しない</span>
+        <span>→</span>
+      </div>
+      <div class="issue">
+        <span>Wi-Fiに接続できない</span>
+        <span>→</span>
+      </div>
+      <div class="issue">
+        <span>日本語入力が動作しない</span>
+        <span>→</span>
+      </div>
+      <div class="issue">
+        <span>画面が真っ黒になる</span>
+        <span>→</span>
+      </div>
+      <div class="issue">
+        <span>APTのエラーが発生する</span>
+        <span>→</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Still need help?</h2>
+    <p>
+      掲載されている情報で解決しない場合は、
+      GitHub Issuesからお問い合わせください。
+    </p>
+    <a class="button"
+       href="https://github.com/nagisinnra/NagisinnraLinux/issues">
+      Contact Support →
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© NagisinnraLinux</span>
+    <span>Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
 
 </body>
 </html>
