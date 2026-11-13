@@ -2,96 +2,739 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NagisinnraLinux Compatibility</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NagisinnraLinux の対応PC・ハードウェア・仮想環境について紹介します。">
+<title>Compatibility | NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --accent: #788c78;
+  --text: #202520;
+  --muted: #737b73;
+  --border: #e8ebe7;
+  --background: #ffffff;
+  --surface: #f7f8f6;
+  --success: #527b59;
+  --warning: #a17b38;
+  --danger: #a65c58;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans JP", sans-serif;
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: .75;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 0 28px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+nav a {
+  color: #626a62;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.lang-btn:hover {
+  border-color: #cbd5ca;
+  background: #eaece7;
+}
+
+.hero {
+  max-width: 1120px;
+  margin: auto;
+  padding: 100px 28px 70px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 18px 0;
+  font-size: clamp(38px, 6vw, 56px);
+  line-height: 1.2;
+  letter-spacing: -1.8px;
+  font-weight: 650;
+}
+
+.hero p {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 28px 100px;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 65px;
+}
+
+.overview-item {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.overview-item strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.overview-item span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.section-header {
+  margin-bottom: 22px;
+}
+
+.section-header h2 {
+  margin: 0 0 7px;
+  font-size: 24px;
+  letter-spacing: -.5px;
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.manufacturer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.manufacturer-card {
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .2s, transform .2s;
+}
+
+.manufacturer-card:hover {
+  border-color: #cbd5ca;
+  transform: translateY(-2px);
+}
+
+.manufacturer-card h3 {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.device-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.device-info {
+  font-size: 13px;
+  color: #555e55;
+}
+
+.device-info strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.status {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.status.ok {
+  color: var(--success);
+  background: #edf3ed;
+}
+
+.status.warn {
+  color: var(--warning);
+  background: #f7f2e7;
+}
+
+.status.ng {
+  color: var(--danger);
+  background: #f7eded;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 65px 0;
+}
+
+.environment-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.environment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.environment-item strong {
+  font-size: 14px;
+}
+
+.environment-item span {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 25px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-dot.ok {
+  background: var(--success);
+}
+
+.legend-dot.warn {
+  background: var(--warning);
+}
+
+.legend-dot.ng {
+  background: var(--danger);
+}
+
+.notice {
+  margin-top: 35px;
+  padding: 23px 25px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.notice h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.notice p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.support {
+  margin-top: 70px;
+  padding: 40px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.support h2 {
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.support p {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.button {
+  display: inline-block;
+  padding: 11px 23px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+
+.button:hover {
+  opacity: .85;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 28px;
+  color: #929992;
+  font-size: 12px;
+}
+
+.footer-inner {
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  .nav-container {
+    height: auto;
+    min-height: 65px;
+    padding: 15px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+
+  nav {
+    width: 100%;
+    gap: 19px;
+    padding-bottom: 3px;
   }
-  h2 {
-    margin-top: 40px;
-    color: #4a90e2;
+
+  .hero {
+    padding: 70px 22px 55px;
   }
-  ul {
-    padding-left: 20px;
+
+  .content {
+    padding: 0 20px 70px;
   }
-  .ok { color: #2ecc71; }
-  .warn { color: #f1c40f; }
-  .ng { color: #e74c3c; }
+
+  .overview {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .manufacturer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manufacturer-card {
+    padding: 21px;
+  }
+
+  .environment-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .environment-item span {
+    text-align: left;
+  }
+
+  .support {
+    padding: 30px 20px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">NagisinnraLinux</a>
 
-<h1>互換性情報（Compatibility）</h1>
+    <div class="nav-right">
+      <nav>
+        <a href="/" data-ja="Home" data-en="Home">Home</a>
+        <a href="/download/" data-ja="Download" data-en="Download">Download</a>
+        <a href="/install/" data-ja="Install Guide" data-en="Install Guide">Install Guide</a>
+        <a href="/support/" data-ja="Support" data-en="Support">Support</a>
+        <a href="/faq/" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        <a href="/compatibility/" class="active" data-ja="Compatibility" data-en="Compatibility">Compatibility</a>
+        <a href="/about/" data-ja="About" data-en="About">About</a>
+      </nav>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
 
-<p>
-NagisinnraLinux がどの PC で動作するかをまとめています。  
-ジャンクPC・古いノートPC・企業向けPCなど、幅広い環境で動作確認を行っています。
-</p>
+<section class="hero">
+  <div class="eyebrow" data-ja="Hardware compatibility" data-en="Hardware compatibility">Hardware compatibility</div>
+  <h1 data-ja="Works with your hardware." data-en="Works with your hardware.">Works with your hardware.</h1>
+  <p data-ja="NagisinnraLinux の対応ハードウェア情報を掲載しています。ノートPC、デスクトップPC、仮想環境など、さまざまな環境での動作確認情報を紹介します。" data-en="Find hardware compatibility information for NagisinnraLinux. Explore verification details across laptops, desktops, and virtual environments.">
+    NagisinnraLinux の対応ハードウェア情報を掲載しています。
+    ノートPC、デスクトップPC、仮想環境など、
+    さまざまな環境での動作確認情報を紹介します。
+  </p>
+</section>
 
-<h2>NEC</h2>
-<ul>
-  <li class="ok">LAVIE（2012〜2020）… 起動・Wi-Fi・サウンド正常</li>
-  <li class="warn">古い Celeron モデル … 起動はするが動作が重い</li>
-</ul>
+<main class="content">
 
-<h2>Dynabook（東芝）</h2>
-<ul>
-  <li class="ok">2013〜2019年モデル … 問題なし</li>
-  <li class="warn">一部の Realtek Wi-Fi … ドライバ追加が必要</li>
-</ul>
+  <div class="overview">
+    <div class="overview-item">
+      <strong data-ja="PC / Laptop" data-en="PC / Laptop">PC / Laptop</strong>
+      <span data-ja="ノートPC・デスクトップPC" data-en="Laptops & Desktops">ノートPC・デスクトップPC</span>
+    </div>
 
-<h2>富士通（FMV）</h2>
-<ul>
-  <li class="ok">LIFEBOOK シリーズ … 起動・Wi-Fi・サウンド正常</li>
-  <li class="warn">古いモデル … UEFI 設定変更が必要な場合あり</li>
-</ul>
+    <div class="overview-item">
+      <strong data-ja="Virtual Machines" data-en="Virtual Machines">Virtual Machines</strong>
+      <span data-ja="仮想環境での動作" data-en="Virtual environment performance">仮想環境での動作</span>
+    </div>
 
-<h2>Lenovo</h2>
-<ul>
-  <li class="ok">ThinkPad シリーズ … Linux との相性が非常に良い</li>
-  <li class="ok">IdeaPad … 基本的に問題なし</li>
-</ul>
+    <div class="overview-item">
+      <strong data-ja="Hardware" data-en="Hardware">Hardware</strong>
+      <span data-ja="CPU・メモリ・ストレージ" data-en="CPU, RAM & Storage">CPU・メモリ・ストレージ</span>
+    </div>
+  </div>
 
-<h2>CFD（玄人志向）</h2>
-<ul>
-  <li class="ok">SSD / NVMe … 完全対応</li>
-  <li class="ok">メモリ … 問題なし</li>
-</ul>
+  <section>
+    <div class="section-header">
+      <h2 data-ja="PC manufacturers" data-en="PC manufacturers">PC manufacturers</h2>
+      <p data-ja="メーカー別の互換性情報。" data-en="Compatibility information by manufacturer.">メーカー別の互換性情報。</p>
+    </div>
 
-<h2>その他の環境</h2>
-<ul>
-  <li class="ok">VirtualBox / VMware / QEMU … 動作確認済み</li>
-  <li class="ok">古いジャンクPC … 軽量モードで動作可能</li>
-  <li class="warn">32bit CPU … 非対応</li>
-</ul>
+    <div class="manufacturer-grid">
 
-<h2>互換性に問題がある場合</h2>
-<p>
-→ <a href="/support/">サポートページ</a> を参照してください。  
-Wi-Fi・画面表示・起動トラブルなどの対処法を掲載しています。
-</p>
+      <div class="manufacturer-card">
+        <h3>NEC</h3>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="LAVIE Series" data-en="LAVIE Series">LAVIE Series</strong>
+              <span data-ja="2012〜2020年モデル。起動・Wi-Fi・サウンドの動作確認情報あり。" data-en="2012–2020 models. Verified boot, Wi-Fi, and sound performance.">2012〜2020年モデル。起動・Wi-Fi・サウンドの動作確認情報あり。</span>
+            </div>
+            <span class="status ok" data-ja="確認済み" data-en="Verified">確認済み</span>
+          </div>
+
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="Older Celeron Models" data-en="Older Celeron Models">Older Celeron Models</strong>
+              <span data-ja="起動するものの、スペックによっては動作が重くなる場合あり。" data-en="Boots successfully, but performance may vary depending on specs.">起動するものの、スペックによっては動作が重くなる場合あり。</span>
+            </div>
+            <span class="status warn" data-ja="条件付き" data-en="Conditional">条件付き</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="manufacturer-card">
+        <h3>Dynabook / Toshiba</h3>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="2013〜2019 Models" data-en="2013–2019 Models">2013〜2019 Models</strong>
+              <span data-ja="基本的な動作確認情報あり。" data-en="Basic operation verification available.">基本的な動作確認情報あり。</span>
+            </div>
+            <span class="status ok" data-ja="確認済み" data-en="Verified">確認済み</span>
+          </div>
+
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="Some Realtek Wi-Fi Devices" data-en="Some Realtek Wi-Fi Devices">Some Realtek Wi-Fi Devices</strong>
+              <span data-ja="チップセットによっては追加ドライバーが必要。" data-en="Additional drivers may be required depending on the chipset.">チップセットによっては追加ドライバーが必要。</span>
+            </div>
+            <span class="status warn" data-ja="条件付き" data-en="Conditional">条件付き</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="manufacturer-card">
+        <h3>Fujitsu</h3>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="LIFEBOOK Series" data-en="LIFEBOOK Series">LIFEBOOK Series</strong>
+              <span data-ja="起動・Wi-Fi・サウンドの動作確認情報あり。" data-en="Verified boot, Wi-Fi, and sound performance.">起動・Wi-Fi・サウンドの動作確認情報あり。</span>
+            </div>
+            <span class="status ok" data-ja="確認済み" data-en="Verified">確認済み</span>
+          </div>
+
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="Older Models" data-en="Older Models">Older Models</strong>
+              <span data-ja="機種によってUEFI設定の変更が必要な場合あり。" data-en="May require UEFI setting adjustments depending on the model.">機種によってUEFI設定の変更が必要な場合あり。</span>
+            </div>
+            <span class="status warn" data-ja="条件付き" data-en="Conditional">条件付き</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="manufacturer-card">
+        <h3>Lenovo</h3>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="ThinkPad Series" data-en="ThinkPad Series">ThinkPad Series</strong>
+              <span data-ja="Linuxとの互換性が比較的良好なシリーズ。" data-en="Series with relatively good compatibility with Linux.">Linuxとの互換性が比較的良好なシリーズ。</span>
+            </div>
+            <span class="status ok" data-ja="確認済み" data-en="Verified">確認済み</span>
+          </div>
+
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="IdeaPad Series" data-en="IdeaPad Series">IdeaPad Series</strong>
+              <span data-ja="機種・搭載デバイスによって動作状況が異なります。" data-en="Operation status varies by model and equipped devices.">機種・搭載デバイスによって動作状況が異なります。</span>
+            </div>
+            <span class="status warn" data-ja="要確認" data-en="Check Required">要確認</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="manufacturer-card">
+        <h3>CFD / Hardware</h3>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="SSD / NVMe" data-en="SSD / NVMe">SSD / NVMe</strong>
+              <span data-ja="対応インターフェース・コントローラーによります。" data-en="Depends on supported interfaces and controllers.">対応インターフェース・コントローラーによります。</span>
+            </div>
+            <span class="status warn" data-ja="要確認" data-en="Check Required">要確認</span>
+          </div>
+
+          <div class="device-item">
+            <div class="device-info">
+              <strong data-ja="Memory" data-en="Memory">Memory</strong>
+              <span data-ja="対応規格とPC側の仕様に依存します。" data-en="Depends on supported standards and PC specifications.">対応規格とPC側の仕様に依存します。</span>
+            </div>
+            <span class="status warn" data-ja="要確認" data-en="Check Required">要確認</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-dot ok"></span>
+        <span data-ja="確認済み" data-en="Verified">確認済み</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot warn"></span>
+        <span data-ja="条件付き・要確認" data-en="Conditional / Check Required">条件付き・要確認</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot ng"></span>
+        <span data-ja="非対応" data-en="Unsupported">非対応</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <div class="section-header">
+      <h2 data-ja="Other environments" data-en="Other environments">Other environments</h2>
+      <p data-ja="PC以外の動作環境について。" data-en="About other operating environments.">PC以外の動作環境について。</p>
+    </div>
+
+    <div class="environment-list">
+      <div class="environment-item">
+        <strong>VirtualBox</strong>
+        <span data-ja="動作確認済み" data-en="Verified">動作確認済み</span>
+      </div>
+
+      <div class="environment-item">
+        <strong>VMware</strong>
+        <span data-ja="動作確認済み" data-en="Verified">動作確認済み</span>
+      </div>
+
+      <div class="environment-item">
+        <strong>QEMU</strong>
+        <span data-ja="動作確認済み" data-en="Verified">動作確認済み</span>
+      </div>
+
+      <div class="environment-item">
+        <strong data-ja="Older / Low-spec PCs" data-en="Older / Low-spec PCs">Older / Low-spec PCs</strong>
+        <span data-ja="機種・構成によって異なります" data-en="Varies by model and configuration">機種・構成によって異なります</span>
+      </div>
+
+      <div class="environment-item">
+        <strong data-ja="32-bit CPU" data-en="32-bit CPU">32-bit CPU</strong>
+        <span data-ja="非対応" data-en="Unsupported">非対応</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="notice">
+    <h3 data-ja="Compatibility information" data-en="Compatibility information">Compatibility information</h3>
+    <p data-ja="ここに掲載されている情報は、すべての同シリーズ製品での動作を保証するものではありません。同じ製品シリーズでも、CPU・Wi-Fiチップ・GPUなどの構成によって互換性が異なる場合があります。購入やインストールの前に、実際のハードウェア構成をご確認ください。" data-en="The information listed here does not guarantee operation across all products in the same series. Even within the same product series, compatibility may vary depending on components such as the CPU, Wi-Fi chip, and GPU. Please check your actual hardware configuration before purchase or installation.">
+      ここに掲載されている情報は、すべての同シリーズ製品での動作を保証するものではありません。
+      同じ製品シリーズでも、CPU・Wi-Fiチップ・GPUなどの構成によって互換性が異なる場合があります。
+      購入やインストールの前に、実際のハードウェア構成をご確認ください。
+    </p>
+  </div>
+
+  <section class="support">
+    <h2 data-ja="Having compatibility issues?" data-en="Having compatibility issues?">Having compatibility issues?</h2>
+    <p data-ja="起動・Wi-Fi・画面表示などに問題がある場合は、サポートページをご確認ください。" data-en="If you encounter issues with booting, Wi-Fi, or display, please check the support page.">
+      起動・Wi-Fi・画面表示などに問題がある場合は、サポートページをご確認ください。
+    </p>
+    <a href="/support/" class="button" data-ja="Visit Support Center →" data-en="Visit Support Center →">Visit Support Center →</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span data-ja="© NagisinnraLinux" data-en="© NagisinnraLinux">© NagisinnraLinux</span>
+    <span data-ja="Reliable by nature. Operational by design." data-en="Reliable by nature. Operational by design.">Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
+
+<script>
+  // ローカルストレージから前回の言語設定を読み込む（デフォルトは 'ja'）
+  let currentLang = localStorage.getItem('nagisinnra_lang') || 'ja';
+
+  // ページ読み込み時に即座に言語を適用
+  applyLanguage(currentLang);
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ja' ? 'en' : 'ja';
+    localStorage.setItem('nagisinnra_lang', currentLang);
+    applyLanguage(currentLang);
+  }
+
+  function applyLanguage(lang) {
+    // ボタンのテキストを更新
+    const langBtn = document.getElementById('langToggle');
+    if (langBtn) {
+      langBtn.textContent = lang === 'ja' ? 'English' : '日本語';
+    }
+
+    // data-ja / data-en 属性を持つすべての要素のテキストを更新
+    const elements = document.querySelectorAll('[data-ja]');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${lang}`);
+    });
+
+    // htmlタグのlang属性を更新
+    document.documentElement.lang = lang;
+  }
+</script>
 
 </body>
 </html>
