@@ -1,43 +1,177 @@
+
 # NagisinnraLinux
 
+**Lightweight. Practical. Independent.**
 
+NagisinnraLinux is an independent Linux distribution developed in Japan.
 
-**NagisinnraLinux（ナギシンラ・リナックス）**は、13歳の学生開発者「nagisinnra」によって2026年8月に開発された、Debianベースの超軽量カスタムLinuxディストリビューション（およびその自動ビルド環境）です。
+Based on Debian GNU/Linux, NagisinnraLinux aims to provide a practical, responsive, and customizable desktop operating system for a wide range of hardware — including older computers and resource-constrained systems.
 
-日常使いできる実用性を保ちながら、古いPCや低スペックPCでも快適に動作させることを目指して極限までチューニングされています。
+The project focuses on balancing performance, usability, accessibility, and user freedom while maintaining the flexibility of the Debian ecosystem.
 
----
-## 主な特徴 (Features)
-
-- **圧倒的な超軽量設計**
-  - 起動直後のRAM（メモリ）使用量はわずか **約476MB**。
-  - ディスク使用量も **約2.45GB** にまで徹底的に削減。
-- **快適な日本語環境**
-  - 軽量化と日本語入力を両立するため、**fcitx5 + mozc** を初期状態で標準搭載。
-- **メモリ最適化 (zram搭載)**
-  - 少ないメモリでも快適に動作するよう、**zram**（メモリ圧縮機能）を標準で最適化構成。
-
-##  技術スタック (Technical Stack)
-
-- **ベースOS**: Debian (GNU/Linux)
-- **メモリ最適化**: zram
-- **入力フレームワーク**: fcitx5
-- **日本語入力エンジン**: mozc
+NagisinnraLinux is developed independently and welcomes users, testers, and contributors from around the world.
 
 ---
 
-##  起動・インストール方法 (How to Use)
+## Features
 
+- **Lightweight Design** — Optimized desktop configurations designed to reduce unnecessary resource consumption.
+- **Debian Foundation** — Built on Debian GNU/Linux.
+- **Japanese Language Support** — Japanese input environment with Fcitx5 and Mozc.
+- **Memory Optimization** — ZRAM configuration for systems with limited memory.
+- **Desktop Choice** — XFCE and KDE editions.
+- **Practical Usability** — Designed for everyday desktop use.
+- **Open Development** — Continuous development and improvement.
+- **International Availability** — A project intended for users worldwide.
+
+---
+
+## Editions
+
+NagisinnraLinux provides different desktop editions to accommodate different preferences and hardware requirements.
+
+### XFCE Edition
+
+The XFCE Edition prioritizes performance, simplicity, and resource efficiency.
+
+Highlights:
+- Lightweight desktop environment
+- Low resource consumption
+- Responsive operation
+- Suitable for older computers
+- Practical everyday desktop experience
+
+### KDE Edition
+
+The KDE Edition provides a feature-rich and customizable desktop experience.
+
+Highlights:
+- KDE Plasma desktop environment
+- Extensive customization options
+- Modern desktop interface
+- Integrated graphical utilities
+- Flexible desktop workflow
+
+Availability and release versions may differ between editions. Please check the project download page for the latest releases.
+
+---
+
+## Technology
+
+| Component | Technology |
+|---|---|
+| Base distribution | Debian GNU/Linux |
+| Desktop environments | XFCE / KDE Plasma |
+| Japanese input | Fcitx5 + Mozc |
+| Memory optimization | ZRAM |
+| Architecture | x86_64 |
+
+---
+
+## Performance Philosophy
+
+Performance is one of the central goals of NagisinnraLinux.
+
+The project aims to minimize unnecessary background services and resource consumption while retaining the functionality needed for everyday computing.
+
+Memory and storage measurements depend on the edition, release, hardware, and measurement conditions. For this reason, performance figures should always be accompanied by their testing environment.
+
+---
+
+## Hardware Compatibility
+
+NagisinnraLinux is intended to run on a broad range of 64-bit PCs.
+
+Compatibility may vary depending on:
+- CPU architecture
+- Graphics hardware
+- Wireless network adapters
+- Storage controllers
+- Firmware and boot configuration
+
+Older and low-specification computers are an important target, but compatibility is not guaranteed for every device.
+
+Please consult the official compatibility documentation and report hardware issues through the project's support channels.
+
+---
+
+## Installation
+
+1. Visit the project download page.
+2. Select the desired edition and release.
+3. Download the ISO image.
+4. Create bootable installation media.
+5. Boot your computer from the installation media.
+6. Follow the installer instructions.
+
+**Important:** Creating installation media and installing an operating system may erase data. Back up important files before proceeding.
+
+Download:
+https://sourceforge.net/projects/nagisinnralinux/files/
+
+Installation guide:
+https://nagisinnra.github.io/install/
+
+---
+
+## Project Development
+
+NagisinnraLinux is continuously developed and improved.
+
+Development priorities include:
+- System reliability
+- Performance optimization
+- Hardware compatibility
+- Desktop usability
+- Japanese language support
+- Documentation
+- International accessibility
+
+The project values transparency, practical engineering, and feedback from users.
+
+---
+
+## Community & Contributions
+
+Contributions and feedback are welcome.
+
+You can help the project through:
+- Testing releases
+- Reporting bugs
+- Improving documentation
+- Translating content
+- Sharing feedback
+- Suggesting improvements
+
+GitHub:
 https://github.com/nagisinnra/NagisinnraLinux
-のreleasesからダウンロードしてください。
 
-##  開発者について (Developer)
+Official website:
+https://nagisinnra.github.io/
 
-- **名前**: nagisinnra
-- **年齢**: 13歳 (2026年時点)
-- **ブログ / 開発記**:https://zenn.dev/nagisinnra
-- **開発のきっかけ**: 「削る ➔ 起動する」の感動を追求し、自分だけの最高に軽い普段使いのOSを作りたくて開発を始めました。
+Development blog:
+https://zenn.dev/nagisinnra
 
-## ライセンス (License)
+---
 
-このプロジェクトは MIT ライセンス のもとで公開されています。
+## Licensing
+
+NagisinnraLinux includes software distributed under various open-source licenses.
+
+The licenses of individual components remain applicable to their respective software.
+
+Please consult the project's license documentation and the license files included with individual components before redistribution or modification.
+
+---
+
+## About the Project
+
+NagisinnraLinux began in August 2026 as an independent project driven by an interest in lightweight Linux systems and practical desktop computing.
+
+What started as an experiment in reducing unnecessary system overhead has grown into an ongoing distribution development project.
+
+The goal is simple:
+
+**Build a Linux distribution that is lightweight, practical, accessible, and useful to people around the world.**
+
+Thank you for your interest in NagisinnraLinux.
