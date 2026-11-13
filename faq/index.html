@@ -2,90 +2,599 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NagisinnraLinux FAQ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>FAQ — NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fb;
+  --text: #17191c;
+  --muted: #737982;
+  --line: #e8eaed;
+  --accent: #788c78;
+  --max: 900px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans JP", sans-serif;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(var(--max), calc(100% - 48px));
+  margin: auto;
+}
+
+/* Navigation */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -.5px;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+nav a {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--text);
+}
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.lang-btn:hover {
+  border-color: #cbd4cb;
+  background: #eaece7;
+}
+
+/* Hero */
+
+.hero {
+  padding: 100px 0 75px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+h1 {
+  margin: 22px 0 15px;
+  font-size: clamp(40px, 6vw, 58px);
+  line-height: 1.15;
+  letter-spacing: -2.5px;
+  font-weight: 750;
+}
+
+.hero p {
+  max-width: 570px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2;
+}
+
+/* FAQ */
+
+main {
+  padding: 70px 0 110px;
+}
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  font-size: 21px;
+  margin: 0 0 6px;
+  letter-spacing: -.5px;
+}
+
+.section-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+
+details {
+  border-bottom: 1px solid var(--line);
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 23px 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.q-label {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+
+.toggle {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 17px;
+  font-weight: 400;
+  transition: transform .2s, background .2s;
+}
+
+details[open] .toggle {
+  transform: rotate(45deg);
+  background: var(--surface);
+}
+
+.answer {
+  padding: 0 42px 25px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 2;
+  animation: appear .2s ease;
+}
+
+.answer a {
+  color: var(--accent);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+}
+
+/* Contact */
+
+.contact {
+  margin-top: 85px;
+  padding: 40px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.contact h2 {
+  margin: 0 0 10px;
+  font-size: 23px;
+  letter-spacing: -.7px;
+}
+
+.contact p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 23px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 19px;
+  background: #17191c;
+  color: white;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+
+.button:hover {
+  opacity: .8;
+}
+
+/* Footer */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 36px);
   }
-  h2 {
-    margin-top: 40px;
-    color: #4a90e2;
+
+  .nav {
+    height: auto;
+    min-height: 65px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 17px 0 13px;
+    gap: 13px;
   }
-  ul {
-    padding-left: 20px;
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
   }
+
+  nav {
+    width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 3px;
+  }
+
+  .hero {
+    padding: 70px 0 55px;
+  }
+
+  main {
+    padding: 50px 0 75px;
+  }
+
+  summary {
+    font-size: 14px;
+    padding: 20px 2px;
+  }
+
+  .question {
+    gap: 10px;
+  }
+
+  .answer {
+    padding: 0 28px 22px;
+    font-size: 13px;
+  }
+
+  .contact {
+    padding: 28px 22px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="container nav">
+    <a class="logo" href="/">Nagisinnra<span>Linux</span></a>
 
-<h1>FAQ（よくある質問）</h1>
+    <div class="nav-right">
+      <nav>
+        <a href="/" data-ja="Home" data-en="Home">Home</a>
+        <a href="/download/" data-ja="Download" data-en="Download">Download</a>
+        <a href="/install/" data-ja="Install" data-en="Install">Install</a>
+        <a href="/support/" data-ja="Support" data-en="Support">Support</a>
+        <a href="/faq/" class="active" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        <a href="/compatibility/" data-ja="Compatibility" data-en="Compatibility">Compatibility</a>
+        <a href="/about/" data-ja="About" data-en="About">About</a>
+      </nav>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
 
-<h2>Q. NagisinnraLinux はどんな PC で動きますか？</h2>
-<p>
-基本的に 64bit CPU を搭載した PC なら動作します。  
-古いノートPCやジャンクPCでも軽快に動くよう最適化されています。
-</p>
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow" data-ja="Frequently Asked Questions" data-en="Frequently Asked Questions">Frequently Asked Questions</div>
+    <h1 data-ja="Questions,<br>answered." data-en="Questions,<br>answered.">Questions,<br>answered.</h1>
+    <p data-ja="NagisinnraLinuxについて、よく寄せられる質問と回答をまとめています。導入前の確認から日常的な利用まで、こちらをご覧ください。" data-en="Find answers to common questions about NagisinnraLinux, from pre-installation checks to daily use.">
+      NagisinnraLinuxについて、よく寄せられる質問と回答をまとめています。
+      導入前の確認から日常的な利用まで、こちらをご覧ください。
+    </p>
+  </div>
+</section>
 
-<h2>Q. どれくらい軽量ですか？</h2>
-<p>
-メモリ 2GB でも動作可能です。  
-4GB 以上あれば快適に利用できます。
-</p>
+<main class="container">
 
-<h2>Q. Debian と何が違いますか？</h2>
-<p>
-NagisinnraLinux は Debian をベースに、  
-軽量化・高速化・日本語環境の改善を行ったディストロです。
-</p>
+  <div class="section-heading">
+    <h2 data-ja="General" data-en="General">General</h2>
+    <p data-ja="NagisinnraLinuxについて" data-en="About NagisinnraLinux">NagisinnraLinuxについて</p>
+  </div>
 
-<h2>Q. インストール方法が分かりません</h2>
-<p>
-→ <a href="/install/">インストールガイド</a> を参照してください。
-</p>
+  <div class="faq-list">
 
-<h2>Q. Wi-Fi が繋がりません</h2>
-<p>
-→ <a href="/support/">サポートページ</a> にトラブルシューティングを掲載しています。
-</p>
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q01</span>
+          <span data-ja="NagisinnraLinuxはどんなPCで動きますか？" data-en="What kind of PC does NagisinnraLinux run on?">NagisinnraLinuxはどんなPCで動きますか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="基本的に64bit CPUを搭載したPCを対象としています。古いノートPCや低スペックPCでも利用できるよう、軽量性を重視して開発しています。" data-en="It generally targets PCs equipped with a 64-bit CPU. It is developed with a strong focus on lightweight performance so it can be used on older laptops and low-spec PCs.">
+        基本的に64bit CPUを搭載したPCを対象としています。
+        古いノートPCや低スペックPCでも利用できるよう、
+        軽量性を重視して開発しています。
+      </div>
+    </details>
 
-<h2>Q. 仮想環境で使えますか？</h2>
-<p>
-はい。VirtualBox / VMware / QEMU で動作確認済みです。
-</p>
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q02</span>
+          <span data-ja="どれくらい軽量ですか？" data-en="How lightweight is it?">どれくらい軽量ですか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="メモリ2GBでも動作可能です。4GB以上のメモリを搭載した環境を推奨します。実際の使用感はデスクトップ環境や起動するアプリケーションによって異なります。" data-en="It can run with 2GB of RAM, though an environment with 4GB or more is recommended. Actual performance varies depending on the desktop environment and applications used.">
+        メモリ2GBでも動作可能です。
+        4GB以上のメモリを搭載した環境を推奨します。
+        実際の使用感はデスクトップ環境や起動するアプリケーションによって異なります。
+      </div>
+    </details>
 
-<h2>Q. 企業向け利用は可能ですか？</h2>
-<p>
-可能です。商用利用も自由です。  
-企業向けの案内は今後掲載予定です。
-</p>
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q03</span>
+          <span data-ja="Debianと何が違いますか？" data-en="How is it different from Debian?">Debianと何が違いますか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="NagisinnraLinuxはDebianをベースに、軽量性、日本語環境、使いやすさなどを重視して独自に調整・構成したLinuxディストリビューションです。" data-en="NagisinnraLinux is a Linux distribution based on Debian, custom-tuned and configured with an emphasis on lightweight design, Japanese localization, and ease of use.">
+        NagisinnraLinuxはDebianをベースに、
+        軽量性、日本語環境、使いやすさなどを重視して
+        独自に調整・構成したLinuxディストリビューションです。
+      </div>
+    </details>
 
-<h2>Q. 問題が解決しません</h2>
-<p>
-→ <a href="https://github.com/nagisinnra/NagisinnraLinux/issues" target="_blank">GitHub Issues</a>  
-からお問い合わせください。
-</p>
+  </div>
+
+  <div class="section-heading" style="margin-top:65px">
+    <h2 data-ja="Installation & Compatibility" data-en="Installation & Compatibility">Installation & Compatibility</h2>
+    <p data-ja="インストールと動作環境について" data-en="Installation and system requirements">インストールと動作環境について</p>
+  </div>
+
+  <div class="faq-list">
+
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q04</span>
+          <span data-ja="インストール方法が分かりません" data-en="I don't know how to install it">インストール方法が分かりません</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer">
+        <span data-ja="USBメモリを使用したインストール方法を" data-en="The installation method using a USB flash drive is explained in the ">USBメモリを使用したインストール方法を</span>
+        <a href="/install/" data-ja="インストールガイド" data-en="Installation Guide">インストールガイド</a>
+        <span data-ja="で解説しています。" data-en=".">で解説しています。</span>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q05</span>
+          <span data-ja="Wi-Fiが繋がりません" data-en="Wi-Fi won't connect">Wi-Fiが繋がりません</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer">
+        <span data-ja="無線LANアダプターの対応状況やドライバーを確認してください。詳細は" data-en="Please check your wireless LAN adapter compatibility and drivers. For details, see the ">無線LANアダプターの対応状況やドライバーを確認してください。詳細は</span>
+        <a href="/support/" data-ja="サポートページ" data-en="Support Page">サポートページ</a>
+        <span data-ja="をご覧ください。" data-en=".">をご覧ください。</span>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q06</span>
+          <span data-ja="仮想環境で使えますか？" data-en="Can I use it in a virtual environment?">仮想環境で使えますか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="はい。VirtualBox、VMware、QEMUなどの仮想環境で利用できます。仮想環境の設定やバージョンによって動作状況は異なります。" data-en="Yes. It can be used in virtual environments such as VirtualBox, VMware, and QEMU. Performance may vary depending on the virtual environment settings and version.">
+        はい。VirtualBox、VMware、QEMUなどの仮想環境で利用できます。
+        仮想環境の設定やバージョンによって動作状況は異なります。
+      </div>
+    </details>
+
+  </div>
+
+  <div class="section-heading" style="margin-top:65px">
+    <h2 data-ja="Usage & Licensing" data-en="Usage & Licensing">Usage & Licensing</h2>
+    <p data-ja="利用条件について" data-en="Usage terms and conditions">利用条件について</p>
+  </div>
+
+  <div class="faq-list">
+
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q07</span>
+          <span data-ja="企業で利用できますか？" data-en="Can it be used in a corporate environment?">企業で利用できますか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="企業での利用も想定しています。ただし、収録されている各ソフトウェアのライセンス条件をそれぞれ確認してください。企業向けの情報は今後拡充予定です。" data-en="Corporate use is also anticipated. However, please check the license conditions for each included software package. Enterprise-focused information will be expanded in the future.">
+        企業での利用も想定しています。
+        ただし、収録されている各ソフトウェアのライセンス条件を
+        それぞれ確認してください。
+        企業向けの情報は今後拡充予定です。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="question">
+          <span class="q-label">Q08</span>
+          <span data-ja="商用利用は可能ですか？" data-en="Is commercial use allowed?">商用利用は可能ですか？</span>
+        </span>
+        <span class="toggle">+</span>
+      </summary>
+      <div class="answer" data-ja="利用するソフトウェアや構成要素のライセンスに従う必要があります。再配布や改変を行う場合も、各ライセンスの条件をご確認ください。" data-en="You must comply with the licenses of the software and components used. Please also review the respective license terms if redistributing or modifying.">
+        利用するソフトウェアや構成要素のライセンスに従う必要があります。
+        再配布や改変を行う場合も、各ライセンスの条件をご確認ください。
+      </div>
+    </details>
+
+  </div>
+
+  <section class="contact">
+    <h2 data-ja="Still have questions?" data-en="Still have questions?">Still have questions?</h2>
+    <p data-ja="お探しの回答が見つからない場合は、GitHub Issuesからお問い合わせください。" data-en="If you cannot find the answer you are looking for, please reach out via GitHub Issues.">
+      お探しの回答が見つからない場合は、
+      GitHub Issuesからお問い合わせください。
+    </p>
+    <a class="button"
+       href="https://github.com/nagisinnra/NagisinnraLinux/issues"
+       target="_blank" rel="noopener noreferrer"
+       data-ja="Contact Support →" data-en="Contact Support →">
+      Contact Support →
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span data-ja="© NagisinnraLinux" data-en="© NagisinnraLinux">© NagisinnraLinux</span>
+    <span data-ja="Reliable by nature. Operational by design." data-en="Reliable by nature. Operational by design.">Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'ja';
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ja' ? 'en' : 'ja';
+    
+    // ボタンのテキストを切り替え
+    const langBtn = document.getElementById('langToggle');
+    langBtn.textContent = currentLang === 'ja' ? 'English' : '日本語';
+
+    // data-ja / data-en 属性を持つすべての要素を走査してテキストを更新
+    const elements = document.querySelectorAll('[data-ja]');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${currentLang}`);
+    });
+
+    // htmlのlang属性も動的に変更
+    document.documentElement.lang = currentLang;
+  }
+</script>
 
 </body>
 </html>
