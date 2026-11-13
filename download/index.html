@@ -2,70 +2,619 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NagisinnraLinux Download</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NagisinnraLinux のダウンロードページ。最新のISOイメージはこちらから入手できます。">
+<title>Download | NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --accent: #788c78;
+  --text: #202520;
+  --muted: #737b73;
+  --border: #e8ebe7;
+  --background: #ffffff;
+  --surface: #f7f8f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans JP", sans-serif;
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: .75;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 0 28px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+nav a {
+  color: #626a62;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.lang-btn:hover {
+  border-color: #cbd5ca;
+  background: #eaece7;
+}
+
+.hero {
+  max-width: 1120px;
+  margin: auto;
+  padding: 100px 28px 65px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 18px 0;
+  font-size: clamp(38px, 6vw, 58px);
+  line-height: 1.2;
+  letter-spacing: -1.8px;
+  font-weight: 650;
+}
+
+.hero p {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 28px 100px;
+}
+
+.download-card {
+  padding: 38px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+}
+
+.release-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.release-label {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.version {
+  margin: 13px 0 5px;
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -.8px;
+}
+
+.release-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.status {
+  display: inline-block;
+  padding: 5px 11px;
+  background: #eaf0e9;
+  color: #607a60;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.release-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.info-item {
+  padding: 16px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.info-item span {
+  display: block;
+}
+
+.info-label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.info-value {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 650;
+  transition: opacity .2s, transform .2s;
+}
+
+.download-button:hover {
+  opacity: .88;
+  transform: translateY(-1px);
+}
+
+.download-note {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.section {
+  margin-top: 75px;
+}
+
+.section-header {
+  margin-bottom: 22px;
+}
+
+.section-header h2 {
+  margin: 0 0 7px;
+  font-size: 23px;
+  letter-spacing: -.5px;
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.mirror-list {
+  border-top: 1px solid var(--border);
+}
+
+.mirror-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 19px 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mirror-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mirror-status {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checksum-card {
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.checksum-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.checksum-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.checksum-code {
+  display: block;
+  margin-top: 15px;
+  padding: 13px;
+  background: var(--surface);
+  border-radius: 7px;
+  color: #687168;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.notice {
+  margin-top: 35px;
+  padding: 22px 25px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.notice h3 {
+  margin: 0 0 7px;
+  font-size: 15px;
+}
+
+.notice p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.help-card {
+  margin-top: 65px;
+  padding: 38px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.help-card h2 {
+  margin: 0 0 9px;
+  font-size: 23px;
+}
+
+.help-card p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.secondary-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #d9dfd7;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  background: white;
+}
+
+.secondary-button:hover {
+  border-color: var(--accent);
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 28px;
+  color: #929992;
+  font-size: 12px;
+}
+
+.footer-inner {
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  .nav-container {
+    height: auto;
+    min-height: 65px;
+    padding: 15px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+
+  nav {
+    width: 100%;
+    gap: 19px;
+    padding-bottom: 3px;
   }
-  .download-box {
-    border: 2px solid #4a90e2;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 30px;
+
+  .hero {
+    padding: 70px 22px 50px;
   }
+
+  .content {
+    padding: 0 20px 70px;
+  }
+
+  .download-card {
+    padding: 25px;
+  }
+
+  .release-info {
+    grid-template-columns: 1fr;
+  }
+
+  .mirror-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .help-card {
+    padding: 30px 20px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">NagisinnraLinux</a>
 
-<h1>NagisinnraLinux ダウンロード</h1>
+    <div class="nav-right">
+      <nav>
+        <a href="/" data-ja="Home" data-en="Home">Home</a>
+        <a href="/download/" class="active" data-ja="Download" data-en="Download">Download</a>
+        <a href="/install/" data-ja="Install Guide" data-en="Install Guide">Install Guide</a>
+        <a href="/support/" data-ja="Support" data-en="Support">Support</a>
+        <a href="/faq/" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        <a href="/compatibility/" data-ja="Compatibility" data-en="Compatibility">Compatibility</a>
+        <a href="/about/" data-ja="About" data-en="About">About</a>
+      </nav>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
 
-<p>
-NagisinnraLinux の最新バージョンをダウンロードできます。  
-軽量・高速・安定を重視した Debian ベースの Linux ディストロです。
-</p>
-
-<div class="download-box">
-  <h2>最新バージョン</h2>
-  <p><strong>NagisinnraLinux</strong></p>
-  <p>ファイルサイズ：約2.45GB</p>
-  <p>
-    <a href="https://sourceforge.net/projects/nagisinnralinux/files/" target="_blank">
-      ▶ SourceForge からダウンロード
-    </a>
+<section class="hero">
+  <div class="eyebrow" data-ja="Get NagisinnraLinux" data-en="Get NagisinnraLinux">Get NagisinnraLinux</div>
+  <h1 data-ja="A new life for<br>your computer." data-en="A new life for<br>your computer.">A new life for<br>your computer.</h1>
+  <p data-ja="NagisinnraLinux をダウンロードして、新しいデスクトップ環境を体験しましょう。軽量性と使いやすさを重視した Debian ベースの Linux ディストリビューションです。" data-en="Download NagisinnraLinux and experience a fresh desktop environment. A Debian-based Linux distribution focused on lightweight performance and ease of use.">
+    NagisinnraLinux をダウンロードして、新しいデスクトップ環境を体験しましょう。
+    軽量性と使いやすさを重視した Debian ベースの Linux ディストリビューションです。
   </p>
-</div>
+</section>
 
-<h2>ミラー（予定）</h2>
-<ul>
-  <li>GitHub Releases（準備中）</li>
-  <li>Cloudflare R2（検討中）</li>
-  <li>企業スポンサー提供サーバー（予定）</li>
-</ul>
+<main class="content">
 
-<h2>チェックサム（予定）</h2>
-<p>ISO の整合性確認用の SHA256 チェックサムを掲載予定です。</p>
+  <section class="download-card">
+    <div class="release-top">
+      <div class="release-label" data-ja="LATEST RELEASE" data-en="LATEST RELEASE">LATEST RELEASE</div>
+      <span class="status" data-ja="Official Download" data-en="Official Download">Official Download</span>
+    </div>
+
+    <h2 class="version">NagisinnraLinux</h2>
+    <p class="release-description" data-ja="最新のISOイメージをこちらから入手できます。" data-en="Get the latest ISO image here.">
+      最新のISOイメージをこちらから入手できます。
+    </p>
+
+    <div class="release-info">
+      <div class="info-item">
+        <span class="info-label" data-ja="File size" data-en="File size">File size</span>
+        <span class="info-value" data-ja="約 2.45 GB" data-en="Approx. 2.45 GB">約 2.45 GB</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label" data-ja="Format" data-en="Format">Format</span>
+        <span class="info-value">ISO Image</span>
+      </div>
+    </div>
+
+    <a
+      href="https://sourceforge.net/projects/nagisinnralinux/files/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="download-button"
+      data-ja="Download from SourceForge →"
+      data-en="Download from SourceForge →"
+    >
+      Download from SourceForge →
+    </a>
+
+    <p class="download-note" data-ja="ダウンロードは SourceForge の公式プロジェクトページから行えます。" data-en="Downloads are hosted on the official SourceForge project page.">
+      ダウンロードは SourceForge の公式プロジェクトページから行えます。
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Alternative mirrors" data-en="Alternative mirrors">Alternative mirrors</h2>
+      <p data-ja="今後、配布環境の拡充を予定しています。" data-en="Plans to expand distribution channels in the future.">今後、配布環境の拡充を予定しています。</p>
+    </div>
+
+    <div class="mirror-list">
+      <div class="mirror-item">
+        <span class="mirror-name">SourceForge</span>
+        <span class="mirror-status" data-ja="Available · Official" data-en="Available · Official">Available · Official</span>
+      </div>
+
+      <div class="mirror-item">
+        <span class="mirror-name">GitHub Releases</span>
+        <span class="mirror-status" data-ja="Planned" data-en="Planned">Planned</span>
+      </div>
+
+      <div class="mirror-item">
+        <span class="mirror-name">Cloudflare R2</span>
+        <span class="mirror-status" data-ja="Under consideration" data-en="Under consideration">Under consideration</span>
+      </div>
+
+      <div class="mirror-item">
+        <span class="mirror-name" data-ja="Community / Partner Mirrors" data-en="Community / Partner Mirrors">Community / Partner Mirrors</span>
+        <span class="mirror-status" data-ja="Planned" data-en="Planned">Planned</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Integrity verification" data-en="Integrity verification">Integrity verification</h2>
+      <p data-ja="ダウンロードしたISOイメージの整合性確認について。" data-en="Integrity verification for downloaded ISO images.">ダウンロードしたISOイメージの整合性確認について。</p>
+    </div>
+
+    <div class="checksum-card">
+      <h3 data-ja="SHA256 Checksum" data-en="SHA256 Checksum">SHA256 Checksum</h3>
+      <p data-ja="ISOイメージのチェックサムを使用すると、ダウンロードしたファイルが公開されたファイルと一致するか確認できます。" data-en="Using the ISO image checksum, you can verify that the downloaded file matches the official release.">
+        ISOイメージのチェックサムを使用すると、
+        ダウンロードしたファイルが公開されたファイルと一致するか確認できます。
+      </p>
+      <span class="checksum-code" data-ja="SHA256 checksum: Coming soon" data-en="SHA256 checksum: Coming soon">
+        SHA256 checksum: Coming soon
+      </span>
+    </div>
+  </section>
+
+  <div class="notice">
+    <h3 data-ja="Before installation" data-en="Before installation">Before installation</h3>
+    <p data-ja="インストールを開始する前に、必要なデータのバックアップを行ってください。インストール方法や対応環境については、各ガイドをご確認ください。" data-en="Please back up necessary data before starting the installation. Check the respective guides for installation methods and compatible environments.">
+      インストールを開始する前に、必要なデータのバックアップを行ってください。
+      インストール方法や対応環境については、各ガイドをご確認ください。
+    </p>
+  </div>
+
+  <section class="help-card">
+    <h2 data-ja="Ready to get started?" data-en="Ready to get started?">Ready to get started?</h2>
+    <p data-ja="インストール手順や対応環境について詳しく確認できます。" data-en="Learn more about installation steps and compatible environments.">
+      インストール手順や対応環境について詳しく確認できます。
+    </p>
+    <a href="/install/" class="secondary-button" data-ja="View Installation Guide →" data-en="View Installation Guide →">
+      View Installation Guide →
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span data-ja="© NagisinnraLinux" data-en="© NagisinnraLinux">© NagisinnraLinux</span>
+    <span data-ja="Reliable by nature. Operational by design." data-en="Reliable by nature. Operational by design.">Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
+
+<script>
+  // ローカルストレージから前回の言語設定を読み込む（デフォルトは 'ja'）
+  let currentLang = localStorage.getItem('nagisinnra_lang') || 'ja';
+
+  // ページ読み込み時に即座に言語を適用
+  applyLanguage(currentLang);
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ja' ? 'en' : 'ja';
+    localStorage.setItem('nagisinnra_lang', currentLang);
+    applyLanguage(currentLang);
+  }
+
+  function applyLanguage(lang) {
+    // ボタンのテキストを更新
+    const langBtn = document.getElementById('langToggle');
+    if (langBtn) {
+      langBtn.textContent = lang === 'ja' ? 'English' : '日本語';
+    }
+
+    // data-ja / data-en 属性を持つすべての要素のテキストを更新
+    const elements = document.querySelectorAll('[data-ja]');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${lang}`);
+    });
+
+    // htmlタグのlang属性を更新
+    document.documentElement.lang = lang;
+  }
+</script>
 
 </body>
 </html>
