@@ -2,110 +2,576 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NagisinnraLinux Install Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NagisinnraLinuxのインストール手順を解説します。USBメディアの作成からインストール完了まで、初心者向けに説明します。">
+<title>Install Guide | NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --accent: #788c78;
+  --text: #202520;
+  --muted: #737b73;
+  --border: #e8ebe7;
+  --background: #ffffff;
+  --surface: #f7f8f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans JP", sans-serif;
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: .75;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 0 28px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+nav a {
+  color: #626a62;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.lang-btn:hover {
+  border-color: #cbd5ca;
+  background: #eaece7;
+}
+
+.hero {
+  max-width: 1120px;
+  margin: auto;
+  padding: 100px 28px 76px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 18px 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.25;
+  letter-spacing: -1.8px;
+  font-weight: 650;
+}
+
+.hero p {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.content {
+  max-width: 900px;
+  margin: auto;
+  padding: 0 28px 100px;
+}
+
+.intro-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 55px;
+}
+
+.intro-card p {
+  margin: 0;
+  color: #626a62;
+  font-size: 14px;
+}
+
+.section-heading {
+  margin-bottom: 25px;
+}
+
+.section-heading h2 {
+  font-size: 23px;
+  letter-spacing: -.5px;
+  margin: 0 0 7px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 20px;
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .2s, transform .2s;
+}
+
+.step:hover {
+  border-color: #cbd5ca;
+  transform: translateY(-2px);
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #edf1eb;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.step-content h3 {
+  margin: 3px 0 9px;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.step-content p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.step-content ul {
+  padding-left: 20px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.step-content li {
+  margin: 5px 0;
+}
+
+.note {
+  margin-top: 14px;
+  padding: 13px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  color: #626a62;
+  font-size: 13px;
+  border-radius: 0 8px 8px 0;
+}
+
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.warning {
+  margin-top: 45px;
+  padding: 25px 27px;
+  background: #fafaf8;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.warning h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.warning p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.support {
+  margin-top: 65px;
+  padding: 40px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.support h2 {
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.support p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 22px;
+}
+
+.button {
+  display: inline-block;
+  padding: 11px 23px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+
+.button:hover {
+  opacity: .85;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 28px;
+  color: #929992;
+  font-size: 12px;
+}
+
+.footer-inner {
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  .nav-container {
+    height: auto;
+    min-height: 65px;
+    padding: 15px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+
+  nav {
+    width: 100%;
+    gap: 19px;
+    padding-bottom: 3px;
   }
-  h2 {
-    margin-top: 40px;
-    color: #4a90e2;
+
+  .hero {
+    padding: 65px 22px 50px;
   }
-  ul {
-    padding-left: 20px;
+
+  .content {
+    padding: 0 20px 70px;
   }
+
+  .step {
+    grid-template-columns: 42px 1fr;
+    gap: 13px;
+    padding: 19px;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+  }
+
+  .support {
+    padding: 30px 20px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">NagisinnraLinux</a>
 
-<h1>NagisinnraLinux インストールガイド</h1>
+    <div class="nav-right">
+      <nav>
+        <a href="/" data-ja="Home" data-en="Home">Home</a>
+        <a href="/download/" data-ja="Download" data-en="Download">Download</a>
+        <a href="/install/" class="active" data-ja="Install Guide" data-en="Install Guide">Install Guide</a>
+        <a href="/support/" data-ja="Support" data-en="Support">Support</a>
+        <a href="/faq/" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        <a href="/compatibility/" data-ja="Compatibility" data-en="Compatibility">Compatibility</a>
+        <a href="/about/" data-ja="About" data-en="About">About</a>
+      </nav>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
 
-<p>
-NagisinnraLinux を PC にインストールするための手順をまとめています。  
-USB ブートの作成からインストール完了まで、初心者でも迷わないように構成しています。
-</p>
+<section class="hero">
+  <div class="eyebrow" data-ja="Documentation" data-en="Documentation">Documentation</div>
+  <h1 data-ja="Install NagisinnraLinux." data-en="Install NagisinnraLinux.">Install NagisinnraLinux.</h1>
+  <p data-ja="NagisinnraLinux のインストール方法を紹介します。USBメディアの作成から初回起動まで、順番に進めていきましょう。" data-en="Learn how to install NagisinnraLinux. Follow the steps from creating the USB media to the initial boot.">
+    NagisinnraLinux のインストール方法を紹介します。
+    USBメディアの作成から初回起動まで、順番に進めていきましょう。
+  </p>
+</section>
 
-<h2>1. 必要なもの</h2>
-<ul>
-  <li>USBメモリ（8GB以上推奨）</li>
-  <li>NagisinnraLinux の ISO イメージ</li>
-  <li>USB書き込みツール（Rufus / balenaEtcher など）</li>
-</ul>
+<main class="content">
 
-<h2>2. ISO をダウンロードする</h2>
-<p>
-最新の ISO は以下からダウンロードできます。  
-→ <a href="/download/">ダウンロードページへ</a>
-</p>
+  <div class="intro-card">
+    <p data-ja="このガイドでは、一般的なPCへのインストール手順を説明します。作業を始める前に、必要なものを確認してください。" data-en="This guide explains the installation procedure for standard PCs. Please review the requirements before getting started.">
+      このガイドでは、一般的なPCへのインストール手順を説明します。
+      作業を始める前に、必要なものを確認してください。
+    </p>
+  </div>
 
-<h2>3. USB ブートメディアを作成する</h2>
-<p>Windows の場合（Rufus 推奨）</p>
-<ul>
-  <li>Rufus を起動</li>
-  <li>USBメモリを選択</li>
-  <li>「選択」から ISO を指定</li>
-  <li>パーティション：MBR / ターゲット：BIOS or UEFI</li>
-  <li>「スタート」を押す</li>
-</ul>
+  <div class="section-heading">
+    <h2 data-ja="Installation process" data-en="Installation process">Installation process</h2>
+    <p data-ja="以下の6つのステップでインストールできます。" data-en="You can install it in the following 6 steps.">以下の6つのステップでインストールできます。</p>
+  </div>
 
-<p>macOS / Linux の場合（balenaEtcher 推奨）</p>
-<ul>
-  <li>Etcher を起動</li>
-  <li>ISO を選択</li>
-  <li>USB を選択</li>
-  <li>「Flash」を押す</li>
-</ul>
+  <div class="steps">
 
-<h2>4. PC を USB から起動する</h2>
-<ul>
-  <li>PC の電源を入れる</li>
-  <li>起動直後に F12 / ESC / F2 などを押してブートメニューへ</li>
-  <li>USB を選択して起動</li>
-</ul>
+    <section class="step">
+      <div class="step-number">01</div>
+      <div class="step-content">
+        <h3 data-ja="必要なものを準備する" data-en="Prepare Required Items">必要なものを準備する</h3>
+        <p data-ja="インストールを始める前に、以下のものを用意します。" data-en="Before starting the installation, prepare the following items:">インストールを始める前に、以下のものを用意します。</p>
+        <ul>
+          <li data-ja="USBメモリ（8GB以上推奨）" data-en="USB flash drive (8GB or larger recommended)">USBメモリ（8GB以上推奨）</li>
+          <li data-ja="NagisinnraLinux の ISO イメージ" data-en="NagisinnraLinux ISO image">NagisinnraLinux の ISO イメージ</li>
+          <li data-ja="USB書き込みツール（Rufus / balenaEtcher など）" data-en="USB flashing tool (Rufus / balenaEtcher, etc.)">USB書き込みツール（Rufus / balenaEtcher など）</li>
+          <li data-ja="インターネット接続環境（必要に応じて）" data-en="Internet connection (as needed)">インターネット接続環境（必要に応じて）</li>
+        </ul>
+      </div>
+    </section>
 
-<h2>5. インストーラーの操作</h2>
-<ul>
-  <li>「Install NagisinnraLinux」を選択</li>
-  <li>言語・キーボードを選択</li>
-  <li>インストール先ディスクを選択</li>
-  <li>ユーザー名・パスワードを設定</li>
-  <li>インストール開始</li>
-</ul>
+    <section class="step">
+      <div class="step-number">02</div>
+      <div class="step-content">
+        <h3 data-ja="ISO イメージをダウンロードする" data-en="Download the ISO Image">ISO イメージをダウンロードする</h3>
+        <p data-ja="ダウンロードページから NagisinnraLinux の ISO イメージを取得します。" data-en="Get the NagisinnraLinux ISO image from the download page.">
+          ダウンロードページから NagisinnraLinux の ISO イメージを取得します。
+        </p>
+        <a href="/download/" class="download-link" data-ja="Download NagisinnraLinux →" data-en="Download NagisinnraLinux →">
+          Download NagisinnraLinux →
+        </a>
+      </div>
+    </section>
 
-<h2>6. インストール完了後</h2>
-<ul>
-  <li>USB を抜く</li>
-  <li>PC を再起動</li>
-  <li>NagisinnraLinux が起動すれば成功</li>
-</ul>
+    <section class="step">
+      <div class="step-number">03</div>
+      <div class="step-content">
+        <h3 data-ja="USB ブートメディアを作成する" data-en="Create Bootable USB Media">USB ブートメディアを作成する</h3>
+        <p><strong data-ja="Windows の場合（Rufus）" data-en="For Windows (Rufus)">Windows の場合（Rufus）</strong></p>
+        <ul>
+          <li data-ja="Rufus を起動する" data-en="Launch Rufus">Rufus を起動する</li>
+          <li data-ja="書き込み先の USB メモリを選択する" data-en="Select the target USB flash drive">書き込み先の USB メモリを選択する</li>
+          <li data-ja="「選択」から ISO イメージを指定する" data-en="Choose the ISO image via 'Select'">「選択」から ISO イメージを指定する</li>
+          <li data-ja="ISO の起動方式に合わせて設定する" data-en="Configure settings according to the ISO boot mode">ISO の起動方式に合わせて設定する</li>
+          <li data-ja="「スタート」を押して書き込みを開始する" data-en="Click 'Start' to begin writing">「スタート」を押して書き込みを開始する</li>
+        </ul>
 
-<h2>トラブルが起きたら</h2>
-<p>
-→ <a href="/support/">サポートページへ</a>  
-起動しない・Wi-Fiが繋がらないなどの対処法を掲載しています。
-</p>
+        <p><strong data-ja="macOS / Linux の場合（balenaEtcher）" data-en="For macOS / Linux (balenaEtcher)">macOS / Linux の場合（balenaEtcher）</strong></p>
+        <ul>
+          <li data-ja="balenaEtcher を起動する" data-en="Launch balenaEtcher">balenaEtcher を起動する</li>
+          <li data-ja="ISO イメージを選択する" data-en="Select the ISO image">ISO イメージを選択する</li>
+          <li data-ja="書き込み先の USB メモリを選択する" data-en="Select the target USB flash drive">書き込み先の USB メモリを選択する</li>
+          <li data-ja="「Flash」を押して書き込みを開始する" data-en="Click 'Flash' to begin writing">「Flash」を押して書き込みを開始する</li>
+        </ul>
+
+        <div class="note" data-ja="USBメモリ内のデータは消去されます。必要なデータは事前にバックアップしてください。" data-en="Data on the USB flash drive will be erased. Please back up any important data beforehand.">
+          USBメモリ内のデータは消去されます。必要なデータは事前にバックアップしてください。
+        </div>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="step-number">04</div>
+      <div class="step-content">
+        <h3 data-ja="PC を USB から起動する" data-en="Boot PC from USB">PC を USB から起動する</h3>
+        <p data-ja="作成した USB メモリをPCに接続し、USBから起動します。" data-en="Connect the created USB flash drive to your PC and boot from it.">作成した USB メモリをPCに接続し、USBから起動します。</p>
+        <ul>
+          <li data-ja="PCの電源を切り、USBメモリを接続する" data-en="Shut down the PC and connect the USB drive">PCの電源を切り、USBメモリを接続する</li>
+          <li data-ja="電源を入れ、起動直後にブートメニューを開く" data-en="Turn on the PC and open the boot menu immediately">電源を入れ、起動直後にブートメニューを開く</li>
+          <li data-ja="USBメモリを選択する" data-en="Select the USB flash drive">USBメモリを選択する</li>
+          <li data-ja="NagisinnraLinux の起動を確認する" data-en="Verify NagisinnraLinux boots up">NagisinnraLinux の起動を確認する</li>
+        </ul>
+        <div class="note" data-ja="ブートメニューのキーはメーカーによって異なります。F12、ESC、F2 などが使用される場合があります。" data-en="The boot menu key varies by manufacturer. Keys like F12, ESC, or F2 are commonly used.">
+          ブートメニューのキーはメーカーによって異なります。
+          F12、ESC、F2 などが使用される場合があります。
+        </div>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="step-number">05</div>
+      <div class="step-content">
+        <h3 data-ja="インストーラーを操作する" data-en="Run the Installer">インストーラーを操作する</h3>
+        <p data-ja="起動後、インストーラーの案内に従って設定を進めます。" data-en="After booting, follow the installer instructions to proceed with setup.">起動後、インストーラーの案内に従って設定を進めます。</p>
+        <ul>
+          <li data-ja="「Install NagisinnraLinux」を選択する" data-en="Select 'Install NagisinnraLinux'">「Install NagisinnraLinux」を選択する</li>
+          <li data-ja="言語・キーボードを設定する" data-en="Configure language and keyboard layout">言語・キーボードを設定する</li>
+          <li data-ja="インストール先のディスクを選択する" data-en="Select the destination installation disk">インストール先のディスクを選択する</li>
+          <li data-ja="ユーザー名・パスワードを設定する" data-en="Set username and password">ユーザー名・パスワードを設定する</li>
+          <li data-ja="設定内容を確認してインストールを開始する" data-en="Review settings and start installation">設定内容を確認してインストールを開始する</li>
+        </ul>
+        <div class="note" data-ja="インストール先ディスクの選択には注意してください。ディスク内の既存データが消去される場合があります。必要なデータは必ず事前にバックアップしてください。" data-en="Be careful when selecting the installation disk. Existing data on the disk may be erased. Always back up necessary data beforehand.">
+          インストール先ディスクの選択には注意してください。
+          ディスク内の既存データが消去される場合があります。
+          必要なデータは必ず事前にバックアップしてください。
+        </div>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="step-number">06</div>
+      <div class="step-content">
+        <h3 data-ja="インストール完了" data-en="Installation Complete">インストール完了</h3>
+        <p data-ja="インストールが完了したら、次の手順で起動します。" data-en="Once installation is complete, start up with the following steps:">インストールが完了したら、次の手順で起動します。</p>
+        <ul>
+          <li data-ja="画面の案内に従ってPCを再起動する" data-en="Restart the PC according to screen instructions">画面の案内に従ってPCを再起動する</li>
+          <li data-ja="USBメモリを取り外す" data-en="Remove the USB flash drive">USBメモリを取り外す</li>
+          <li data-ja="PCが内蔵ディスクから起動することを確認する" data-en="Verify the PC boots from the internal disk">PCが内蔵ディスクから起動することを確認する</li>
+        </ul>
+        <p data-ja="NagisinnraLinux のデスクトップが表示されれば完了です。" data-en="You are all set once the NagisinnraLinux desktop appears.">
+          NagisinnraLinux のデスクトップが表示されれば完了です。
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="warning">
+    <h3 data-ja="インストール前の注意事項" data-en="Pre-installation Notice">インストール前の注意事項</h3>
+    <p data-ja="OSのインストールは、既存のデータやOSに影響する場合があります。大切なファイルは必ずバックアップしてください。また、PCによってBIOS / UEFIの設定や起動方法が異なります。" data-en="OS installation may affect existing data and operating systems. Always back up important files. Also, BIOS / UEFI settings and boot methods vary depending on your PC.">
+      OSのインストールは、既存のデータやOSに影響する場合があります。
+      大切なファイルは必ずバックアップしてください。
+      また、PCによってBIOS / UEFIの設定や起動方法が異なります。
+    </p>
+  </div>
+
+  <section class="support">
+    <h2 data-ja="Need help?" data-en="Need help?">Need help?</h2>
+    <p data-ja="インストール中に問題が発生した場合は、サポートページをご確認ください。" data-en="If you encounter any issues during installation, please check the support page.">
+      インストール中に問題が発生した場合は、サポートページをご確認ください。
+    </p>
+    <a href="/support/" class="button" data-ja="Visit Support Center →" data-en="Visit Support Center →">Visit Support Center →</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span data-ja="© NagisinnraLinux" data-en="© NagisinnraLinux">© NagisinnraLinux</span>
+    <span data-ja="Reliable by nature. Operational by design." data-en="Reliable by nature. Operational by design.">Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'ja';
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ja' ? 'en' : 'ja';
+    
+    // ボタンのテキストを切り替え
+    const langBtn = document.getElementById('langToggle');
+    langBtn.textContent = currentLang === 'ja' ? 'English' : '日本語';
+
+    // data-ja / data-en 属性を持つすべての要素を走査してテキストを更新
+    const elements = document.querySelectorAll('[data-ja]');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${currentLang}`);
+    });
+
+    // htmlのlang属性も動的に変更
+    document.documentElement.lang = currentLang;
+  }
+</script>
 
 </body>
 </html>
