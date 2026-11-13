@@ -2,85 +2,679 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>About NagisinnraLinux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NagisinnraLinuxについて。開発理念、特徴、開発者、プロジェクトの展望をご紹介します。">
+<title>About | NagisinnraLinux</title>
+
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    line-height: 1.7;
+:root {
+  --accent: #788c78;
+  --text: #202520;
+  --muted: #737b73;
+  --border: #e8ebe7;
+  --background: #ffffff;
+  --surface: #f7f8f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans JP", sans-serif;
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: .75;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 0 28px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+nav a {
+  color: #626a62;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.lang-btn:hover {
+  border-color: #cbd5ca;
+  background: #eaece7;
+}
+
+.hero {
+  max-width: 1120px;
+  margin: auto;
+  padding: 110px 28px 95px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 18px 0;
+  font-size: clamp(38px, 6vw, 60px);
+  line-height: 1.2;
+  letter-spacing: -2px;
+  font-weight: 650;
+}
+
+.hero p {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.hero-meta {
+  margin-top: 28px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  padding: 6px 13px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  color: #697169;
+  font-size: 12px;
+}
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 28px 100px;
+}
+
+.section {
+  margin-top: 75px;
+}
+
+.section-header {
+  margin-bottom: 25px;
+}
+
+.section-header h2 {
+  margin: 0 0 8px;
+  font-size: 25px;
+  letter-spacing: -.6px;
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.intro {
+  padding: 35px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.intro p {
+  margin: 0;
+  color: #626a62;
+  font-size: 15px;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.value-card {
+  padding: 27px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .2s, transform .2s;
+}
+
+.value-card:hover {
+  border-color: #cbd5ca;
+  transform: translateY(-2px);
+}
+
+.value-number {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.value-card h3 {
+  margin: 12px 0 8px;
+  font-size: 17px;
+}
+
+.value-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.feature {
+  padding: 25px;
+  background: var(--surface);
+  border-radius: 13px;
+}
+
+.feature h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.developer-card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 35px;
+  padding: 35px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.developer-label {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.developer-name {
+  margin: 10px 0 5px;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -.8px;
+}
+
+.developer-alias {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.developer-description {
+  color: #626a62;
+  font-size: 14px;
+}
+
+.developer-description p:first-child {
+  margin-top: 0;
+}
+
+.outlook {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.outlook-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 19px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.outlook-item span:first-child {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.outlook-item span:last-child {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+.contact {
+  margin-top: 85px;
+  padding: 45px 30px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.contact h2 {
+  margin: 0 0 10px;
+  font-size: 25px;
+}
+
+.contact p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.button {
+  display: inline-block;
+  padding: 11px 23px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+
+.button:hover {
+  opacity: .85;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 28px;
+  color: #929992;
+  font-size: 12px;
+}
+
+.footer-inner {
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  .nav-container {
+    height: auto;
+    min-height: 65px;
+    padding: 15px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
-  h1 {
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 10px;
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
   }
-  nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #4a90e2;
+
+  nav {
+    width: 100%;
+    gap: 19px;
+    padding-bottom: 3px;
   }
-  h2 {
-    margin-top: 40px;
-    color: #4a90e2;
+
+  .hero {
+    padding: 75px 22px 65px;
   }
+
+  .content {
+    padding: 0 20px 70px;
+  }
+
+  .values,
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .developer-card {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 25px;
+  }
+
+  .intro {
+    padding: 25px;
+  }
+
+  .outlook-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .outlook-item span:last-child {
+    text-align: left;
+  }
+
+  .contact {
+    padding: 35px 20px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="/">Home</a>
-  <a href="/download/">Download</a>
-  <a href="/install/">Install Guide</a>
-  <a href="/support/">Support</a>
-  <a href="/faq/">FAQ</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/about/">About</a>
-</nav>
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">NagisinnraLinux</a>
 
-<h1>About NagisinnraLinux</h1>
+    <div class="nav-right">
+      <nav>
+        <a href="/" data-ja="Home" data-en="Home">Home</a>
+        <a href="/download/" data-ja="Download" data-en="Download">Download</a>
+        <a href="/install/" data-ja="Install Guide" data-en="Install Guide">Install Guide</a>
+        <a href="/support/" data-ja="Support" data-en="Support">Support</a>
+        <a href="/faq/" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        <a href="/compatibility/" data-ja="Compatibility" data-en="Compatibility">Compatibility</a>
+        <a href="/about/" class="active" data-ja="About" data-en="About">About</a>
+      </nav>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
 
-<p>
-NagisinnraLinux は、13歳の開発者によって作られた  
-Debian ベースの超軽量 Linux ディストリビューションです。  
-古いノートPCやジャンクPCでも快適に動作するよう最適化されています。
-</p>
+<section class="hero">
+  <div class="eyebrow" data-ja="About the project" data-en="About the project">About the project</div>
 
-<h2>開発者について</h2>
-<p>
-NagisinnraLinux の開発者は「なぎしんら」。略称しんら  
-日本の学生で、Linux ディストロ構築・サーバー構築・  
-ネットワーク設定などを得意としています。
-</p>
+  <h1 data-ja="Technology should<br>be accessible to everyone." data-en="Technology should<br>be accessible to everyone.">Technology should<br>be accessible to everyone.</h1>
 
-<h2>プロジェクトの目的</h2>
-<ul>
-  <li>古いPCを再利用し、再び使える状態にすること</li>
-  <li>軽量で高速な Linux 環境を提供すること</li>
-  <li>初心者でも扱いやすい日本語環境を整えること</li>
-  <li>教育用途や企業用途でも使える安定性を確保すること</li>
-</ul>
+  <p data-ja="NagisinnraLinux は、古いPCにも新しい可能性を与えることを目指して開発されている Debian ベースの Linux ディストリビューションです。軽量性、使いやすさ、日本語環境を大切にしています。" data-en="NagisinnraLinux is a Debian-based Linux distribution developed to give new possibilities to older PCs. We value lightweight performance, ease of use, and Japanese localization.">
+    NagisinnraLinux は、古いPCにも新しい可能性を与えることを目指して
+    開発されている Debian ベースの Linux ディストリビューションです。
+    軽量性、使いやすさ、日本語環境を大切にしています。
+  </p>
 
-<h2>特徴</h2>
-<ul>
-  <li>超軽量・高速化されたデスクトップ環境</li>
-  <li>日本語環境の改善</li>
-  <li>古いPCでも動作する最適化</li>
-  <li>仮想環境（VirtualBox / VMware / QEMU）対応</li>
-</ul>
+  <div class="hero-meta">
+    <span class="meta-tag" data-ja="Debian Based" data-en="Debian Based">Debian Based</span>
+    <span class="meta-tag" data-ja="Lightweight Linux" data-en="Lightweight Linux">Lightweight Linux</span>
+    <span class="meta-tag" data-ja="Japan" data-en="Japan">Japan</span>
+    <span class="meta-tag" data-ja="Open Source" data-en="Open Source">Open Source</span>
+  </div>
+</section>
 
-<h2>今後の展望</h2>
-<ul>
-  <li>DistroWatch 掲載</li>
-  <li>企業向けスポンサー獲得</li>
-  <li>公式ミラーサーバーの拡充</li>
-  <li>新エディションの開発</li>
-</ul>
+<main class="content">
 
-<h2>お問い合わせ</h2>
-<p>
-→ <a href="https://github.com/nagisinnra/NagisinnraLinux/issues" target="_blank">GitHub Issues</a>  
-からお問い合わせいただけます。
-</p>
+  <section class="intro">
+    <p data-ja="NagisinnraLinux は、限られたハードウェア資源でも快適に利用できるデスクトップ環境を目指すプロジェクトです。古いノートPCや低スペックPCの再活用から、日常的なコンピューター利用まで、幅広い用途を想定して開発しています。" data-en="NagisinnraLinux is a project aiming for a desktop environment that can be comfortably used even with limited hardware resources. It is developed for a wide range of use cases, from recycling old laptops and low-spec PCs to daily computer usage.">
+      NagisinnraLinux は、限られたハードウェア資源でも快適に利用できる
+      デスクトップ環境を目指すプロジェクトです。
+      古いノートPCや低スペックPCの再活用から、日常的なコンピューター利用まで、
+      幅広い用途を想定して開発しています。
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Our mission" data-en="Our mission">Our mission</h2>
+      <p data-ja="プロジェクトが大切にしている4つの考え方。" data-en="Four core values cherished by the project.">プロジェクトが大切にしている4つの考え方。</p>
+    </div>
+
+    <div class="values">
+      <div class="value-card">
+        <div class="value-number">01 / ACCESSIBILITY</div>
+        <h3 data-ja="古いPCに新しい可能性を" data-en="New Possibilities for Older PCs">古いPCに新しい可能性を</h3>
+        <p data-ja="まだ使えるハードウェアを活用し、コンピューターをより長く使える環境を提供します。" data-en="Leverage still-usable hardware to provide an environment where computers can be used longer.">
+          まだ使えるハードウェアを活用し、
+          コンピューターをより長く使える環境を提供します。
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-number">02 / PERFORMANCE</div>
+        <h3 data-ja="軽量で快適な環境" data-en="Lightweight & Comfortable Environment">軽量で快適な環境</h3>
+        <p data-ja="不必要な負荷を抑え、限られたリソースでも快適に動作するデスクトップを目指します。" data-en="Minimize unnecessary load and aim for a desktop that runs comfortably even with limited resources.">
+          不必要な負荷を抑え、限られたリソースでも
+          快適に動作するデスクトップを目指します。
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-number">03 / LOCALIZATION</div>
+        <h3 data-ja="使いやすい日本語環境" data-en="User-Friendly Japanese Environment">使いやすい日本語環境</h3>
+        <p data-ja="日本語入力や表示環境を整え、日本のユーザーが使いやすい環境を目指します。" data-en="Prepare Japanese input and display environments to create a user-friendly experience for Japanese speakers.">
+          日本語入力や表示環境を整え、
+          日本のユーザーが使いやすい環境を目指します。
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-number">04 / OPEN SOURCE</div>
+        <h3 data-ja="オープンな開発" data-en="Open Development">オープンな開発</h3>
+        <p data-ja="オープンソースの考え方を尊重し、より多くの人が利用・参加できるプロジェクトを目指します。" data-en="Respect open-source principles and aim for a project that more people can use and contribute to.">
+          オープンソースの考え方を尊重し、
+          より多くの人が利用・参加できるプロジェクトを目指します。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Key features" data-en="Key features">Key features</h2>
+      <p data-ja="NagisinnraLinux の主な特徴。" data-en="Key features of NagisinnraLinux.">NagisinnraLinux の主な特徴。</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3 data-ja="Lightweight Desktop" data-en="Lightweight Desktop">Lightweight Desktop</h3>
+        <p data-ja="軽量なデスクトップ環境を採用し、古いPCや低スペックPCでの利用を考慮しています。" data-en="Adopts a lightweight desktop environment, designed with older and low-spec PCs in mind.">
+          軽量なデスクトップ環境を採用し、
+          古いPCや低スペックPCでの利用を考慮しています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3 data-ja="Japanese Environment" data-en="Japanese Environment">Japanese Environment</h3>
+        <p data-ja="日本語表示や日本語入力に対応した環境を提供します。" data-en="Provides an environment supporting Japanese display and input out of the box.">
+          日本語表示や日本語入力に対応した環境を提供します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3 data-ja="Debian Foundation" data-en="Debian Foundation">Debian Foundation</h3>
+        <p data-ja="Debian をベースに構築し、そのパッケージエコシステムを活用しています。" data-en="Built on top of Debian, leveraging its robust package ecosystem.">
+          Debian をベースに構築し、
+          そのパッケージエコシステムを活用しています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3 data-ja="Virtualization Support" data-en="Virtualization Support">Virtualization Support</h3>
+        <p data-ja="VirtualBox、VMware、QEMU などの仮想環境での動作も想定しています。" data-en="Designed to run smoothly in virtual environments such as VirtualBox, VMware, and QEMU.">
+          VirtualBox、VMware、QEMU などの
+          仮想環境での動作も想定しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Developer" data-en="Developer">Developer</h2>
+      <p data-ja="このプロジェクトを開発・運営しています。" data-en="Developing and maintaining this project.">このプロジェクトを開発・運営しています。</p>
+    </div>
+
+    <div class="developer-card">
+      <div>
+        <div class="developer-label">PROJECT DEVELOPER</div>
+        <div class="developer-name" data-ja="なぎしんら" data-en="Nagisinnra">なぎしんら</div>
+        <div class="developer-alias" data-ja="通称：しんら" data-en="Alias: Sinnra">通称：しんら</div>
+      </div>
+
+      <div class="developer-description">
+        <p data-ja="日本を拠点に活動する学生開発者。Linux ディストリビューションの構築を中心に、サーバー構築やネットワーク、ソフトウェア開発などに取り組んでいます。" data-en="A student developer based in Japan. Focusing on building Linux distributions, server setup, networking, and software development.">
+          日本を拠点に活動する学生開発者。
+          Linux ディストリビューションの構築を中心に、
+          サーバー構築やネットワーク、ソフトウェア開発などに取り組んでいます。
+        </p>
+        <p data-ja="NagisinnraLinux は、個人の技術的な挑戦から始まったプロジェクトです。継続的な改善と公開を通じて、国内外のユーザーに利用される Linux ディストリビューションを目指しています。" data-en="NagisinnraLinux started as an individual technical challenge. Through continuous improvement and open release, we aim to build a Linux distribution used by users globally.">
+          NagisinnraLinux は、個人の技術的な挑戦から始まったプロジェクトです。
+          継続的な改善と公開を通じて、国内外のユーザーに利用される
+          Linux ディストリビューションを目指しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-ja="Future direction" data-en="Future direction">Future direction</h2>
+      <p data-ja="今後取り組んでいくプロジェクトの方向性。" data-en="Future directions and roadmap for the project.">今後取り組んでいくプロジェクトの方向性。</p>
+    </div>
+
+    <div class="outlook">
+      <div class="outlook-item">
+        <span data-ja="International Community" data-en="International Community">International Community</span>
+        <span data-ja="国内外のユーザーとの交流・認知拡大" data-en="Global user engagement and awareness">国内外のユーザーとの交流・認知拡大</span>
+      </div>
+
+      <div class="outlook-item">
+        <span data-ja="Infrastructure Expansion" data-en="Infrastructure Expansion">Infrastructure Expansion</span>
+        <span data-ja="ダウンロード環境・ミラーサーバーの拡充" data-en="Expanding download infrastructure and mirror servers">ダウンロード環境・ミラーサーバーの拡充</span>
+      </div>
+
+      <div class="outlook-item">
+        <span data-ja="New Editions" data-en="New Editions">New Editions</span>
+        <span data-ja="新しいデスクトップ環境やエディションの開発" data-en="Developing new desktop environments and editions">新しいデスクトップ環境やエディションの開発</span>
+      </div>
+
+      <div class="outlook-item">
+        <span data-ja="Technical Partnerships" data-en="Technical Partnerships">Technical Partnerships</span>
+        <span data-ja="企業・団体・OSSコミュニティとの連携" data-en="Collaborating with companies, organizations, and OSS communities">企業・団体・OSSコミュニティとの連携</span>
+      </div>
+
+      <div class="outlook-item">
+        <span data-ja="Continuous Development" data-en="Continuous Development">Continuous Development</span>
+        <span data-ja="品質・互換性・使いやすさの継続的な改善" data-en="Continuous improvement in quality, compatibility, and usability">品質・互換性・使いやすさの継続的な改善</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2 data-ja="Get in touch." data-en="Get in touch.">Get in touch.</h2>
+    <p data-ja="バグ報告、機能提案、プロジェクトに関するお問い合わせはこちら。" data-en="Bug reports, feature suggestions, and project inquiries.">
+      バグ報告、機能提案、プロジェクトに関するお問い合わせはこちら。
+    </p>
+    <a
+      href="https://github.com/nagisinnra/NagisinnraLinux/issues"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="button"
+      data-ja="GitHub Issues →"
+      data-en="GitHub Issues →"
+    >
+      GitHub Issues →
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span data-ja="© NagisinnraLinux" data-en="© NagisinnraLinux">© NagisinnraLinux</span>
+    <span data-ja="Reliable by nature. Operational by design." data-en="Reliable by nature. Operational by design.">Reliable by nature. Operational by design.</span>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'ja';
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ja' ? 'en' : 'ja';
+    
+    // ボタンのテキストを切り替え
+    const langBtn = document.getElementById('langToggle');
+    langBtn.textContent = currentLang === 'ja' ? 'English' : '日本語';
+
+    // data-ja / data-en 属性を持つすべての要素を走査してテキストを更新
+    const elements = document.querySelectorAll('[data-ja]');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${currentLang}`);
+    });
+
+    // htmlのlang属性も動的に変更
+    document.documentElement.lang = currentLang;
+  }
+</script>
 
 </body>
 </html>
