@@ -1,57 +1,131 @@
-            <a class="related-link-item"
-               href="https://"
-               target="_blank"
-               rel="noopener noreferrer">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f1">
+  <meta name="description" content="NagisinnraLinux — Official links">
+  <title>Links — NagisinnraLinux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f5f5f1;
+      --surface: rgba(255,255,255,.68);
+      --text: #171817;
+      --muted: #858780;
+      --line: rgba(30,32,29,.09);
+      --green: #78987d;
+      --green-dark: #48634d;
+      --shadow: 0 18px 55px rgba(0,0,0,.055);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      padding: 72px 20px;
+      color: var(--text);
+      font-family: Inter, "Noto Sans JP", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 5% 8%, rgba(151,177,153,.15), transparent 31%),
+        radial-gradient(circle at 95% 25%, rgba(210,195,165,.13), transparent 30%),
+        var(--background);
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(680px, 100%); margin: 0 auto; }
+    .top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 78px;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -.045em; }
+    .brand-mark {
+      width: 36px; height: 36px; display: grid; place-items: center;
+      border-radius: 12px; color: white; font-size: 14px;
+      background: linear-gradient(145deg, #b8ceb9, #6f8f75);
+      box-shadow: inset 0 1px rgba(255,255,255,.65), 0 7px 18px rgba(80,110,85,.18);
+    }
+    .top-label { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+    .intro { margin-bottom: 42px; }
+    .eyebrow {
+      display: inline-block; margin-bottom: 17px; color: var(--green-dark);
+      font-size: 10px; font-weight: 800; letter-spacing: .18em;
+    }
+    h1 {
+      font-size: clamp(48px, 10vw, 76px); line-height: .98;
+      letter-spacing: -.075em; font-weight: 800;
+    }
+    h1 span { display: block; color: #8c8e88; font-weight: 500; }
+    .intro p { margin-top: 20px; color: var(--muted); font-size: 13px; }
+    .link-list { border-top: 1px solid var(--line); }
+    .link {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 23px 5px; border-bottom: 1px solid var(--line);
+      transition: padding .28s ease, background .28s ease;
+    }
+    .link:hover { padding-left: 15px; padding-right: 15px; background: rgba(120,152,125,.045); }
+    .link-copy { min-width: 0; }
+    .category {
+      display: block; margin-bottom: 5px; color: var(--green-dark);
+      font-size: 9px; font-weight: 800; letter-spacing: .16em;
+    }
+    .link h2 { font-size: 18px; line-height: 1.35; letter-spacing: -.04em; font-weight: 700; }
+    .link p { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .arrow {
+      flex: none; width: 34px; height: 34px; display: grid; place-items: center;
+      border: 1px solid var(--line); border-radius: 50%; font-size: 16px;
+      transition: transform .28s, color .28s, background .28s, border-color .28s;
+    }
+    .link:hover .arrow { transform: translate(3px,-3px); color: white; background: var(--text); border-color: var(--text); }
+    footer {
+      display: flex; justify-content: space-between; gap: 15px;
+      margin-top: 58px; padding-top: 18px; border-top: 1px solid var(--line);
+      color: #a0a199; font-size: 10px;
+    }
+    @media (max-width: 520px) {
+      body { padding: 38px 20px; }
+      .top { margin-bottom: 65px; }
+      .top-label { font-size: 8px; }
+      .link { padding: 21px 3px; }
+      .link h2 { font-size: 16px; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <a class="brand" href="https://nagisinnra.github.io/" aria-label="NagisinnraLinux home">
+        <span class="brand-mark">N</span>
+        <span>NagisinnraLinux</span>
+      </a>
+      <span class="top-label">OFFICIAL LINKS</span>
+    </header>
 
-                <div class="related-link-text">
+    <section class="intro">
+      <span class="eyebrow">CONNECT WITH THE PROJECT</span>
+      <h1><span>One project.</span>Many links.</h1>
+      <p>NagisinnraLinuxに関するリンクをまとめています。</p>
+    </section>
 
-                    <span class="related-link-kicker">
-                    FAMILY
-                    </span>
+　　  <a class="link" href="https://hamanet.org/" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy"><span class="category">FRIEND'S WEBSITE</span><h2>hamanet</h2><p>友人のウェブサイト（NagisinnraLinuxとは無関係です）</p></div><span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
 
-                    <h3>
-                     Nagisinnra-create(仮)かつ工事中
-                    </h3>
+　　<a class="link" href="https://fedoranize.seesaa.net/" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy"><span class="category">WEBSITE</span><h2>ゆったりとLinux</h2><p>非常に詳しい情報が書かれたブログサイトです。</p></div><span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
 
-                    <p data-i18n
-                       data-jp="Nagisinnralinux公式がおすすめするNagisinnraLinuxの派生です。"
-                       data-en="This is a derivative of NagisinnraLinux recommended by the official Nagisinnralinux.">
-                        Nagisinnralinux公式がおすすめするNagisinnraLinuxの派生です。
-                    </p>
-
-                </div>
-
-                <span class="related-link-arrow">
-                    ↗
-                </span>
-
-            </a>
-
-            <a class="related-link-item"
-               href="https://fedoranize.seesaa.net/"
-               target="_blank"
-               rel="noopener noreferrer">
-
-                <div class="related-link-text">
-
-                    <span class="related-link-kicker">
-                    BLOG
-                    </span>
-
-                    <h3>
-                     ゆったりとLinux (ブログ)
-                    </h3>
-
-                    <p data-i18n
-                       data-jp="Nagisinnralinux公式が動作テストの参考にしている非常に詳しい情報が書かれたブログです"
-                       data-en="This is a blog with really detailed information that the official Nagisinnralinux uses as a reference for testing.">
-                        Nagisinnralinux公式が動作テストの参考にしている非常に詳しい情報が書かれたブログです
-                    </p>
-
-                </div>
-
-                <span class="related-link-arrow">
-                    ↗
-                </span>
-
-            </a>
+    <footer>
+      <span>© 2026 NagisinnraLinux</span>
+      <span>Small by nature. Beautiful by design.</span>
+    </footer>
+  </main>
+</body>
+</html>
