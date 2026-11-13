@@ -39,6 +39,9 @@
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 78px;
     }
+    .top-right {
+      display: flex; align-items: center; gap: 15px;
+    }
     .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -.045em; }
     .brand-mark {
       width: 36px; height: 36px; display: grid; place-items: center;
@@ -47,6 +50,24 @@
       box-shadow: inset 0 1px rgba(255,255,255,.65), 0 7px 18px rgba(80,110,85,.18);
     }
     .top-label { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+    
+    /* Language Toggle Button */
+    .lang-btn {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 650;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .lang-btn:hover {
+      border-color: #cbd4cb;
+      background: #eaece7;
+    }
+
     .intro { margin-bottom: 42px; }
     .eyebrow {
       display: inline-block; margin-bottom: 17px; color: var(--green-dark);
@@ -85,7 +106,8 @@
     }
     @media (max-width: 520px) {
       body { padding: 38px 20px; }
-      .top { margin-bottom: 65px; }
+      .top { margin-bottom: 65px; flex-direction: column; align-items: flex-start; gap: 15px; }
+      .top-right { width: 100%; justify-content: space-between; }
       .top-label { font-size: 8px; }
       .link { padding: 21px 3px; }
       .link h2 { font-size: 16px; }
@@ -103,39 +125,81 @@
         <span class="brand-mark">N</span>
         <span>NagisinnraLinux</span>
       </a>
-      <span class="top-label">OFFICIAL LINKS</span>
+      <div class="top-right">
+        <span class="top-label" data-ja="OFFICIAL LINKS" data-en="OFFICIAL LINKS">OFFICIAL LINKS</span>
+        <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+      </div>
     </header>
 
     <section class="intro">
-      <span class="eyebrow">CONNECT WITH THE PROJECT</span>
-      <h1><span>One project.</span>Many links.</h1>
-      <p>NagisinnraLinuxに関するリンクをまとめています。</p>
+      <span class="eyebrow" data-ja="CONNECT WITH THE PROJECT" data-en="CONNECT WITH THE PROJECT">CONNECT WITH THE PROJECT</span>
+      <h1 data-ja="<span>One project.</span>Many links." data-en="<span>One project.</span>Many links."><span>One project.</span>Many links.</h1>
+      <p data-ja="NagisinnraLinuxに関するリンクをまとめています。" data-en="A collection of official and related links for NagisinnraLinux.">NagisinnraLinuxに関するリンクをまとめています。</p>
     </section>
 
-　　  <a class="link" href="https://hamanet.org/" target="_blank" rel="noopener noreferrer">
-        <div class="link-copy"><span class="category">FRIEND'S WEBSITE</span><h2>hamanet</h2><p>友人のウェブサイト（NagisinnraLinuxとは無関係です）</p></div><span class="arrow" aria-hidden="true">↗</span>
+    <div class="link-list">
+      <a class="link" href="https://hamanet.org/" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy">
+          <span class="category" data-ja="FRIEND'S WEBSITE" data-en="FRIEND'S WEBSITE">FRIEND'S WEBSITE</span>
+          <h2>hamanet</h2>
+          <p data-ja="友人のウェブサイト（NagisinnraLinuxとは無関係です）" data-en="A friend's website (unrelated to NagisinnraLinux)">友人のウェブサイト（NagisinnraLinuxとは無関係です）</p>
+        </div>
+        <span class="arrow" aria-hidden="true">↗</span>
       </a>
-    </nav>
 
-　　<a class="link" href="https://fedoranize.seesaa.net/" target="_blank" rel="noopener noreferrer">
-        <div class="link-copy"><span class="category">WEBSITE</span><h2>ゆったりとLinux</h2><p>非常に詳しい情報が書かれたブログサイトです。</p></div><span class="arrow" aria-hidden="true">↗</span>
+      <a class="link" href="https://fedoranize.seesaa.net/" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy">
+          <span class="category" data-ja="WEBSITE" data-en="WEBSITE">WEBSITE</span>
+          <h2 data-ja="ゆったりとLinux" data-en="Yuttari to Linux">ゆったりとLinux</h2>
+          <p data-ja="非常に詳しい情報が書かれたブログサイトです。" data-en="A detailed blog site with comprehensive Linux information.">非常に詳しい情報が書かれたブログサイトです。</p>
+        </div>
+        <span class="arrow" aria-hidden="true">↗</span>
       </a>
-    </nav>
+      
+      <a class="link" href="https://sinnra.f5.si" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy">
+          <span class="category" data-ja="WEBSITE" data-en="WEBSITE">WEBSITE</span>
+          <h2 data-ja="Nagisinnra Technology公式サイト" data-en="Nagisinnra Technology Official Site">Nagisinnra Technology公式サイト</h2>
+          <p data-ja="私の任意団体のサイトです。" data-en="Website of my voluntary organization.">私の任意団体のサイトです。</p>
+        </div>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      
+      <a class="link" href="https://nagisinnra.f5.si/support/" target="_blank" rel="noopener noreferrer">
+        <div class="link-copy">
+          <span class="category" data-ja="SUPPORT" data-en="SUPPORT">SUPPORT</span>
+          <h2 data-ja="サポートページ" data-en="Support Page">サポートページ</h2>
+          <p data-ja="困ったときのサポートページです。" data-en="Support page for when you need help.">困ったときのサポートページです。</p>
+        </div>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
     
-    　　<a class="link" href="https://sinnra.f5.si" target="_blank" rel="noopener noreferrer">
-        <div class="link-copy"><span class="category">WEBSITE</span><h2>Nagisinnra Technology公式サイト</h2><p>私の任意団体のサイトです。</p></div><span class="arrow" aria-hidden="true">↗</span>
-      </a>
-    </nav>
-    　　
-    　　<a class="link" href="https://nagisinnra.f5.si/support/" target="_blank" rel="noopener noreferrer">
-        <div class="link-copy"><span class="category">SUPPORT</span><h2>サポートページ</h2><p>困ったときのサポートページです。</p></div><span class="arrow" aria-hidden="true">↗</span>
-      </a>
-    </nav>
-    
-   <footer>
-      <span>© 2026 NagisinnraLinux</span>
-      <span>Small by nature. Beautiful by design.</span>
+    <footer>
+      <span data-ja="© 2026 NagisinnraLinux" data-en="© 2026 NagisinnraLinux">© 2026 NagisinnraLinux</span>
+      <span data-ja="Small by nature. Beautiful by design." data-en="Small by nature. Beautiful by design.">Small by nature. Beautiful by design.</span>
     </footer>
   </main>
+
+  <script>
+    let currentLang = 'ja';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'ja' ? 'en' : 'ja';
+      
+      // ボタンのテキストを切り替え
+      const langBtn = document.getElementById('langToggle');
+      langBtn.textContent = currentLang === 'ja' ? 'English' : '日本語';
+
+      // data-ja / data-en 属性を持つすべての要素を走査してテキストを更新
+      const elements = document.querySelectorAll('[data-ja]');
+      elements.forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${currentLang}`);
+      });
+
+      // htmlのlang属性も動的に変更
+      document.documentElement.lang = currentLang;
+    }
+  </script>
 </body>
 </html>
