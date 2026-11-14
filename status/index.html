@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f8f6">
+<meta name="description" content="NagisinnraLinux Status — official system status and development overview.">
+<title>NagisinnraLinux Status</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f7f8f6;
+  --paper: #fff;
+  --ink: #171a17;
+  --muted: #777e77;
+  --line: #e7eae5;
+  --green: #788c78;
+  --green-deep: #536b55;
+  --green-pale: #edf2ec;
+  --amber: #a7864f;
+  --red: #a45f5f;
+  --max: 1080px;
+  --radius: 20px;
+  --shadow: 0 16px 44px rgba(27, 35, 27, .045);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(120,140,120,.10), transparent 34rem),
+    var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Inter", "Segoe UI", "Noto Sans JP", sans-serif;
+  letter-spacing: -.018em;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+.shell { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(225,229,223,.7);
+  background: rgba(247,248,246,.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; min-height: 38px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; font-size: 14px; font-weight: 680; letter-spacing: -.025em; }
+.brand-mark {
+  width: 25px; height: 25px; display: grid; place-items: center;
+  border: 1px solid #dce3da; border-radius: 8px;
+  color: var(--green-deep); background: #fff;
+  font-size: 12px; font-weight: 750;
+}
+.nav-right { display: flex; align-items: center; gap: 22px; }
+.nav-meta { display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: 12px; }
+.nav-meta a { transition: color .2s; }
+.nav-meta a:hover { color: var(--ink); }
+
+/* Language Toggle Button */
+.lang-btn {
+  background: var(--paper);
+  border: 1px solid #dce3da;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.lang-btn:hover {
+  border-color: #cbd8ca;
+  background: #edf2ec;
+}
+
+main { padding: 82px 0 76px; }
+.hero { padding: 0 0 48px; border-bottom: 1px solid var(--line); }
+.eyebrow {
+  display: flex; align-items: center; gap: 9px;
+  color: var(--green-deep); font-size: 11px; font-weight: 750;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.pulse {
+  position: relative; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+}
+.pulse::after {
+  content: ""; position: absolute; inset: -4px; border: 1px solid rgba(120,140,120,.35);
+  border-radius: 50%; animation: pulse 2.2s ease-out infinite;
+}
+@keyframes pulse { 0% { transform: scale(.65); opacity: .9; } 100% { transform: scale(1.8); opacity: 0; } }
+h1 {
+  max-width: 800px; margin: 22px 0 17px;
+  font-size: clamp(42px, 7vw, 76px); line-height: .99;
+  letter-spacing: -.075em; font-weight: 680;
+}
+.hero-copy { max-width: 610px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.75; }
+.hero-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  margin-top: 34px;
+}
+.overall {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border: 1px solid #dce5dc; border-radius: 999px;
+  color: var(--green-deep); background: rgba(237,242,236,.8);
+  font-size: 12px; font-weight: 680;
+}
+.overall .pulse { width: 6px; height: 6px; }
+.updated { color: #929891; font-size: 11px; letter-spacing: .02em; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 42px 0 17px; }
+.section-kicker { margin: 0 0 7px; color: var(--green-deep); font-size: 10px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+h2 { margin: 0; font-size: 19px; font-weight: 680; letter-spacing: -.04em; }
+.section-note { color: var(--muted); font-size: 12px; }
+.panel {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: rgba(255,255,255,.82); box-shadow: var(--shadow);
+}
+.overview-grid { display: grid; grid-template-columns: 1.35fr .85fr; gap: 16px; }
+.panel-inner { padding: 25px 27px; }
+.panel-title { display: flex; align-items: start; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
+.panel-title h3 { margin: 0; font-size: 15px; font-weight: 680; letter-spacing: -.025em; }
+.panel-title p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.mini-label { color: #9a9f99; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.service-list { display: grid; }
+.service {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  min-height: 53px; border-top: 1px solid #eff1ed;
+}
+.service:first-child { border-top: 0; }
+.service-name { font-size: 13px; font-weight: 590; }
+.state { display: inline-flex; align-items: center; gap: 7px; color: var(--green-deep); font-size: 11px; font-weight: 650; white-space: nowrap; }
+.state-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.state.maintenance { color: var(--amber); }
+.state.maintenance .state-dot { background: #b99b65; }
+.state.degraded { color: #986b43; }
+.state.degraded .state-dot { background: #c18a54; }
+.state.offline { color: var(--red); }
+.state.offline .state-dot { background: #ad6565; }
+.release-name { margin: 22px 0 25px; font-size: clamp(22px, 3vw, 29px); font-weight: 690; letter-spacing: -.055em; }
+.release-rule { width: 34px; height: 2px; margin-bottom: 21px; background: var(--green); }
+.meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.meta-box { padding: 13px 14px; border-radius: 12px; background: #f6f8f5; }
+.meta-label { margin-bottom: 6px; color: var(--muted); font-size: 10px; }
+.meta-value { font-size: 14px; font-weight: 680; }
+.developer-panel { padding: 24px 27px; }
+.dev-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; }
+.dev-option {
+  min-height: 78px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  padding: 13px; border: 1px solid var(--line); border-radius: 13px;
+  color: #747a73; background: #fff; text-align: left;
+}
+.dev-option.active { border-color: #cbd8ca; color: var(--green-deep); background: var(--green-pale); }
+.dev-emoji { margin-bottom: 7px; font-size: 17px; }
+.dev-option span:last-child { font-size: 11px; font-weight: 650; }
+.task-list { display: grid; }
+.task {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px;
+  padding: 17px 0; border-top: 1px solid #eff1ed;
+}
+.task:first-child { border-top: 0; }
+.task-title { font-size: 13px; font-weight: 660; }
+.task-desc { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.task-state { padding: 6px 9px; border-radius: 999px; color: #687968; background: #f0f4ef; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.task-state.planned { color: #81745e; background: #f5f2eb; }
+.bottom-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 16px; margin-top: 16px; }
+.metric-panel, .incident-panel { padding: 25px 27px; }
+.metric-value { margin: 26px 0 8px; font-size: clamp(42px, 6vw, 58px); line-height: .95; font-weight: 680; letter-spacing: -.075em; }
+.metric-caption { color: var(--muted); font-size: 11px; }
+.metric-line { height: 3px; margin-top: 22px; overflow: hidden; border-radius: 99px; background: #edf0eb; }
+.metric-line span { display: block; width: 99.98%; height: 100%; border-radius: inherit; background: var(--green); }
+.incident-copy { margin: 23px 0 0; padding: 15px 16px; border-radius: 12px; color: #667066; background: #f6f8f5; font-size: 12px; line-height: 1.6; }
+footer { padding: 25px 0 35px; border-top: 1px solid var(--line); color: #8b918a; font-size: 11px; }
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.footer-brand { color: #596459; font-weight: 700; }
+.footer-tagline { margin-top: 5px; }
+.footer-right { text-align: right; }
+.fade { animation: rise .65s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .shell { width: min(100% - 34px, var(--max)); }
+  main { padding-top: 58px; }
+  .overview-grid, .bottom-grid { grid-template-columns: 1fr; }
+  .dev-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-foot { align-items: flex-start; flex-direction: column; }
+  .section-head { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+@media (max-width: 460px) {
+  .nav-right { gap: 12px; }
+  .nav-meta { gap: 12px; font-size: 11px; }
+  .nav-meta a:first-child { display: none; }
+  h1 { font-size: 43px; }
+  .hero-copy { font-size: 14px; }
+  .panel-inner, .developer-panel, .metric-panel, .incident-panel { padding: 21px; }
+  .task { grid-template-columns: 1fr; gap: 9px; }
+  .task-state { justify-self: start; }
+  .footer-row { align-items: flex-start; flex-direction: column; }
+  .footer-right { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="shell nav">
+    <a class="brand" href="#" aria-label="NagisinnraLinux Status home">
+      <span class="brand-mark">N</span>
+      <span>NagisinnraLinux <span style="color:#8b928a;font-weight:500">/ Status</span></span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-meta">
+        <a href="#infrastructure" data-ja="インフラストラクチャ" data-en="Infrastructure">Infrastructure</a>
+        <a href="#development" data-ja="開発状況" data-en="Development">Development</a>
+        <span data-ja="システム概要" data-en="System overview">System overview</span>
+      </div>
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero fade">
+    <div class="eyebrow"><span class="pulse"></span> <span data-ja="公式システムステータス" data-en="Official system status">Official system status</span></div>
+    <h1 data-ja="信頼性を標準に。<br>実用性を設計に。" data-en="Reliable by nature.<br>Operational by design.">Reliable by nature.<br>Operational by design.</h1>
+    <p class="hero-copy" data-ja="NagisinnraLinuxエコシステム全体における、稼働状況、リリース情報、開発の進捗を明確に確認できます。" data-en="A clear view of the availability, releases, and development activity across the NagisinnraLinux ecosystem.">A clear view of the availability, releases, and development activity across the NagisinnraLinux ecosystem.</p>
+    <div class="hero-foot">
+      <div class="overall"><span class="pulse"></span><span id="overallLabel" data-ja="全システム正常稼働中" data-en="All Systems Operational">All Systems Operational</span></div>
+      <div class="updated">NAGISINNRA TECHNOLOGY <span aria-hidden="true">·</span> <span data-ja="システム概要" data-en="SYSTEM OVERVIEW">SYSTEM OVERVIEW</span></div>
+    </div>
+  </section>
+
+  <section id="infrastructure">
+    <div class="section-head">
+      <div><p class="section-kicker">01 / Platform</p><h2 data-ja="インフラストラクチャ" data-en="Infrastructure">Infrastructure</h2></div>
+      <div class="section-note" data-ja="コアサービスと現在の稼働状況" data-en="Core services and current availability">Core services and current availability</div>
+    </div>
+    <div class="overview-grid fade">
+      <article class="panel panel-inner">
+        <div class="panel-title">
+          <div><h3 data-ja="サービスステータス" data-en="Service status">Service status</h3><p data-ja="主要なNagisinnraLinuxサービスの現在の状態。" data-en="Current status of core NagisinnraLinux services.">Current status of core NagisinnraLinux services.</p></div>
+          <span class="mini-label" data-ja="サービス" data-en="Services">Services</span>
+        </div>
+        <div class="service-list" id="services"></div>
+      </article>
+      <article class="panel panel-inner">
+        <div class="panel-title">
+          <div><h3 data-ja="現在のリリース" data-en="Current release">Current release</h3><p data-ja="現在パブリックに維持されている最新リリース。" data-en="The latest publicly maintained release.">The latest publicly maintained release.</p></div>
+          <span class="mini-label" data-ja="リリース" data-en="Release">Release</span>
+        </div>
+        <div class="release-rule"></div>
+        <div class="release-name" id="releaseName">NagisinnraLinux</div>
+        <div class="meta">
+          <div class="meta-box"><div class="meta-label" data-ja="バージョン" data-en="Version">Version</div><div class="meta-value" id="version">1.1.1</div></div>
+          <div class="meta-box"><div class="meta-label" data-ja="リリースチャンネル" data-en="Release channel">Release channel</div><div class="meta-value" id="channel" data-ja="安定版" data-en="Stable">Stable</div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><p class="section-kicker">02 / Maintainer</p><h2 data-ja="開発者ステータス" data-en="Developer status">Developer status</h2></div>
+      <div class="section-note" data-ja="プロジェクト保守担当者の現在の状態" data-en="A simple human status for the project maintainer">A simple human status for the project maintainer</div>
+    </div>
+    <article class="panel developer-panel fade">
+      <div class="dev-grid" id="developer"></div>
+    </article>
+  </section>
+
+  <section id="development">
+    <div class="section-head">
+      <div><p class="section-kicker">03 / Progress</p><h2 data-ja="現在の開発状況" data-en="Current development">Current development</h2></div>
+      <div class="section-note" data-ja="エコシステムを前進させる取り組み" data-en="Work moving the ecosystem forward">Work moving the ecosystem forward</div>
+    </div>
+    <article class="panel panel-inner fade">
+      <div class="task-list" id="tasks"></div>
+    </article>
+  </section>
+
+  <section class="bottom-grid fade">
+    <article class="panel metric-panel">
+      <div class="panel-title">
+        <div><h3 data-ja="サービスの稼働率" data-en="Service availability">Service availability</h3><p data-ja="監視対象サービスの過去の稼働率。" data-en="Rolling availability across monitored services.">Rolling availability across monitored services.</p></div>
+        <span class="mini-label" data-ja="稼働率" data-en="Uptime">Uptime</span>
+      </div>
+      <div class="metric-value" id="availability">99.98%</div>
+      <div class="metric-caption" data-ja="現在の期間" data-en="Current period">Current period</div>
+      <div class="metric-line" aria-hidden="true"><span></span></div>
+    </article>
+    <article class="panel incident-panel">
+      <div class="panel-title">
+        <div><h3 data-ja="インシデント履歴" data-en="Incident history">Incident history</h3><p data-ja="最近のサービス信頼性に関するイベント。" data-en="Recent service reliability events.">Recent service reliability events.</p></div>
+        <span class="mini-label" data-ja="履歴" data-en="History">History</span>
+      </div>
+      <p class="incident-copy" id="incident" data-ja="この期間に報告されたインシデントはありません。" data-en="No incidents reported during this period.">No incidents reported during this period.</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="shell footer-row">
+    <div>
+      <div class="footer-brand">NagisinnraLinux Status</div>
+      <div class="footer-tagline" data-ja="透明性のために構築されています。" data-en="Built for transparency.">Built for transparency.</div>
+    </div>
+    <div class="footer-right">Nagisinnra Technology<br><span data-ja="丁寧な保守・運用を行っています。" data-en="Maintained with care.">Maintained with care.</span></div>
+  </div>
+</footer>
+
+<script>
+/*
+=========================================================
+  NagisinnraLinux Status
+  GitHub Pages / Single HTML configuration
+
+  Edit the values in the configuration section below.
+=========================================================
+*/
+
+/* Overall status */
+const overallStatus = {
+  label_ja: "全システム正常稼働中",
+  label_en: "All Systems Operational"
+};
+
+/*
+  Infrastructure status:
+  operational = Operational
+  maintenance = Maintenance
+  degraded    = Degraded Performance
+  offline     = Offline
+*/
+const infrastructure = [
+  { name: "Main Website",   status: "operational" },
+  { name: "Downloads",      status: "operational" },
+  { name: "Repository",     status: "operational" },
+  { name: "Documentation",  status: "operational" }
+];
+
+/* Current release */
+const currentRelease = {
+  name: "NagisinnraLinux",
+  version: "1.0.8",
+  channel_ja: "安定版",
+  channel_en: "Stable"
+};
+
+/*
+  Developer status:
+  alive    = Alive
+  coding   = Coding
+  studying = Studying
+  sleeping = Sleeping
+  fixing   = Fixing Production
+*/
+const developerStatus = "coding";
+
+/* Current development */
+const development = [
+  {
+    title_ja: "Mist Edition のブラッシュアップ",
+    title_en: "Mist Edition refinement",
+    desc_ja: "現在のリリース体験の品質向上を進めています。",
+    desc_en: "Polishing the current release experience.",
+    state_ja: "進行中",
+    state_en: "In progress"
+  },
+  {
+    title_ja: "インフラストラクチャの改善",
+    title_en: "Infrastructure improvements",
+    desc_ja: "プロジェクトサービス全体の信頼性を高めています。",
+    desc_en: "Improving reliability across project services.",
+    state_ja: "進行中",
+    state_en: "In progress"
+  },
+  {
+    title_ja: "ドキュメントの更新",
+    title_en: "Documentation updates",
+    desc_ja: "インストール手順やプロジェクト文書を常に最新の状態に保ちます。",
+    desc_en: "Keeping installation and project documentation current.",
+    state_ja: "計画中",
+    state_en: "Planned"
+  }
+];
+
+/* Service availability */
+const availability = "99.98%";
+
+/* Incident history */
+const incidentHistory_ja = "この期間に報告されたインシデントはありません。";
+const incidentHistory_en = "No incidents reported during this period.";
+
+/* =====================================================
+    Do not normally need to edit below this line.
+===================================================== */
+
+const statusLabels = {
+  operational: { ja: "正常稼働中", en: "Operational" },
+  maintenance: { ja: "メンテナンス中", en: "Maintenance" },
+  degraded:    { ja: "パフォーマンス低下", en: "Degraded Performance" },
+  offline:     { ja: "オフライン", en: "Offline" }
+};
+
+const developerStates = [
+  ["alive", "☕", { ja: "生存中", en: "Alive" }],
+  ["coding", "⌘", { ja: "コーディング中", en: "Coding" }],
+  ["studying", "＋", { ja: "勉強中", en: "Studying" }],
+  ["sleeping", "－", { ja: "睡眠中", en: "Sleeping" }],
+  ["fixing", "!", { ja: "本番環境の修正中", en: "Fixing Production" }]
+];
+
+// ローカルストレージから前回の言語設定を読み込む（デフォルトは 'ja'）
+let currentLang = localStorage.getItem('nagisinnra_lang') || 'ja';
+
+// ページ読み込み時に即座に言語を適用
+applyLanguage(currentLang);
+
+function toggleLanguage() {
+  currentLang = currentLang === 'ja' ? 'en' : 'ja';
+  localStorage.setItem('nagisinnra_lang', currentLang);
+  applyLanguage(currentLang);
+}
+
+function applyLanguage(lang) {
+  // ボタンのテキストを更新
+  const langBtn = document.getElementById('langToggle');
+  if (langBtn) {
+    langBtn.textContent = lang === 'ja' ? 'English' : '日本語';
+  }
+
+  // 全体ステータスラベル
+  document.getElementById("overallLabel").textContent = overallStatus[`label_${lang}`];
+
+  // サービス一覧の描画
+  document.getElementById("services").innerHTML = infrastructure.map(service => `
+    <div class="service">
+      <span class="service-name">${service.name}</span>
+      <span class="state ${service.status}">
+        <i class="state-dot" aria-hidden="true"></i>
+        ${statusLabels[service.status][lang]}
+      </span>
+    </div>
+  `).join("");
+
+  // リリース情報の反映
+  document.getElementById("releaseName").textContent = currentRelease.name;
+  document.getElementById("version").textContent = currentRelease.version;
+  document.getElementById("channel").textContent = currentRelease[`channel_${lang}`];
+
+  // 開発者ステータスの描画
+  document.getElementById("developer").innerHTML = developerStates.map(state => `
+    <div class="dev-option ${state[0] === developerStatus ? "active" : ""}"
+         ${state[0] === developerStatus ? 'aria-current="true"' : ''}>
+      <span class="dev-emoji" aria-hidden="true">${state[1]}</span>
+      <span>${state[2][lang]}</span>
+    </div>
+  `).join("");
+
+  // 開発タスクの描画
+  document.getElementById("tasks").innerHTML = development.map(task => `
+    <div class="task">
+      <div>
+        <div class="task-title">${task[`title_${lang}`]}</div>
+        <div class="task-desc">${task[`desc_${lang}`]}</div>
+      </div>
+      <div class="task-state ${task.state_en.toLowerCase().replaceAll(" ", "-")}">${task[`state_${lang}`]}</div>
+    </div>
+  `).join("");
+
+  // 稼働率とインシデント
+  document.getElementById("availability").textContent = availability;
+  document.getElementById("incident").textContent = lang === 'ja' ? incidentHistory_ja : incidentHistory_en;
+
+  // data-ja / data-en 属性を持つすべての静的要素のテキストを更新
+  const elements = document.querySelectorAll('[data-ja]');
+  elements.forEach(el => {
+    el.innerHTML = el.getAttribute(`data-${lang}`);
+  });
+
+  // htmlタグのlang属性を更新
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>
