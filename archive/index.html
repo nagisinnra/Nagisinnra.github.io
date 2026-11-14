@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NagisinnraLinux Release Archive</title>
+    <style>
+        /* リセット・基本設定 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fafcfa;
+            color: #2c352a;
+        }
+
+        /* 元のデザインをそのまま継承 */
+        #release-archive {
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 0 24px;
+        }
+        .archive-header {
+            margin-bottom: 48px;
+        }
+        .archive-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .archive-header p {
+            color: #75806f;
+        }
+        .release-item {
+            background: #ffffff;
+            border: 1px solid #e6eee3;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .release-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(83, 113, 79, 0.06);
+        }
+        .release-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .release-top h3 {
+            font-size: 1.6rem;
+        }
+        .release-top span {
+            color: #7d8779;
+        }
+        .release-status {
+            display: inline-block;
+            background: #eef3ec;
+            color: #567057;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        .release-status.lts {
+            background: #e4efe1;
+            color: #53714f;
+            font-weight: 600;
+        }
+        .release-notes {
+            margin-left: 18px;
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+        .release-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .release-links a {
+            color: #5d7860;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .release-links a:hover {
+            opacity: 0.7;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<section id="release-archive">
+    <div class="archive-header">
+        <h2>Release Archive</h2>
+        <p>Previous releases, changelogs and ISO downloads.</p>
+    </div>
+
+    <!-- ここにJavaScriptでリリース一覧が自動生成されます -->
+    <div id="release-list"></div>
+</section>
+
+<script>
+    /* =========================================================================
+       【新しいリリースの追加方法】
+       下の RELEASES の一番上（[ のすぐ下）に、{ ... }, のブロックを追加するだけです！
+       HTMLタグを書く必要はありません。
+    ========================================================================= */
+    const RELEASES = [
+        // --- ここからコピーして上に貼り付け ---
+        {
+            version: "v1.1.1 LTS",
+            date: "Nov 2026",
+            status: "Supported until 2031",
+            isLTS: true, // LTS（長期サポート版）なら true、通常版・アーカイブなら false
+            notes: [
+                "Current Long-Term Support release.",
+                "Stability improvements.",
+                "Various bug fixes."
+            ],
+            isoUrl: "https://sourceforge.net/projects/nagisinnralinux/files/NagisinnraLinux-v1.1.1.iso/download",
+            githubUrl: "https://github.com/nagisinnra/NagisinnraLinux/releases/tag/v1.1.1"
+        },
+        // --- ここまでコピー ---
+
+        // ↓ サンプル（過去のバージョン例：不要なら削除してください）
+        {
+            version: "v1.0.5",
+            date: "May 2026",
+            status: "Archived",
+            isLTS: false,
+            notes: [
+                "Initial public release of NagisinnraLinux.",
+                "Base system setup and core packages."
+            ],
+            isoUrl: "https://sourceforge.net/projects/nagisinnralinux/files/NagisinnraLinux-v1.0.5.iso/download",
+            githubUrl: "NO-Link"
+        }
+    ];
+
+    /* =========================================================================
+       以下は自動描画用のプログラム（普段は触らなくてOKです）
+    ========================================================================= */
+    const listContainer = document.getElementById("release-list");
+
+    RELEASES.forEach(release => {
+        // 変更点のリスト（<li>）を生成
+        const notesHtml = release.notes
+            .map(note => `<li>${note}</li>`)
+            .join("");
+
+        // リンクの生成（URLが空欄 "" の場合はリンクを非表示にする親切設計）
+        let linksHtml = "";
+        if (release.isoUrl) {
+            linksHtml += `<a href="${release.isoUrl}">Download ISO</a>`;
+        }
+        if (release.githubUrl) {
+            linksHtml += `<a href="${release.githubUrl}">GitHub Release</a>`;
+        }
+
+        // カード全体のHTMLを組み立てて追加
+        const itemHtml = `
+            <div class="release-item">
+                <div class="release-top">
+                    <h3>${release.version}</h3>
+                    <span>${release.date}</span>
+                </div>
+                <div class="release-status ${release.isLTS ? 'lts' : ''}">
+                    ${release.status}
+                </div>
+                <ul class="release-notes">
+                    ${notesHtml}
+                </ul>
+                <div class="release-links">
+                    ${linksHtml}
+                </div>
+            </div>
+        `;
+        listContainer.insertAdjacentHTML("beforeend", itemHtml);
+    });
+</script>
+
+</body>
+</html>
