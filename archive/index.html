@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
             padding: 0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: #fafcfa;
             color: #2c352a;
         }
@@ -25,6 +25,11 @@
         }
         .archive-header {
             margin-bottom: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         .archive-header h2 {
             font-size: 3rem;
@@ -34,6 +39,37 @@
         .archive-header p {
             color: #75806f;
         }
+
+        /* おしゃれな言語切り替えピルボタン */
+        .lang-switcher {
+            display: inline-flex;
+            background: #eef3ec;
+            border: 1px solid #e6eee3;
+            border-radius: 999px;
+            padding: 4px;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .lang-btn {
+            border: none;
+            background: transparent;
+            color: #567057;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .lang-btn:hover {
+            color: #2c352a;
+        }
+        .lang-btn.active {
+            background: #ffffff;
+            color: #2c352a;
+            box-shadow: 0 2px 8px rgba(83, 113, 79, 0.1);
+        }
+
         .release-item {
             background: #ffffff;
             border: 1px solid #e6eee3;
@@ -99,8 +135,16 @@
 
 <section id="release-archive">
     <div class="archive-header">
-        <h2>Release Archive</h2>
-        <p>Previous releases, changelogs and ISO downloads.</p>
+        <div>
+            <h2 id="ui-title">Release Archive</h2>
+            <p id="ui-subtitle">Previous releases, changelogs and ISO downloads.</p>
+        </div>
+
+        <!-- 言語切り替えスイッチ -->
+        <div class="lang-switcher" role="group" aria-label="Language switcher">
+            <button type="button" class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+            <button type="button" class="lang-btn" data-lang="ja" onclick="setLanguage('ja')">日本語</button>
+        </div>
     </div>
 
     <!-- ここにJavaScriptでリリース一覧が自動生成されます -->
@@ -111,80 +155,132 @@
     /* =========================================================================
        【新しいリリースの追加方法】
        下の RELEASES の一番上（[ のすぐ下）に、{ ... }, のブロックを追加するだけです！
-       HTMLタグを書く必要はありません。
+       en（英語）と ja（日本語）の両方を書いておくと自動で切り替わります。
     ========================================================================= */
     const RELEASES = [
         // --- ここからコピーして上に貼り付け ---
         {
             version: "v1.1.1 LTS",
-            date: "Nov 2026",
-            status: "Supported until 2031",
+            date: { en: "Nov 2026", ja: "2026年11月" },
+            status: { en: "Supported until 2031", ja: "2031年までサポート" },
             isLTS: true, // LTS（長期サポート版）なら true、通常版・アーカイブなら false
-            notes: [
-                "Current Long-Term Support release.",
-                "Stability improvements.",
-                "Various bug fixes."
-            ],
+            notes: {
+                en: [
+                    "Current Long-Term Support release.",
+                    "Stability improvements.",
+                    "Various bug fixes."
+                ],
+                ja: [
+                    "最新の長期サポート（LTS）リリース。",
+                    "システム全体の安定性を向上。",
+                    "各種バグの修正。"
+                ]
+            },
             isoUrl: "https://sourceforge.net/projects/nagisinnralinux/files/NagisinnraLinux-v1.1.1.iso/download",
             githubUrl: "https://github.com/nagisinnra/NagisinnraLinux/releases/tag/v1.1.1"
         },
         // --- ここまでコピー ---
 
-        // ↓ サンプル（過去のバージョン例：不要なら削除してください）
         {
             version: "v1.0.5",
-            date: "May 2026",
-            status: "Archived",
+            date: { en: "May 2026", ja: "2026年5月" },
+            status: { en: "Archived", ja: "アーカイブ済み" },
             isLTS: false,
-            notes: [
-                "Initial public release of NagisinnraLinux.",
-                "Base system setup and core packages."
-            ],
+            notes: {
+                en: [
+                    "Initial public release of NagisinnraLinux.",
+                    "Base system setup and core packages."
+                ],
+                ja: [
+                    "NagisinnraLinux の初回公開リリース。",
+                    "ベースシステムの構築とコアパッケージの導入。"
+                ]
+            },
             isoUrl: "https://sourceforge.net/projects/nagisinnralinux/files/NagisinnraLinux-v1.0.5.iso/download",
             githubUrl: "NO-Link"
         }
     ];
 
     /* =========================================================================
-       以下は自動描画用のプログラム（普段は触らなくてOKです）
+       以下は自動描画・言語切り替え用のプログラム（普段は触らなくてOKです）
     ========================================================================= */
-    const listContainer = document.getElementById("release-list");
-
-    RELEASES.forEach(release => {
-        // 変更点のリスト（<li>）を生成
-        const notesHtml = release.notes
-            .map(note => `<li>${note}</li>`)
-            .join("");
-
-        // リンクの生成（URLが空欄 "" の場合はリンクを非表示にする親切設計）
-        let linksHtml = "";
-        if (release.isoUrl) {
-            linksHtml += `<a href="${release.isoUrl}">Download ISO</a>`;
+    const UI_TEXT = {
+        en: {
+            title: "Release Archive",
+            subtitle: "Previous releases, changelogs and ISO downloads.",
+            downloadIso: "Download ISO",
+            githubRelease: "GitHub Release"
+        },
+        ja: {
+            title: "リリースアーカイブ",
+            subtitle: "過去のリリース、変更履歴、ISOイメージのダウンロード。",
+            downloadIso: "ISOをダウンロード",
+            githubRelease: "GitHub リリース"
         }
-        if (release.githubUrl) {
-            linksHtml += `<a href="${release.githubUrl}">GitHub Release</a>`;
-        }
+    };
 
-        // カード全体のHTMLを組み立てて追加
-        const itemHtml = `
-            <div class="release-item">
-                <div class="release-top">
-                    <h3>${release.version}</h3>
-                    <span>${release.date}</span>
+    // ブラウザの言語設定を自動判定（日本語環境なら最初から日本語にする場合は下の行を有効化できます）
+    // let currentLang = navigator.language.startsWith('ja') ? 'ja' : 'en';
+    let currentLang = 'en';
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+
+        // ボタンのアクティブ状態を切り替え
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        // ヘッダーテキストの更新
+        document.getElementById('ui-title').textContent = UI_TEXT[lang].title;
+        document.getElementById('ui-subtitle').textContent = UI_TEXT[lang].subtitle;
+
+        // リリース一覧を再描画
+        renderReleases();
+    }
+
+    function renderReleases() {
+        const listContainer = document.getElementById("release-list");
+        listContainer.innerHTML = "";
+        const t = UI_TEXT[currentLang];
+
+        RELEASES.forEach(release => {
+            const notesHtml = release.notes[currentLang]
+                .map(note => `<li>${note}</li>`)
+                .join("");
+
+            let linksHtml = "";
+            if (release.isoUrl && release.isoUrl !== "NO-Link") {
+                linksHtml += `<a href="${release.isoUrl}">${t.downloadIso}</a>`;
+            }
+            if (release.githubUrl && release.githubUrl !== "NO-Link") {
+                linksHtml += `<a href="${release.githubUrl}">${t.githubRelease}</a>`;
+            }
+
+            const itemHtml = `
+                <div class="release-item">
+                    <div class="release-top">
+                        <h3>${release.version}</h3>
+                        <span>${release.date[currentLang]}</span>
+                    </div>
+                    <div class="release-status ${release.isLTS ? 'lts' : ''}">
+                        ${release.status[currentLang]}
+                    </div>
+                    <ul class="release-notes">
+                        ${notesHtml}
+                    </ul>
+                    <div class="release-links">
+                        ${linksHtml}
+                    </div>
                 </div>
-                <div class="release-status ${release.isLTS ? 'lts' : ''}">
-                    ${release.status}
-                </div>
-                <ul class="release-notes">
-                    ${notesHtml}
-                </ul>
-                <div class="release-links">
-                    ${linksHtml}
-                </div>
-            </div>
-        `;
-        listContainer.insertAdjacentHTML("beforeend", itemHtml);
-    });
+            `;
+            listContainer.insertAdjacentHTML("beforeend", itemHtml);
+        });
+    }
+
+    // 初回描画
+    renderReleases();
 </script>
 
 </body>
