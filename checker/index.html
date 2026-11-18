@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -169,19 +169,19 @@ body{
 <div class="container">
     <div class="top-bar">
         <div class="lang-switch">
-            <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-            <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">JP</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" id="btn-ja" onclick="setLang('ja')">JP</button>
         </div>
     </div>
 
     <div class="hero">
-        <h1 data-i18n="heroTitle">Compatibility Checker</h1>
-        <p data-i18n="heroSub">Find out if your PC can run NagisinnraLinux.</p>
+        <h1 data-i18n="heroTitle">互換性チェッカー</h1>
+        <p data-i18n="heroSub">お使いのPCで NagisinnraLinux が動作するか確認しましょう。</p>
     </div>
 
     <div class="card">
         <div class="section">
-            <h2 data-i18n="ramTitle">How much RAM do you have?</h2>
+            <h2 data-i18n="ramTitle">メモリ（RAM）の容量はどれくらいですか？</h2>
             <div class="grid" id="ramGrid">
                 <div class="option" data-val="256MB">256MB</div>
                 <div class="option" data-val="512MB">512MB</div>
@@ -194,19 +194,19 @@ body{
         </div>
 
         <div class="section">
-            <h2 data-i18n="cpuTitle">What CPU do you have?</h2>
+            <h2 data-i18n="cpuTitle">CPUの種類は何ですか？</h2>
             <div class="grid" id="cpuGrid">
                 <div class="option" data-val="Core 2 Duo">Core 2 Duo</div>
                 <div class="option" data-val="Core i Series">Core i Series</div>
                 <div class="option" data-val="Core Ultra">Core Ultra</div>
                 <div class="option" data-val="Ryzen">Ryzen</div>
                 <div class="option" data-val="Athlon / FX">Athlon / FX</div>
-                <div class="option" data-val="unknown" data-i18n="cpuUnknown">I don't know</div>
+                <div class="option" data-val="unknown" data-i18n="cpuUnknown">わからない</div>
             </div>
         </div>
 
         <button class="button" onclick="checkCompatibility()" data-i18n="checkBtn">
-            Check Compatibility
+            互換性をチェックする
         </button>
 
         <div id="result">
@@ -218,7 +218,8 @@ body{
 </div>
 
 <script>
-let currentLang = "en";
+// 初期言語を日本語（"ja"）に設定
+let currentLang = "ja";
 let selectedRAM = "";
 let selectedCPU = "";
 let hasChecked = false;
