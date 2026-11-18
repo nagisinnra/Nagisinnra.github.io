@@ -48,6 +48,9 @@ button,input,select,textarea{font:inherit}
 .symbol{width:28px;height:28px;border-radius:8px;background:var(--dark);color:#fff;display:grid;place-items:center;font-size:15px}
 .navlinks{display:flex;gap:22px;color:var(--sub);font-size:12px;font-weight:600}
 .navlinks a:hover{color:var(--green-dark)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.lang-btn{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--sub);padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer;transition:.2s;letter-spacing:.04em}
+.lang-btn:hover{border-color:var(--green);color:var(--green-dark)}
 .btn{border:0;border-radius:999px;background:var(--dark);color:#fff;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(23,24,23,.15)}
 .btn-sub{background:#fff;color:var(--text);border:1px solid var(--line)}
@@ -145,21 +148,24 @@ textarea{min-height:68px;resize:vertical}
 <nav class="nav">
   <a class="brand" href="#"><span class="symbol">N</span><span>Nagisinnra Hardware DB</span></a>
   <div class="navlinks">
-    <a href="#explorer">検索・診断</a>
-    <a href="#reports">検証レポート</a>
+    <a href="#explorer" data-i18n="nav_search">検索・診断</a>
+    <a href="#reports" data-i18n="nav_reports">検証レポート</a>
   </div>
-  <a class="btn" href="#report-form">レポート投稿 ↗</a>
+  <div class="nav-actions">
+    <button class="lang-btn" id="lang-toggle" type="button">EN</button>
+    <a class="btn" href="#report-form" data-i18n="nav_submit">レポート投稿 ↗</a>
+  </div>
 </nav>
 
 <header class="hero">
   <div class="container">
     <div class="eyebrow"><span class="dot"></span> NagisinnraLinux Compatibility</div>
-    <h1>そのPCで、<span>NagisinnraLinuxを。</span></h1>
-    <p>対応ハードウェアの検索とスペック簡易診断、実機検証レポートの共有データベース。</p>
+    <h1 id="hero-title">そのPCで、<span>NagisinnraLinuxを。</span></h1>
+    <p data-i18n="hero_desc">対応ハードウェアの検索とスペック簡易診断、実機検証レポートの共有データベース。</p>
     <div class="hero-stats">
-      <div class="stat"><strong id="device-count">0</strong><span>登録デバイス</span></div>
-      <div class="stat"><strong id="report-count">0</strong><span>検証レポート</span></div>
-      <div class="stat"><strong>2 GB+</strong><span>推奨最小メモリ</span></div>
+      <div class="stat"><strong id="device-count">0</strong><span data-i18n="stat_devices">登録デバイス</span></div>
+      <div class="stat"><strong id="report-count">0</strong><span data-i18n="stat_reports">検証レポート</span></div>
+      <div class="stat"><strong>2 GB+</strong><span data-i18n="stat_ram">推奨最小メモリ</span></div>
     </div>
   </div>
 </header>
@@ -169,8 +175,8 @@ textarea{min-height:68px;resize:vertical}
   <section id="explorer">
     <div class="console">
       <div class="mode-tabs">
-        <button class="mode-tab active" data-mode="search">データベース検索</button>
-        <button class="mode-tab" data-mode="diag">スペック簡易診断</button>
+        <button class="mode-tab active" data-mode="search" data-i18n="tab_search">データベース検索</button>
+        <button class="mode-tab" data-mode="diag" data-i18n="tab_diag">スペック簡易診断</button>
       </div>
 
       <!-- モード1: 検索 -->
@@ -179,33 +185,33 @@ textarea{min-height:68px;resize:vertical}
           <input id="query" type="search" placeholder="CPU・GPU・PC型番で検索（例：Core i5 / ThinkPad / Atom）">
         </div>
         <div class="filters" id="filters">
-          <button class="filter active" data-filter="all">すべて</button>
-          <button class="filter" data-filter="recommended">おすすめ</button>
-          <button class="filter" data-filter="usable">動作可能</button>
-          <button class="filter" data-filter="notrec">非推奨</button>
+          <button class="filter active" data-filter="all" data-i18n="filter_all">すべて</button>
+          <button class="filter" data-filter="recommended" data-i18n="filter_rec">おすすめ</button>
+          <button class="filter" data-filter="usable" data-i18n="filter_use">動作可能</button>
+          <button class="filter" data-filter="notrec" data-i18n="filter_not">非推奨</button>
         </div>
       </div>
 
       <!-- モード2: 簡易診断 -->
       <div id="pane-diag" style="display:none">
         <div class="diag-grid">
-          <div><label>CPU名（任意）</label><input id="d-cpu" placeholder="例：Core i5-4300M"></div>
-          <div><label>メモリ</label>
+          <div><label data-i18n="diag_cpu_label">CPU名（任意）</label><input id="d-cpu" placeholder="例：Core i5-4300M"></div>
+          <div><label data-i18n="diag_ram_label">メモリ</label>
             <select id="d-ram">
               <option value="1">1 GB</option>
               <option value="2" selected>2 GB</option>
               <option value="4">4 GB</option>
-              <option value="8">8 GB以上</option>
+              <option value="8" data-i18n="ram_8plus">8 GB以上</option>
             </select>
           </div>
-          <div><label>ストレージ</label>
+          <div><label data-i18n="diag_storage_label">ストレージ</label>
             <select id="d-storage">
               <option>SSD</option>
               <option>eMMC</option>
               <option>HDD</option>
             </select>
           </div>
-          <button class="diag-btn" id="run-diag">診断する</button>
+          <button class="diag-btn" id="run-diag" data-i18n="diag_btn">診断する</button>
         </div>
         <div class="diag-out" id="diag-out"></div>
       </div>
@@ -213,7 +219,7 @@ textarea{min-height:68px;resize:vertical}
 
     <div class="results-bar">
       <span id="result-label">登録デバイス一覧</span>
-      <span>スコア目安：0〜100</span>
+      <span data-i18n="score_guide">スコア目安：0〜100</span>
     </div>
     <div class="results" id="results"></div>
   </section>
@@ -222,43 +228,43 @@ textarea{min-height:68px;resize:vertical}
   <section class="section" id="reports">
     <div class="section-head">
       <div class="kicker">Community Reports</div>
-      <h2 class="section-title">実機検証レポート</h2>
+      <h2 class="section-title" data-i18n="reports_title">実機検証レポート</h2>
     </div>
     <div class="two-col">
       <div class="panel" id="report-form">
-        <h3>検証結果を投稿する</h3>
-        <p>入力内容はブラウザに保存されます。</p>
-        <label for="r-device">デバイス名 *</label>
+        <h3 data-i18n="form_title">検証結果を投稿する</h3>
+        <p data-i18n="form_sub">入力内容はブラウザに保存されます。</p>
+        <label for="r-device" data-i18n="form_device">デバイス名 *</label>
         <input id="r-device" placeholder="例：NEC VersaPro VK25">
         <div class="form-row">
-          <div><label for="r-cpu">CPU *</label><input id="r-cpu" placeholder="Core i5-4300M"></div>
-          <div><label for="r-ram">メモリ</label>
+          <div><label for="r-cpu" data-i18n="form_cpu">CPU *</label><input id="r-cpu" placeholder="Core i5-4300M"></div>
+          <div><label for="r-ram" data-i18n="form_ram">メモリ</label>
             <select id="r-ram"><option>1 GB</option><option>2 GB</option><option selected>4 GB</option><option>8 GB</option><option>16 GB+</option></select>
           </div>
         </div>
         <div class="form-row">
-          <div><label for="r-storage">ストレージ</label>
+          <div><label for="r-storage" data-i18n="form_storage">ストレージ</label>
             <select id="r-storage"><option selected>SSD</option><option>HDD</option><option>eMMC</option></select>
           </div>
-          <div><label for="r-ver">OSバージョン</label><input id="r-ver" placeholder="例：1.1.1"></div>
+          <div><label for="r-ver" data-i18n="form_ver">OSバージョン</label><input id="r-ver" placeholder="例：1.1.1"></div>
         </div>
-        <label for="r-result">動作結果</label>
+        <label for="r-result" data-i18n="form_result">動作結果</label>
         <select id="r-result">
-          <option value="success">成功</option>
-          <option value="partial">一部動作</option>
-          <option value="failed">失敗</option>
+          <option value="success" data-i18n="res_success">成功</option>
+          <option value="partial" data-i18n="res_partial">一部動作</option>
+          <option value="failed" data-i18n="res_failed">失敗</option>
         </select>
-        <label for="r-notes">メモ</label>
+        <label for="r-notes" data-i18n="form_notes">メモ</label>
         <textarea id="r-notes" placeholder="Wi-Fiやグラフィックの動作状況など"></textarea>
-        <button class="btn submit" id="submit-report">レポートを追加する</button>
+        <button class="btn submit" id="submit-report" data-i18n="form_submit">レポートを追加する</button>
       </div>
 
       <div class="panel">
-        <h3>最近の検証レポート</h3>
-        <p>投稿された実機データの一覧。</p>
+        <h3 data-i18n="list_title">最近の検証レポート</h3>
+        <p data-i18n="list_sub">投稿された実機データの一覧。</p>
         <div class="report-list" id="report-list"></div>
-        <button class="btn btn-sub copy-json" id="copy-json">最新レポートをコード用JSONでコピー</button>
-        <p class="notice">※ 投稿データはブラウザのlocalStorageに保存されます。DB本体へ反映したい場合は上のボタンからJSONをコピーしてコードの REPORTS に貼り付けてください。</p>
+        <button class="btn btn-sub copy-json" id="copy-json" data-i18n="copy_json">最新レポートをコード用JSONでコピー</button>
+        <p class="notice" data-i18n="notice">※ 投稿データはブラウザのlocalStorageに保存されます。DB本体へ反映したい場合は上のボタンからJSONをコピーしてコードの REPORTS に貼り付けてください。</p>
       </div>
     </div>
   </section>
@@ -277,79 +283,242 @@ textarea{min-height:68px;resize:vertical}
    status: "recommended" (おすすめ) / "usable" (動作可能) / "notrec" (非推奨)
 ===================================================================== */
 const DEVICES = [
-  { name: "NEC VersaPro (Core i5)", type: "ノートPC", cpu: "Core i5-4300M", gpu: "HD Graphics 4600", ram: "4 GB", storage: "SSD", score: 88, status: "recommended", notes: "実機ベース基準モデル" },
-  { name: "ThinkPad X230", type: "ノートPC", cpu: "Core i5-3320M", gpu: "HD Graphics 4000", ram: "8 GB", storage: "SSD", score: 91, status: "recommended", notes: "軽量デスクトップで非常に快適" },
-  { name: "AMD Ryzen 7 1700", type: "CPU", cpu: "Ryzen 7 1700", gpu: "外部GPU推奨", ram: "16 GB", storage: "SSD", score: 96, status: "recommended", notes: "高負荷作業も余裕のスペック" },
-  { name: "Core i5-2400 Desktop", type: "デスクトップ", cpu: "Core i5-2400", gpu: "HD Graphics 2000", ram: "8 GB", storage: "SSD", score: 76, status: "usable", notes: "動画再生などGPU機能は要確認" },
-  { name: "Intel Core 2 Duo E8400", type: "CPU", cpu: "Core 2 Duo E8400", gpu: "Intel GMA", ram: "2 GB", storage: "HDD", score: 51, status: "usable", notes: "軽作業に限定すれば動作可能" },
-  { name: "Intel Atom N550", type: "CPU", cpu: "Atom N550", gpu: "GMA 3150", ram: "1 GB", storage: "HDD", score: 38, status: "notrec", notes: "メモリ・CPUともに制約大" }
+  { name: "NEC VersaPro (Core i5)", type: "ノートPC", typeEn: "Laptop", cpu: "Core i5-4300M", gpu: "HD Graphics 4600", gpuEn: "HD Graphics 4600", ram: "4 GB", storage: "SSD", score: 88, status: "recommended", notes: "実機ベース基準モデル", notesEn: "Reference hardware baseline model" },
+  { name: "ThinkPad X230", type: "ノートPC", typeEn: "Laptop", cpu: "Core i5-3320M", gpu: "HD Graphics 4000", gpuEn: "HD Graphics 4000", ram: "8 GB", storage: "SSD", score: 91, status: "recommended", notes: "軽量デスクトップで非常に快適", notesEn: "Very smooth with a lightweight desktop" },
+  { name: "AMD Ryzen 7 1700", type: "CPU", typeEn: "CPU", cpu: "Ryzen 7 1700", gpu: "外部GPU推奨", gpuEn: "Discrete GPU recommended", ram: "16 GB", storage: "SSD", score: 96, status: "recommended", notes: "高負荷作業も余裕のスペック", notesEn: "Handles heavy workloads effortlessly" },
+  { name: "Core i5-2400 Desktop", type: "デスクトップ", typeEn: "Desktop", cpu: "Core i5-2400", gpu: "HD Graphics 2000", gpuEn: "HD Graphics 2000", ram: "8 GB", storage: "SSD", score: 76, status: "usable", notes: "動画再生などGPU機能は要確認", notesEn: "Check GPU features such as video playback" },
+  { name: "Intel Core 2 Duo E8400", type: "CPU", typeEn: "CPU", cpu: "Core 2 Duo E8400", gpu: "Intel GMA", gpuEn: "Intel GMA", ram: "2 GB", storage: "HDD", score: 51, status: "usable", notes: "軽作業に限定すれば動作可能", notesEn: "Usable if limited to light tasks" },
+  { name: "Intel Atom N550", type: "CPU", typeEn: "CPU", cpu: "Atom N550", gpu: "GMA 3150", gpuEn: "GMA 3150", ram: "1 GB", storage: "HDD", score: 38, status: "notrec", notes: "メモリ・CPUともに制約大", notesEn: "Severely limited by both RAM and CPU" }
 ];
 
 const DEFAULT_REPORTS = [
-  { device: "NEC VersaPro", cpu: "Core i5-4300M", ram: "4 GB", storage: "SSD", ver: "1.1.1", result: "success", notes: "Xfceデスクトップで正常起動を確認。" },
-  { device: "ThinkPad X230", cpu: "Core i5-3320M", ram: "8 GB", storage: "SSD", ver: "1.1.1", result: "success", notes: "基本操作・Wi-Fiともに快適。" },
-  { device: "Atom N550 Netbook", cpu: "Atom N550", ram: "1 GB", storage: "HDD", ver: "1.1.1", result: "partial", notes: "起動はするがメモリ不足になりやすい。" }
+  { device: "NEC VersaPro", cpu: "Core i5-4300M", ram: "4 GB", storage: "SSD", ver: "1.1.1", result: "success", notes: "Xfceデスクトップで正常起動を確認。", notesEn: "Confirmed normal boot on Xfce desktop." },
+  { device: "ThinkPad X230", cpu: "Core i5-3320M", ram: "8 GB", storage: "SSD", ver: "1.1.1", result: "success", notes: "基本操作・Wi-Fiともに快適。", notesEn: "Both basic operations and Wi-Fi work smoothly." },
+  { device: "Atom N550 Netbook", cpu: "Atom N550", ram: "1 GB", storage: "HDD", ver: "1.1.1", result: "partial", notes: "起動はするがメモリ不足になりやすい。", notesEn: "Boots up, but easily runs out of memory." }
 ];
+
+/* =====================================================================
+   多言語辞書 (JA / EN)
+===================================================================== */
+const I18N = {
+  ja: {
+    toggle: "EN",
+    nav_search: "検索・診断",
+    nav_reports: "検証レポート",
+    nav_submit: "レポート投稿 ↗",
+    hero_title: 'そのPCで、<span>NagisinnraLinuxを。</span>',
+    hero_desc: "対応ハードウェアの検索とスペック簡易診断、実機検証レポートの共有データベース。",
+    stat_devices: "登録デバイス",
+    stat_reports: "検証レポート",
+    stat_ram: "推奨最小メモリ",
+    tab_search: "データベース検索",
+    tab_diag: "スペック簡易診断",
+    query_ph: "CPU・GPU・PC型番で検索（例：Core i5 / ThinkPad / Atom）",
+    filter_all: "すべて",
+    filter_rec: "おすすめ",
+    filter_use: "動作可能",
+    filter_not: "非推奨",
+    diag_cpu_label: "CPU名（任意）",
+    diag_cpu_ph: "例：Core i5-4300M",
+    diag_ram_label: "メモリ",
+    ram_8plus: "8 GB以上",
+    diag_storage_label: "ストレージ",
+    diag_btn: "診断する",
+    score_guide: "スコア目安：0〜100",
+    reports_title: "実機検証レポート",
+    form_title: "検証結果を投稿する",
+    form_sub: "入力内容はブラウザに保存されます。",
+    form_device: "デバイス名 *",
+    form_device_ph: "例：NEC VersaPro VK25",
+    form_cpu: "CPU *",
+    form_ram: "メモリ",
+    form_storage: "ストレージ",
+    form_ver: "OSバージョン",
+    form_ver_ph: "例：1.1.1",
+    form_result: "動作結果",
+    res_success: "成功",
+    res_partial: "一部動作",
+    res_failed: "失敗",
+    form_notes: "メモ",
+    form_notes_ph: "Wi-Fiやグラフィックの動作状況など",
+    form_submit: "レポートを追加する",
+    list_title: "最近の検証レポート",
+    list_sub: "投稿された実機データの一覧。",
+    copy_json: "最新レポートをコード用JSONでコピー",
+    copy_done: "コピーしました！DEFAULT_REPORTS に貼り付けできます",
+    notice: "※ 投稿データはブラウザのlocalStorageに保存されます。DB本体へ反映したい場合は上のボタンからJSONをコピーしてコードの REPORTS に貼り付けてください。",
+    empty: "該当するハードウェアが見つかりませんでした。",
+    no_notes: "メモなし",
+    unfilled: "未記入",
+    alert_required: "デバイス名とCPUを入力してください。",
+    showing: (shown, total) => `表示中：${shown} / ${total} 件`,
+    status: { recommended: "おすすめ", usable: "動作可能", notrec: "非推奨" },
+    result: { success: "成功", partial: "一部動作", failed: "失敗" },
+    diag_out: (ram, storage, score) => {
+      const judge = ram >= 4 ? "おすすめ（標準構成で快適）" : ram >= 2 ? "動作可能（軽量利用向け）" : "非推奨（メモリ2GB以上を推奨）";
+      const env = ram >= 4 ? "NagisinnraLinux 標準版 (Xfce)" : "常駐アプリを絞った軽量構成";
+      const stg = storage === "SSD" ? "SSD構成で良好です" : "SSDへ換装すると体感が大幅に向上します";
+      return `<strong>判定：${judge}（推定スコア ${score} / 100）</strong><br>推奨環境：${env} / ${stg}`;
+    }
+  },
+  en: {
+    toggle: "JA",
+    nav_search: "Search & Check",
+    nav_reports: "Reports",
+    nav_submit: "Submit Report ↗",
+    hero_title: 'Run <span>NagisinnraLinux</span> on Your PC.',
+    hero_desc: "Hardware compatibility database, quick spec checker, and community test reports.",
+    stat_devices: "Devices",
+    stat_reports: "Reports",
+    stat_ram: "Min. Recommended RAM",
+    tab_search: "Database Search",
+    tab_diag: "Quick Spec Check",
+    query_ph: "Search by CPU, GPU, or model (e.g. Core i5 / ThinkPad / Atom)",
+    filter_all: "All",
+    filter_rec: "Recommended",
+    filter_use: "Usable",
+    filter_not: "Not Recommended",
+    diag_cpu_label: "CPU Name (Optional)",
+    diag_cpu_ph: "e.g. Core i5-4300M",
+    diag_ram_label: "Memory (RAM)",
+    ram_8plus: "8 GB or more",
+    diag_storage_label: "Storage",
+    diag_btn: "Check",
+    score_guide: "Score Guide: 0–100",
+    reports_title: "Community Test Reports",
+    form_title: "Submit a Test Report",
+    form_sub: "Entries are saved locally in your browser.",
+    form_device: "Device Name *",
+    form_device_ph: "e.g. NEC VersaPro VK25",
+    form_cpu: "CPU *",
+    form_ram: "Memory (RAM)",
+    form_storage: "Storage",
+    form_ver: "OS Version",
+    form_ver_ph: "e.g. 1.1.1",
+    form_result: "Result",
+    res_success: "Success",
+    res_partial: "Partial",
+    res_failed: "Failed",
+    form_notes: "Notes",
+    form_notes_ph: "Wi-Fi, graphics, or other hardware behavior...",
+    form_submit: "Add Report",
+    list_title: "Recent Reports",
+    list_sub: "Hardware verification logs submitted by users.",
+    copy_json: "Copy Latest Report as JSON",
+    copy_done: "Copied! Paste it into DEFAULT_REPORTS in the code",
+    notice: "* Submitted reports are stored in your browser's localStorage. To add them to the main DB, copy the JSON above and paste it into DEFAULT_REPORTS.",
+    empty: "No matching hardware found.",
+    no_notes: "No notes",
+    unfilled: "N/A",
+    alert_required: "Please enter both Device Name and CPU.",
+    showing: (shown, total) => `Showing: ${shown} / ${total} devices`,
+    status: { recommended: "Recommended", usable: "Usable", notrec: "Not Rec." },
+    result: { success: "Success", partial: "Partial", failed: "Failed" },
+    diag_out: (ram, storage, score) => {
+      const judge = ram >= 4 ? "Recommended (Smooth with standard setup)" : ram >= 2 ? "Usable (Best for light tasks)" : "Not Recommended (2 GB+ RAM advised)";
+      const env = ram >= 4 ? "NagisinnraLinux Standard (Xfce)" : "Minimal setup with fewer background apps";
+      const stg = storage === "SSD" ? "SSD storage is optimal" : "Upgrading to an SSD will greatly improve responsiveness";
+      return `<strong>Result: ${judge} (Est. Score ${score} / 100)</strong><br>Recommended Setup: ${env} / ${stg}`;
+    }
+  }
+};
 
 /* =====================================================================
    ロジック（基本触らなくてOK）
 ===================================================================== */
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-const STATUS_MAP = { recommended: "おすすめ", usable: "動作可能", notrec: "非推奨" };
-const RESULT_MAP = {
-  success: { text: "成功", cls: "recommended" },
-  partial: { text: "一部動作", cls: "usable" },
-  failed:  { text: "失敗", cls: "notrec" }
-};
+const RESULT_CLS = { success: "recommended", partial: "usable", failed: "notrec" };
 
+let lang = localStorage.getItem("nhd-lang") || "ja";
 let filter = "all";
 let reports = JSON.parse(localStorage.getItem("nhd-reports") || "null") || [...DEFAULT_REPORTS];
+let lastDiag = null;
+
+function applyLang() {
+  const t = I18N[lang];
+  document.documentElement.lang = lang;
+  $("lang-toggle").textContent = t.toggle;
+  $("hero-title").innerHTML = t.hero_title;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) el.textContent = t[key];
+  });
+
+  $("query").placeholder = t.query_ph;
+  $("d-cpu").placeholder = t.diag_cpu_ph;
+  $("r-device").placeholder = t.form_device_ph;
+  $("r-ver").placeholder = t.form_ver_ph;
+  $("r-notes").placeholder = t.form_notes_ph;
+
+  if (lastDiag) {
+    $("diag-out").innerHTML = t.diag_out(lastDiag.ram, lastDiag.storage, lastDiag.score);
+  }
+  renderDevices();
+  renderReports();
+}
 
 // デバイス一覧描画
 function renderDevices() {
+  const t = I18N[lang];
   const q = $("query").value.trim().toLowerCase();
   const list = DEVICES.filter(d => {
-    const matchText = !q || [d.name, d.type, d.cpu, d.gpu, d.ram, d.storage].join(" ").toLowerCase().includes(q);
+    const matchText = !q || [d.name, d.type, d.typeEn, d.cpu, d.gpu, d.gpuEn, d.ram, d.storage].join(" ").toLowerCase().includes(q);
     return matchText && (filter === "all" || d.status === filter);
   });
   $("device-count").textContent = DEVICES.length;
-  $("result-label").textContent = `表示中：${list.length} / ${DEVICES.length} 件`;
-  $("results").innerHTML = list.length ? list.map(d => `
+  $("result-label").textContent = t.showing(list.length, DEVICES.length);
+  $("results").innerHTML = list.length ? list.map(d => {
+    const typeText = lang === "en" && d.typeEn ? d.typeEn : d.type;
+    const gpuText = lang === "en" && d.gpuEn ? d.gpuEn : d.gpu;
+    const notesText = lang === "en" && d.notesEn ? d.notesEn : d.notes;
+    return `
     <article class="device">
       <div class="device-head">
-        <div><h3>${esc(d.name)}</h3><div class="kind">${esc(d.type)}</div></div>
-        <span class="status ${d.status}">${STATUS_MAP[d.status]}</span>
+        <div><h3>${esc(d.name)}</h3><div class="kind">${esc(typeText)}</div></div>
+        <span class="status ${d.status}">${t.status[d.status]}</span>
       </div>
       <div class="specs">
         <span class="spec">${esc(d.cpu)}</span>
-        <span class="spec">${esc(d.gpu)}</span>
+        <span class="spec">${esc(gpuText)}</span>
         <span class="spec">RAM ${esc(d.ram)}</span>
         <span class="spec">${esc(d.storage)}</span>
       </div>
       <div class="device-foot">
-        <span>${esc(d.notes)}</span>
+        <span>${esc(notesText)}</span>
         <span class="score">${d.score} / 100</span>
       </div>
-    </article>`).join("") : `<div class="empty">該当するハードウェアが見つかりませんでした。</div>`;
+    </article>`;
+  }).join("") : `<div class="empty">${t.empty}</div>`;
 }
 
 // レポート一覧描画
 function renderReports() {
+  const t = I18N[lang];
   $("report-count").textContent = reports.length;
   $("report-list").innerHTML = reports.slice(0, 6).map(r => {
-    const st = RESULT_MAP[r.result] || RESULT_MAP.partial;
+    const cls = RESULT_CLS[r.result] || "usable";
+    const resText = t.result[r.result] || t.result.partial;
+    const notesText = lang === "en" && r.notesEn ? r.notesEn : r.notes;
     return `
       <div class="report">
         <div class="report-top">
           <span>${esc(r.device)}</span>
-          <span class="status ${st.cls}">${st.text}</span>
+          <span class="status ${cls}">${resText}</span>
         </div>
         <small>${esc(r.cpu)} · ${esc(r.ram)} · ${esc(r.storage)} · v${esc(r.ver)}</small>
-        <p>${esc(r.notes || "メモなし")}</p>
+        <p>${esc(notesText || t.no_notes)}</p>
       </div>`;
   }).join("");
 }
+
+// 言語切り替え
+$("lang-toggle").onclick = () => {
+  lang = lang === "ja" ? "en" : "ja";
+  localStorage.setItem("nhd-lang", lang);
+  applyLang();
+};
 
 // タブ切り替え（検索 / 診断）
 document.querySelectorAll(".mode-tab").forEach(tab => {
@@ -379,21 +548,22 @@ $("run-diag").onclick = () => {
   const storage = $("d-storage").value;
   const cpu = $("d-cpu").value.trim();
   const score = Math.min(100, Math.max(20, 30 + ram * 6 + (storage === "SSD" ? 18 : storage === "eMMC" ? 8 : 0) + (cpu ? 10 : 0)));
-  const judge = ram >= 4 ? "おすすめ（標準構成で快適）" : ram >= 2 ? "動作可能（軽量利用向け）" : "非推奨（メモリ2GB以上を推奨）";
+  lastDiag = { ram, storage, score };
   const out = $("diag-out");
   out.style.display = "block";
-  out.innerHTML = `<strong>判定：${judge}（推定スコア ${score} / 100）</strong><br>推奨環境：${ram >= 4 ? "NagisinnraLinux 標準版 (Xfce)" : "常駐アプリを絞った軽量構成"} / ${storage === "SSD" ? "SSD構成で良好です" : "SSDへ換装すると体感が大幅に向上します"}`;
+  out.innerHTML = I18N[lang].diag_out(ram, storage, score);
 };
 
 // レポート投稿
 $("submit-report").onclick = () => {
+  const t = I18N[lang];
   const device = $("r-device").value.trim(), cpu = $("r-cpu").value.trim();
-  if (!device || !cpu) return alert("デバイス名とCPUを入力してください。");
+  if (!device || !cpu) return alert(t.alert_required);
   reports.unshift({
     device, cpu,
     ram: $("r-ram").value,
     storage: $("r-storage").value,
-    ver: $("r-ver").value.trim() || "未記入",
+    ver: $("r-ver").value.trim() || t.unfilled,
     result: $("r-result").value,
     notes: $("r-notes").value.trim()
   });
@@ -404,14 +574,14 @@ $("submit-report").onclick = () => {
 
 // 管理用：コード貼り付け用JSONコピー
 $("copy-json").onclick = () => {
+  const t = I18N[lang];
   navigator.clipboard.writeText(JSON.stringify(reports[0]));
   const btn = $("copy-json");
-  btn.textContent = "コピーしました！DEFAULT_REPORTS に貼り付けできます";
-  setTimeout(() => btn.textContent = "最新レポートをコード用JSONでコピー", 2200);
+  btn.textContent = t.copy_done;
+  setTimeout(() => btn.textContent = I18N[lang].copy_json, 2200);
 };
 
-renderDevices();
-renderReports();
+applyLang();
 </script>
 </body>
 </html>
