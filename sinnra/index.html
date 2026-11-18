@@ -339,6 +339,40 @@ button {
 
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 言語切り替えスイッチ（ヘルパー用） */
+.lang-switch {
+    background: rgba(255,255,255,0.8);
+    padding: 3px;
+    border-radius: 999px;
+    display: inline-flex;
+    border: 1px solid rgba(20,25,20,.09);
+    gap: 2px;
+}
+.lang-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #747770;
+    cursor: pointer;
+    transition: .2s;
+}
+.lang-btn:hover {
+    color: var(--black);
+}
+.lang-btn.active {
+    background: var(--black);
+    color: white;
+}
+
 
 .nav-button {
 
@@ -3066,32 +3100,40 @@ footer {
 
     <div class="nav-links">
 
-        <a href="#about">
+        <a href="#about" data-i18n="navAbout">
             About
         </a>
 
-        <a href="#technology">
+        <a href="#technology" data-i18n="navTech">
             Technology
         </a>
 
-        <a href="#organization">
+        <a href="#organization" data-i18n="navOrg">
             Organization
         </a>
 
-        <a href="#governance">
+        <a href="#governance" data-i18n="navGov">
             Governance
         </a>
 
     </div>
 
 
-    <a
-        href="#contact"
-        class="nav-button">
+    <div class="nav-right">
+        <!-- 言語切り替えスイッチ -->
+        <div class="lang-switch">
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" id="btn-ja" onclick="setLang('ja')">JP</button>
+        </div>
 
-        Contact
+        <a
+            href="#contact"
+            class="nav-button" data-i18n="navContact">
 
-    </a>
+            Contact
+
+        </a>
+    </div>
 
 </nav>
 
@@ -3113,43 +3155,33 @@ footer {
 
                 <span class="hero-dot"></span>
 
-                Nagisinnra Technology
-                · EST. 2026
+                <span data-i18n="heroLabel">Nagisinnra Technology · EST. 2026</span>
 
             </div>
 
 
-            <h1 class="hero-title">
-
+            <h1 class="hero-title" data-i18n-html="heroTitle">
                 <span class="gray">
                     Technology,
                 </span>
-
                 <br>
-
                 <span>
                     made
                 </span>
-
                 <span class="green">
                     human.
                 </span>
-
             </h1>
 
 
-            <p class="hero-description">
-
+            <p class="hero-description" data-i18n-html="heroDesc">
                 Nagisinnra Technologyは、
                 オープンソースとコンピューティング技術を軸に、
                 新しいソフトウェア体験をつくる技術組織です。
-
                 <br><br>
-
                 超軽量Linuxディストリビューション
                 「NagisinnraLinux」を中心として、
                 技術開発と情報発信を行っています。
-
             </p>
 
 
@@ -3157,7 +3189,7 @@ footer {
 
                 <a
                     href="#about"
-                    class="button button-dark">
+                    class="button button-dark" data-i18n-html="heroBtnAbout">
 
                     私たちについて
 
@@ -3170,7 +3202,7 @@ footer {
 
                 <a
                     href="#technology"
-                    class="button button-light">
+                    class="button button-light" data-i18n="heroBtnTech">
 
                     Technology
 
@@ -3184,7 +3216,7 @@ footer {
 
                 <div class="hero-info-item">
 
-                    <div class="hero-info-label">
+                    <div class="hero-info-label" data-i18n="infoOrgLabel">
                         ORGANIZATION
                     </div>
 
@@ -3197,7 +3229,7 @@ footer {
 
                 <div class="hero-info-item">
 
-                    <div class="hero-info-label">
+                    <div class="hero-info-label" data-i18n="infoProjLabel">
                         PROJECT
                     </div>
 
@@ -3210,11 +3242,11 @@ footer {
 
                 <div class="hero-info-item">
 
-                    <div class="hero-info-label">
+                    <div class="hero-info-label" data-i18n="infoFieldLabel">
                         FIELD
                     </div>
 
-                    <div class="hero-info-value">
+                    <div class="hero-info-value" data-i18n="infoFieldValue">
                         Linux / Open Source
                     </div>
 
@@ -3223,7 +3255,7 @@ footer {
 
                 <div class="hero-info-item">
 
-                    <div class="hero-info-label">
+                    <div class="hero-info-label" data-i18n="infoEstLabel">
                         ESTABLISHED
                     </div>
 
@@ -3257,26 +3289,22 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="aboutEyebrow">
                 ABOUT SINNRA
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n-html="aboutTitle">
                 技術を、
                 <br>
                 もっと自由に。
-
             </h2>
 
 
-            <p class="section-description">
-
+            <p class="section-description" data-i18n="aboutDesc">
                 Nagisinnra Technologyは、
                 小さなアイデアを技術として形にし、
                 それを世界へ届けることを目指しています。
-
             </p>
 
         </div>
@@ -3285,56 +3313,40 @@ footer {
         <div class="about-layout">
 
 
-            <div class="about-large">
-
+            <div class="about-large" data-i18n-html="aboutLarge">
                 私たちは
                 <span>
                     「使う人」
                 </span>
                 の視点から、
                 技術を考えます。
-
             </div>
 
 
-            <div class="about-text">
-
+            <div class="about-text" data-i18n-html="aboutText">
                 <p>
-
                     高性能であること。
                     新しいこと。
                     複雑であること。
-
                     それだけが、
                     良い技術ではありません。
-
                 </p>
-
-
                 <p>
-
                     必要なものを必要なだけ。
                     わかりやすく、
                     軽く、
                     美しく。
-
                     Nagisinnra Technologyでは、
                     コンピューターを使う人が
                     技術そのものに振り回されるのではなく、
                     技術によって自由になれる環境を
                     目指しています。
-
                 </p>
-
-
                 <p>
-
                     その思想を形にしたものが、
                     私たちの主要プロジェクト
                     「NagisinnraLinux」です。
-
                 </p>
-
             </div>
 
         </div>
@@ -3357,17 +3369,15 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="missionEyebrow">
                 OUR MISSION
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n-html="missionTitle">
                 三つの
                 <br>
                 基本思想。
-
             </h2>
 
         </div>
@@ -3388,18 +3398,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n="mission1Title">
                     オープンであること。
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="mission1Desc">
                     オープンソースの思想を尊重し、
                     技術を一部の人だけのものにせず、
                     学び、改良し、共有できる環境を
                     つくります。
-
                 </p>
 
             </article>
@@ -3418,20 +3426,17 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n="mission2Title">
                     軽くあること。
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="mission2Desc">
                     ハードウェアの性能を
                     OS自身が使い切るのではなく、
                     ユーザーのために残す。
-
                     軽量で効率的な
                     コンピューティングを追求します。
-
                 </p>
 
             </article>
@@ -3450,19 +3455,17 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n="mission3Title">
                     人を中心にすること。
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="mission3Desc">
                     技術仕様だけではなく、
                     実際に使う人の感覚、
                     わかりやすさ、
                     美しさまで含めて
                     プロダクトを設計します。
-
                 </p>
 
             </article>
@@ -3488,39 +3491,30 @@ footer {
         <div class="dark-card">
 
 
-            <div class="dark-label">
+            <div class="dark-label" data-i18n="philLabel">
                 THE SINNRA APPROACH
             </div>
 
 
-            <h2 class="dark-title">
-
+            <h2 class="dark-title" data-i18n-html="philTitle">
                 Small teams.
                 <br>
-
                 <span>
                     Serious technology.
                 </span>
-
             </h2>
 
 
-            <p class="dark-description">
-
+            <p class="dark-description" data-i18n-html="philDesc">
                 私たちは大規模な組織ではありません。
-
                 <br><br>
-
                 だからこそ、
                 一つひとつの技術について考え、
                 実際に手を動かし、
                 必要であれば何度でも作り直す。
-
                 <br><br>
-
                 小さな組織だからできる
                 技術への向き合い方を大切にしています。
-
             </p>
 
 
@@ -3545,23 +3539,19 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="prodEyebrow">
                 FLAGSHIP PROJECT
             </div>
 
 
             <h2 class="section-title">
-
                 NagisinnraLinux
-
             </h2>
 
 
-            <p class="section-description">
-
+            <p class="section-description" data-i18n="prodDesc">
                 Nagisinnra Technologyが独自に開発・運営する
                 超軽量Linuxディストリビューション。
-
             </p>
 
         </div>
@@ -3604,7 +3594,7 @@ footer {
 
                         <div class="window-body">
 
-                            <div class="fake-small">
+                            <div class="fake-small" data-i18n="screenWelcome">
                                 Welcome to
                             </div>
 
@@ -3641,39 +3631,30 @@ footer {
             <div class="product-copy">
 
 
-                <h3>
-
+                <h3 data-i18n-html="prodCopyTitle">
                     軽く。
                     <br>
-
                     速く。
                     <br>
-
                     美しく。
-
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="prodCopyP1">
                     NagisinnraLinuxは、
                     「Linuxだから難しい」という
                     固定観念を変えることを目指した
                     Linuxディストリビューションです。
-
                 </p>
 
 
-                <p>
-
+                <p data-i18n="prodCopyP2">
                     カーネルを基盤としながら、
                     システム構成を見直し、
                     必要な環境をコンパクトにまとめる。
-
                     そして、技術的な中身だけではなく、
                     デスクトップの体験まで
                     一つのプロダクトとして考えます。
-
                 </p>
 
 
@@ -3724,24 +3705,20 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="techEyebrow">
                 TECHNOLOGY
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n="techTitle">
                 技術領域。
-
             </h2>
 
 
-            <p class="section-description">
-
+            <p class="section-description" data-i18n="techSub">
                 Nagisinnra Technologyでは、
                 Linuxを中心に複数の技術領域へ
                 継続的に取り組みます。
-
             </p>
 
         </div>
@@ -3756,18 +3733,16 @@ footer {
                     TECHNOLOGY / 01
                 </div>
 
-                <h3>
+                <h3 data-i18n="tech1Title">
                     Linux Engineering
                 </h3>
 
-                <p>
-
+                <p data-i18n="tech1Desc">
                     Linuxカーネル、
                     システム構成、
                     パッケージング、
                     起動プロセスなどを含めた
                     OSレベルの技術研究。
-
                 </p>
 
             </article>
@@ -3780,16 +3755,14 @@ footer {
                     TECHNOLOGY / 02
                 </div>
 
-                <h3>
+                <h3 data-i18n="tech2Title">
                     System Optimization
                 </h3>
 
-                <p>
-
+                <p data-i18n="tech2Desc">
                     CPU、メモリ、ストレージなどの
                     ハードウェア資源を効率的に利用するための
                     システム最適化。
-
                 </p>
 
             </article>
@@ -3802,17 +3775,15 @@ footer {
                     TECHNOLOGY / 03
                 </div>
 
-                <h3>
+                <h3 data-i18n="tech3Title">
                     Open Source
                 </h3>
 
-                <p>
-
+                <p data-i18n="tech3Desc">
                     オープンソースコミュニティへの参加、
                     技術情報の公開、
                     開発成果の共有を通じて
                     OSSエコシステムへ貢献します。
-
                 </p>
 
             </article>
@@ -3825,17 +3796,15 @@ footer {
                     TECHNOLOGY / 04
                 </div>
 
-                <h3>
+                <h3 data-i18n="tech4Title">
                     Computing Experience
                 </h3>
 
-                <p>
-
+                <p data-i18n="tech4Desc">
                     技術仕様だけではなく、
                     UI、UX、デザイン、
                     インストール体験まで含めた
                     コンピューティング体験の設計。
-
                 </p>
 
             </article>
@@ -3861,15 +3830,13 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="actEyebrow">
                 ACTIVITIES
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n="actTitle">
                 活動内容。
-
             </h2>
 
         </div>
@@ -3886,11 +3853,11 @@ footer {
 
                 <div>
 
-                    <div class="activity-title">
+                    <div class="activity-title" data-i18n="act1Title">
                         NagisinnraLinux 開発
                     </div>
 
-                    <div class="activity-text">
+                    <div class="activity-text" data-i18n="act1Desc">
                         カーネル最適化、ビルド、アップデートなど
                     </div>
 
@@ -3912,11 +3879,11 @@ footer {
 
                 <div>
 
-                    <div class="activity-title">
+                    <div class="activity-title" data-i18n="act2Title">
                         技術情報発信
                     </div>
 
-                    <div class="activity-text">
+                    <div class="activity-text" data-i18n="act2Desc">
                         公式ウェブサイト、Zenn等を通じた技術発信
                     </div>
 
@@ -3938,11 +3905,11 @@ footer {
 
                 <div>
 
-                    <div class="activity-title">
+                    <div class="activity-title" data-i18n="act3Title">
                         オープンソース活動
                     </div>
 
-                    <div class="activity-text">
+                    <div class="activity-text" data-i18n="act3Desc">
                         OSSコミュニティへの技術的貢献
                     </div>
 
@@ -3964,11 +3931,11 @@ footer {
 
                 <div>
 
-                    <div class="activity-title">
+                    <div class="activity-title" data-i18n="act4Title">
                         技術連携
                     </div>
 
-                    <div class="activity-text">
+                    <div class="activity-text" data-i18n="act4Desc">
                         国内外の企業・団体との技術的な連携
                     </div>
 
@@ -4002,15 +3969,13 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="orgEyebrow">
                 ORGANIZATION
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n="orgTitle">
                 組織について。
-
             </h2>
 
         </div>
@@ -4022,7 +3987,7 @@ footer {
             <div class="organization-box">
 
 
-                <div class="organization-box-label">
+                <div class="organization-box-label" data-i18n="orgBoxLabel">
                     ORGANIZATION
                 </div>
 
@@ -4056,11 +4021,11 @@ footer {
 
                     <div class="organization-row">
 
-                        <div class="organization-key">
+                        <div class="organization-key" data-i18n="orgLocKey">
                             Location
                         </div>
 
-                        <div class="organization-value">
+                        <div class="organization-value" data-i18n="orgLocVal">
                             栃木県宇都宮市
                         </div>
 
@@ -4099,36 +4064,24 @@ footer {
 
 
 
-            <div class="organization-text">
-
+            <div class="organization-text" data-i18n-html="orgText">
                 <p>
-
                     Nagisinnra Technologyは、
                     NagisinnraLinuxの独自開発・運営を中心として
                     活動する技術組織です。
-
                 </p>
-
-
                 <p>
-
                     会員は本会の目的に賛同し、
                     開発または運営に協力する者によって構成されます。
-
                 </p>
-
-
                 <p>
-
                     組織としての意思決定、
                     技術開発、
                     情報発信、
                     外部との連携を通じて、
                     長期的に活動できる
                     技術コミュニティを目指します。
-
                 </p>
-
             </div>
 
 
@@ -4152,17 +4105,15 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="sponsorEyebrow">
                 PARTNERSHIP
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n-html="sponsorTitle">
                 技術を、
                 <br>
                 一緒につくる。
-
             </h2>
 
         </div>
@@ -4177,28 +4128,22 @@ footer {
                 <div>
 
                     <h3 class="sponsor-title">
-
                         Support
                         <br>
                         the project.
-
                     </h3>
 
 
-                    <p class="sponsor-text">
-
+                    <p class="sponsor-text" data-i18n-html="sponsorText">
                         Nagisinnra Technologyでは、
                         NagisinnraLinuxをはじめとする
                         技術活動を支援していただける
                         企業・団体との連携を歓迎しています。
-
                         <br><br>
-
                         資金だけではなく、
                         機材、開発環境、
                         技術的な協力など、
                         さまざまな形での支援を想定しています。
-
                     </p>
 
                 </div>
@@ -4210,11 +4155,11 @@ footer {
 
                     <div class="sponsor-item">
 
-                        <span>
+                        <span data-i18n="sp1En">
                             Financial Support
                         </span>
 
-                        <span>
+                        <span data-i18n="sp1Ja">
                             資金支援
                         </span>
 
@@ -4223,11 +4168,11 @@ footer {
 
                     <div class="sponsor-item">
 
-                        <span>
+                        <span data-i18n="sp2En">
                             Hardware
                         </span>
 
-                        <span>
+                        <span data-i18n="sp2Ja">
                             機材提供
                         </span>
 
@@ -4236,11 +4181,11 @@ footer {
 
                     <div class="sponsor-item">
 
-                        <span>
+                        <span data-i18n="sp3En">
                             Infrastructure
                         </span>
 
-                        <span>
+                        <span data-i18n="sp3Ja">
                             開発環境
                         </span>
 
@@ -4249,11 +4194,11 @@ footer {
 
                     <div class="sponsor-item">
 
-                        <span>
+                        <span data-i18n="sp4En">
                             Technical Partnership
                         </span>
 
-                        <span>
+                        <span data-i18n="sp4Ja">
                             技術連携
                         </span>
 
@@ -4286,26 +4231,22 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="govEyebrow">
                 GOVERNANCE
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n-html="govTitle">
                 透明性と、
                 <br>
                 責任。
-
             </h2>
 
 
-            <p class="section-description">
-
+            <p class="section-description" data-i18n="govSub">
                 Nagisinnra Technologyは、
                 技術組織としての自由さと、
                 対外的な責任の両立を目指します。
-
             </p>
 
         </div>
@@ -4314,38 +4255,26 @@ footer {
         <div class="governance-layout">
 
 
-            <div class="governance-text">
-
+            <div class="governance-text" data-i18n-html="govText">
                 <p>
-
                     組織の活動内容、
                     資産、
                     会計年度、
                     会員、
                     代表などについて
                     会則を定めています。
-
                 </p>
-
-
                 <p style="margin-top:25px;">
-
                     また、代表が未成年者である期間については、
                     法的な契約行為や重大な意思決定に際して
                     保護者の同意または法的アドバイスを得ることを
                     会則上の特約として定めています。
-
                 </p>
-
-
                 <p style="margin-top:25px;">
-
                     技術活動だけではなく、
                     組織としての信頼性についても
                     継続的に改善していきます。
-
                 </p>
-
             </div>
 
 
@@ -4381,11 +4310,11 @@ footer {
 
                 <div class="governance-row">
 
-                    <div class="governance-key">
+                    <div class="governance-key" data-i18n="govLocKey">
                         Office
                     </div>
 
-                    <div class="governance-value">
+                    <div class="governance-value" data-i18n="govLocVal">
                         栃木県宇都宮市
                     </div>
 
@@ -4407,11 +4336,11 @@ footer {
 
                 <div class="governance-row">
 
-                    <div class="governance-key">
+                    <div class="governance-key" data-i18n="govFiscalKey">
                         Fiscal Year
                     </div>
 
-                    <div class="governance-value">
+                    <div class="governance-value" data-i18n="govFiscalVal">
                         4月1日 — 3月31日
                     </div>
 
@@ -4420,11 +4349,11 @@ footer {
 
                 <div class="governance-row">
 
-                    <div class="governance-key">
+                    <div class="governance-key" data-i18n="govEffKey">
                         Effective
                     </div>
 
-                    <div class="governance-value">
+                    <div class="governance-value" data-i18n="govEffVal">
                         2026年9月4日
                     </div>
 
@@ -4453,17 +4382,15 @@ footer {
 
         <div class="section-header">
 
-            <div class="eyebrow">
+            <div class="eyebrow" data-i18n="timeEyebrow">
                 OUR JOURNEY
             </div>
 
 
-            <h2 class="section-title">
-
+            <h2 class="section-title" data-i18n-html="timeTitle">
                 ここから、
                 <br>
                 始まる。
-
             </h2>
 
         </div>
@@ -4487,12 +4414,10 @@ footer {
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="time1Desc">
                     軽量で、自分が使いたいと思える
                     Linuxをつくるというアイデアから
                     プロジェクトが始まりました。
-
                 </p>
 
             </div>
@@ -4509,18 +4434,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n="time2Title">
                     軽量化への挑戦
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="time2Desc">
                     システム構成を見直し、
                     より小さく、
                     より高速なLinux環境を目指して
                     開発を進めました。
-
                 </p>
 
             </div>
@@ -4542,13 +4465,11 @@ footer {
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="time3Desc">
                     NagisinnraLinuxだけではなく、
                     技術発信やオープンソース活動、
                     外部との連携までを含めた
                     組織としての活動へ。
-
                 </p>
 
             </div>
@@ -4565,18 +4486,16 @@ footer {
                 </div>
 
 
-                <h3>
+                <h3 data-i18n="time4Title">
                     次の技術へ。
                 </h3>
 
 
-                <p>
-
+                <p data-i18n="time4Desc">
                     Linuxに限らず、
                     コンピューティングの未来につながる
                     技術を研究し、
                     新しいプロジェクトへ挑戦していきます。
-
                 </p>
 
             </div>
@@ -4607,7 +4526,7 @@ footer {
             </div>
 
 
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n="faqTitle">
                 よくある質問。
             </h2>
 
@@ -4623,7 +4542,7 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n="faq1Q">
                         Nagisinnra Technologyとは何ですか？
                     </span>
 
@@ -4636,13 +4555,11 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
-
+                    <p data-i18n="faq1A">
                         NagisinnraLinuxの独自開発・運営を中心に、
                         Linux、オープンソース、
                         システム最適化などの技術活動を行う
                         技術組織です。
-
                     </p>
 
                 </div>
@@ -4658,7 +4575,7 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n="faq2Q">
                         NagisinnraLinuxとの関係は？
                     </span>
 
@@ -4671,12 +4588,10 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
-
+                    <p data-i18n="faq2A">
                         NagisinnraLinuxは、
                         Nagisinnra Technologyが独自に開発・運営する
                         主要プロジェクトです。
-
                     </p>
 
                 </div>
@@ -4692,7 +4607,7 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n="faq3Q">
                         企業との技術連携は可能ですか？
                     </span>
 
@@ -4705,14 +4620,12 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
-
+                    <p data-i18n="faq3A">
                         技術連携、機材提供、
                         開発環境の提供、
                         スポンサーシップなど、
                         活動目的に沿ったさまざまな形の連携を
                         想定しています。
-
                     </p>
 
                 </div>
@@ -4728,7 +4641,7 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n="faq4Q">
                         会員になるには？
                     </span>
 
@@ -4741,15 +4654,12 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
-
+                    <p data-i18n="faq4A">
                         本会の目的に賛同し、
                         開発または運営に協力する方を
                         会員としています。
-
                         詳細については
                         今後の案内をご確認ください。
-
                     </p>
 
                 </div>
@@ -4765,7 +4675,7 @@ footer {
                 <button
                     class="faq-question">
 
-                    <span>
+                    <span data-i18n="faq5Q">
                         会則は公開されていますか？
                     </span>
 
@@ -4778,14 +4688,12 @@ footer {
 
                 <div class="faq-answer">
 
-                    <p>
-
+                    <p data-i18n="faq5A">
                         Nagisinnra Technologyでは、
                         組織の名称、目的、活動、
                         会員、会計、
                         未成年者保護に関する特約などを
                         会則として定めています。
-
                     </p>
 
                 </div>
@@ -4803,7 +4711,7 @@ footer {
 
 
 <!-- =======================================================
-     CONTACT
+     CONTACT CTA
 ======================================================= -->
 
 <section
@@ -4830,33 +4738,27 @@ footer {
             </h2>
 
 
-            <p class="contact-description">
-
+            <p class="contact-description" data-i18n="contactDesc">
                 技術連携、
                 NagisinnraLinuxに関するお問い合わせ、
                 スポンサーシップなどについては
                 Nagisinnra Technologyまでご連絡ください。
-
             </p>
 
 
             <div class="contact-actions">
 
 
-                <a href="/cdn-cgi/l/email-protection#65060a0b1104061125001d04081509004b060a08" class="contact-button contact-primary">
-
+                <a href="/cdn-cgi/l/email-protection#65060a0b1104061125001d04081509004b060a08" class="contact-button contact-primary" data-i18n-html="contactBtn1">
                     Contact us
                     →
-                    
                 </a>
 
 
                 <a
                     href="#technology"
-                    class="contact-button contact-secondary">
-
+                    class="contact-button contact-secondary" data-i18n="contactBtn2">
                     Explore technology
-
                 </a>
 
 
@@ -4897,13 +4799,11 @@ footer {
                 </div>
 
 
-                <p class="footer-description">
-
+                <p class="footer-description" data-i18n="footerDesc">
                     Linux、
                     オープンソース、
                     コンピューティング技術を通じて、
                     次の技術をつくる。
-
                 </p>
 
 
@@ -4913,19 +4813,19 @@ footer {
 
             <div class="footer-column">
 
-                <h4>
+                <h4 data-i18n="footerCol1Title">
                     Company
                 </h4>
 
-                <a href="#about">
+                <a href="#about" data-i18n="navAbout">
                     About
                 </a>
 
-                <a href="#organization">
+                <a href="#organization" data-i18n="navOrg">
                     Organization
                 </a>
 
-                <a href="#governance">
+                <a href="#governance" data-i18n="navGov">
                     Governance
                 </a>
 
@@ -4935,7 +4835,7 @@ footer {
 
             <div class="footer-column">
 
-                <h4>
+                <h4 data-i18n="footerCol2Title">
                     Technology
                 </h4>
 
@@ -4943,11 +4843,11 @@ footer {
                     NagisinnraLinux
                 </a>
 
-                <a href="#technology">
+                <a href="#technology" data-i18n="tech1Title">
                     Linux Engineering
                 </a>
 
-                <a href="#technology">
+                <a href="#technology" data-i18n="tech3Title">
                     Open Source
                 </a>
 
@@ -4957,11 +4857,11 @@ footer {
 
             <div class="footer-column">
 
-                <h4>
+                <h4 data-i18n="footerCol3Title">
                     Connect
                 </h4>
 
-                <a href="#contact">
+                <a href="#contact" data-i18n="navContact">
                     Contact
                 </a>
 
@@ -4982,12 +4882,12 @@ footer {
 
         <div class="footer-bottom">
 
-            <span>
+            <span id="footer-copyright">
                 © 2026 Nagisinnra Technology
             </span>
 
 
-            <span>
+            <span data-i18n="footerEffective">
                 Effective September 4, 2026
             </span>
 
@@ -5006,6 +4906,266 @@ footer {
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
+/* =========================================================
+   MULTILINGUAL SUPPORT (i18n)
+========================================================= */
+const translations = {
+    ja: {
+        navAbout: "About",
+        navTech: "Technology",
+        navOrg: "Organization",
+        navGov: "Governance",
+        navContact: "Contact",
+        heroLabel: "Nagisinnra Technology · EST. 2026",
+        heroTitle: '<span class="gray">Technology,</span><br><span>made</span><span class="green">human.</span>',
+        heroDesc: "Nagisinnra Technologyは、オープンソースとコンピューティング技術を軸に、新しいソフトウェア体験をつくる技術組織です。<br><br>超軽量Linuxディストリビューション「NagisinnraLinux」を中心として、技術開発と情報発信を行っています。",
+        heroBtnAbout: "私たちについて <span>→</span>",
+        heroBtnTech: "Technology",
+        infoOrgLabel: "ORGANIZATION",
+        infoProjLabel: "PROJECT",
+        infoFieldLabel: "FIELD",
+        infoFieldValue: "Linux / Open Source",
+        infoEstLabel: "ESTABLISHED",
+        aboutEyebrow: "ABOUT SINNRA",
+        aboutTitle: "技術を、<br>もっと自由に。",
+        aboutDesc: "Nagisinnra Technologyは、小さなアイデアを技術として形にし、それを世界へ届けることを目指しています。",
+        aboutLarge: '私たちは<span>「使う人」</span>の視点から、技術を考えます。',
+        aboutText: '<p>高性能であること。新しいこと。複雑であること。それだけが、良い技術ではありません。</p><p>必要なものを必要なだけ。わかりやすく、軽く、美しく。Nagisinnra Technologyでは、コンピューターを使う人が技術そのものに振り回されるのではなく、技術によって自由になれる環境を目指しています。</p><p>その思想を形にしたものが、私たちの主要プロジェクト「NagisinnraLinux」です。</p>',
+        missionEyebrow: "OUR MISSION",
+        missionTitle: "三つの<br>基本思想。",
+        mission1Title: "オープンであること。",
+        mission1Desc: "オープンソースの思想を尊重し、技術を一部の人だけのものにせず、学び、改良し、共有できる環境をつきます。",
+        mission2Title: "軽くあること。",
+        mission2Desc: "ハードウェアの性能をOS自身が使い切るのではなく、ユーザーのために残す。軽量で効率的なコンピューティングを追求します。",
+        mission3Title: "人を中心にすること。",
+        mission3Desc: "技術仕様だけではなく、実際に使う人の感覚、わかりやすさ、美しさまで含めてプロダクトを設計します。",
+        philLabel: "THE SINNRA APPROACH",
+        philTitle: 'Small teams.<br><span>Serious technology.</span>',
+        philDesc: "私たちは大規模な組織ではありません。<br><br>だからこそ、一つひとつの技術について考え、実際に手を動かし、必要であれば何度でも作り直す。<br><br>小さな組織だからできる技術への向き合い方を大切にしています。",
+        prodEyebrow: "FLAGSHIP PROJECT",
+        prodDesc: "Nagisinnra Technologyが独自に開発・運営する超軽量Linuxディストリビューション。",
+        screenWelcome: "Welcome to",
+        prodCopyTitle: "軽く。<br>速く。<br>美しく。",
+        prodCopyP1: "NagisinnraLinuxは、「Linuxだから難しい」という固定観念を変えることを目指したLinuxディストリビューションです。",
+        prodCopyP2: "カーネルを基盤としながら、システム構成を見直し、必要な環境をコンパクトにまとめる。そして、技術的な中身だけではなく、デスクトップの体験まで一つのプロダクトとして考えます。",
+        techEyebrow: "TECHNOLOGY",
+        techTitle: "技術領域。",
+        techSub: "Nagisinnra Technologyでは、Linuxを中心に複数の技術領域へ継続的に取り組みます。",
+        tech1Title: "Linux Engineering",
+        tech1Desc: "Linuxカーネル、システム構成、パッケージング、起動プロセスなどを含めたOSレベルの技術研究。",
+        tech2Title: "System Optimization",
+        tech2Desc: "CPU、メモリ、ストレージなどのハードウェア資源を効率的に利用するためのシステム最適化。",
+        tech3Title: "Open Source",
+        tech3Desc: "オープンソースコミュニティへの参加、技術情報の公開、開発成果の共有を通じてOSSエコシステムへ貢献します。",
+        tech4Title: "Computing Experience",
+        tech4Desc: "技術仕様だけではなく、UI、UX、デザイン、インストール体験まで含めたコンピューティング体験の設計。",
+        actEyebrow: "ACTIVITIES",
+        actTitle: "活動内容。",
+        act1Title: "NagisinnraLinux 開発",
+        act1Desc: "カーネル最適化、ビルド、アップデートなど",
+        act2Title: "技術情報発信",
+        act2Desc: "公式ウェブサイト、Zenn等を通じた技術発信",
+        act3Title: "オープンソース活動",
+        act3Desc: "OSSコミュニティへの技術的貢献",
+        act4Title: "技術連携",
+        act4Desc: "国内外の企業・団体との技術的な連携",
+        orgEyebrow: "ORGANIZATION",
+        orgTitle: "組織について。",
+        orgBoxLabel: "ORGANIZATION",
+        orgLocKey: "Location",
+        orgLocVal: "栃木県宇都宮市",
+        orgText: '<p>Nagisinnra Technologyは、NagisinnraLinuxの独自開発・運営を中心として活動する技術組織です。</p><p>会員は本会の目的に賛同し、開発または運営に協力する者によって構成されます。</p><p>組織としての意思決定、技術開発、情報発信、外部との連携を通じて、長期的に活動できる技術コミュニティを目指します。</p>',
+        sponsorEyebrow: "PARTNERSHIP",
+        sponsorTitle: "技術を、<br>一緒につくる。",
+        sponsorText: "Nagisinnra Technologyでは、NagisinnraLinuxをはじめとする技術活動を支援していただける企業・団体との連携を歓迎しています。<br><br>資金だけではなく、機材、開発環境、技術的な協力など、さまざまな形での支援を想定しています。",
+        sp1En: "Financial Support",
+        sp1Ja: "資金支援",
+        sp2En: "Hardware",
+        sp2Ja: "機材提供",
+        sp3En: "Infrastructure",
+        sp3Ja: "開発環境",
+        sp4En: "Technical Partnership",
+        sp4Ja: "技術連携",
+        govEyebrow: "GOVERNANCE",
+        govTitle: "透明性と、<br>責任。",
+        govSub: "Nagisinnra Technologyは、技術組織としての自由さと、対外的な責任の両立を目指します。",
+        govText: '<p>組織の活動内容、資産、会計年度、会員、代表などについて会則を定めています。</p><p style="margin-top:25px;">また、代表が未成年者である期間については、法的な契約行為や重大な意思決定に際して保護者の同意または法的アドバイスを得ることを会則上の特約として定めています。</p><p style="margin-top:25px;">技術活動だけではなく、組織としての信頼性についても継続的に改善していきます。</p>',
+        govLocKey: "Office",
+        govLocVal: "栃木県宇都宮市",
+        govFiscalKey: "Fiscal Year",
+        govFiscalVal: "4月1日 — 3月31日",
+        govEffKey: "Effective",
+        govEffVal: "2026年9月4日",
+        timeEyebrow: "OUR JOURNEY",
+        timeTitle: "ここから、<br>始まる。",
+        time1Desc: "軽量で、自分が使いたいと思えるLinuxをつくるというアイデアからプロジェクトが始まりました。",
+        time2Title: "軽量化への挑戦",
+        time2Desc: "システム構成を見直し、より小さく、より高速なLinux環境を目指して開発を進めました。",
+        time3Desc: "NagisinnraLinuxだけではなく、技術発信やオープンソース活動、外部との連携までを含めた組織としての活動へ。",
+        time4Title: "次の技術へ。",
+        time4Desc: "Linuxに限らず、コンピューティングの未来につながる技術を研究し、新しいプロジェクトへ挑戦していきます。",
+        faqTitle: "よくある質問。",
+        faq1Q: "Nagisinnra Technologyとは何ですか？",
+        faq1A: "NagisinnraLinuxの独自開発・運営を中心に、Linux、オープンソース、システム最適化などの技術活動を行う技術組織です。",
+        faq2Q: "NagisinnraLinuxとの関係は？",
+        faq2A: "NagisinnraLinuxは、Nagisinnra Technologyが独自に開発・運営する主要プロジェクトです。",
+        faq3Q: "企業との技術連携は可能ですか？",
+        faq3A: "技術連携、機材提供、開発環境の提供、スポンサーシップなど、活動目的に沿ったさまざまな形の連携を想定しています。",
+        faq4Q: "会員になるには？",
+        faq4A: "本会の目的に賛同し、開発または運営に協力する方を会員としています。詳細については今後の案内をご確認ください。",
+        faq5Q: "会則は公開されていますか？",
+        faq5A: "Nagisinnra Technologyでは、組織の名称、目的、活動、会員、会計、未成年者保護に関する特約などを会則として定めています。",
+        contactDesc: "技術連携、NagisinnraLinuxに関するお問い合わせ、スポンサーシップなどについてはNagisinnra Technologyまでご連絡ください。",
+        contactBtn1: "Contact us →",
+        contactBtn2: "Explore technology",
+        footerDesc: "Linux、オープンソース、コンピューティング技術を通じて、次の技術をつくる。",
+        footerCol1Title: "Company",
+        footerCol2Title: "Technology",
+        footerCol3Title: "Connect",
+        footerEffective: "Effective September 4, 2026"
+    },
+    en: {
+        navAbout: "About",
+        navTech: "Technology",
+        navOrg: "Organization",
+        navGov: "Governance",
+        navContact: "Contact",
+        heroLabel: "Nagisinnra Technology · EST. 2026",
+        heroTitle: '<span class="gray">Technology,</span><br><span>made</span><span class="green">human.</span>',
+        heroDesc: "Nagisinnra Technology is a technical organization creating new software experiences centered around open source and computing technologies.<br><br>We focus on technical development and information dissemination centered on the ultra-lightweight Linux distribution \"NagisinnraLinux\".",
+        heroBtnAbout: "About us <span>→</span>",
+        heroBtnTech: "Technology",
+        infoOrgLabel: "ORGANIZATION",
+        infoProjLabel: "PROJECT",
+        infoFieldLabel: "FIELD",
+        infoFieldValue: "Linux / Open Source",
+        infoEstLabel: "ESTABLISHED",
+        aboutEyebrow: "ABOUT SINNRA",
+        aboutTitle: "Technology,<br>freed.",
+        aboutDesc: "Nagisinnra Technology aims to shape small ideas into technology and deliver them to the world.",
+        aboutLarge: 'We think about technology from the perspective of <span>"the user"</span>.',
+        aboutText: '<p>High performance. Newness. Complexity. These alone do not make good technology.</p><p>Just what is needed. Simple, light, and beautiful. At Nagisinnra Technology, we aim for an environment where computer users are not overwhelmed by technology itself, but empowered by it.</p><p>The embodiment of this philosophy is our flagship project, "NagisinnraLinux".</p>',
+        missionEyebrow: "OUR MISSION",
+        missionTitle: "Three core<br>philosophies.",
+        mission1Title: "Be Open.",
+        mission1Desc: "Respecting open-source principles, we create an environment where technology is not confined to a few, but can be learned, improved, and shared.",
+        mission2Title: "Be Light.",
+        mission2Desc: "Instead of letting the OS consume all hardware performance, we leave it for the user. We pursue lightweight and efficient computing.",
+        mission3Title: "Be Human-Centric.",
+        mission3Desc: "We design products encompassing not only technical specs, but also the actual user's feel, clarity, and beauty.",
+        philLabel: "THE SINNRA APPROACH",
+        philTitle: 'Small teams.<br><span>Serious technology.</span>',
+        philDesc: "We are not a massive organization.<br><br>That is precisely why we think deeply about every piece of technology, get hands-on, and rebuild as many times as necessary.<br><br>We cherish the way we approach technology that only a small organization can achieve.",
+        prodEyebrow: "FLAGSHIP PROJECT",
+        prodDesc: "An ultra-lightweight Linux distribution independently developed and operated by Nagisinnra Technology.",
+        screenWelcome: "Welcome to",
+        prodCopyTitle: "Light.<br>Fast.<br>Beautiful.",
+        prodCopyP1: "NagisinnraLinux is a Linux distribution aimed at changing the stereotype that \"Linux is difficult\".",
+        prodCopyP2: "Built upon the kernel, we review the system configuration to bundle the necessary environment compactly. We treat not just the technical internals, but the desktop experience as a single product.",
+        techEyebrow: "TECHNOLOGY",
+        techTitle: "Technology Areas.",
+        techSub: "Nagisinnra Technology continuously engages in multiple technical areas centered around Linux.",
+        tech1Title: "Linux Engineering",
+        tech1Desc: "OS-level technical research including the Linux kernel, system composition, packaging, and boot processes.",
+        tech2Title: "System Optimization",
+        tech2Desc: "System optimization for efficient utilization of hardware resources such as CPU, memory, and storage.",
+        tech3Title: "Open Source",
+        tech3Desc: "Contributing to the OSS ecosystem through participation in open source communities, publicizing technical info, and sharing results.",
+        tech4Title: "Computing Experience",
+        tech4Desc: "Designing computing experiences including UI, UX, design, and installation experience, not just technical specs.",
+        actEyebrow: "ACTIVITIES",
+        actTitle: "Activities.",
+        act1Title: "NagisinnraLinux Development",
+        act1Desc: "Kernel optimization, building, updating, etc.",
+        act2Title: "Technical Publishing",
+        act2Desc: "Sharing technical info via official site, Zenn, etc.",
+        act3Title: "Open Source Activity",
+        act3Desc: "Technical contributions to OSS communities",
+        act4Title: "Technical Partnership",
+        act4Desc: "Technical cooperation with domestic/international companies and organizations",
+        orgEyebrow: "ORGANIZATION",
+        orgTitle: "Organization.",
+        orgBoxLabel: "ORGANIZATION",
+        orgLocKey: "Location",
+        orgLocVal: "Utsunomiya, Tochigi",
+        orgText: '<p>Nagisinnra Technology is a technical organization focused on the independent development and operation of NagisinnraLinux.</p><p>Members consist of those who agree with the purpose of the association and cooperate in development or operation.</p><p>Through organizational decision-making, technical development, information dissemination, and external cooperation, we aim to be a sustainable technical community.</p>',
+        sponsorEyebrow: "PARTNERSHIP",
+        sponsorTitle: "Build technology<br>together.",
+        sponsorText: "Nagisinnra Technology welcomes cooperation with companies and organizations willing to support technical activities such as NagisinnraLinux.<br><br>We anticipate various forms of support, including financial support, hardware, development environments, and technical cooperation.",
+        sp1En: "Financial Support",
+        sp1Ja: "Financial Support",
+        sp2En: "Hardware",
+        sp2Ja: "Hardware",
+        sp3En: "Infrastructure",
+        sp3Ja: "Infrastructure",
+        sp4En: "Technical Partnership",
+        sp4Ja: "Technical Partnership",
+        govEyebrow: "GOVERNANCE",
+        govTitle: "Transparency<br>& Responsibility.",
+        govSub: "Nagisinnra Technology aims to balance freedom as a technical organization with external responsibility.",
+        govText: '<p>We establish rules regarding the organization\'s activities, assets, fiscal year, members, representative, etc.</p><p style="margin-top:25px;">Additionally, for periods when the representative is a minor, obtaining parental consent or legal advice for legal contracts and major decisions is specified as a special provision in the rules.</p><p style="margin-top:25px;">We continuously improve not only our technical activities but also our reliability as an organization.</p>',
+        govLocKey: "Office",
+        govLocVal: "Utsunomiya, Tochigi",
+        govFiscalKey: "Fiscal Year",
+        govFiscalVal: "Apr 1 — Mar 31",
+        govEffKey: "Effective",
+        govEffVal: "September 4, 2026",
+        timeEyebrow: "OUR JOURNEY",
+        timeTitle: "Where it<br>all begins.",
+        time1Desc: "The project started from the idea of creating a lightweight Linux that we actually want to use.",
+        time2Title: "Challenge to Lightweighting",
+        time2Desc: "We reviewed the system configuration and advanced development aiming for a smaller, faster Linux environment.",
+        time3Desc: "Expanding into organizational activities including not only NagisinnraLinux, but also technical publishing, open source activities, and external cooperation.",
+        time4Title: "Toward Next Tech.",
+        time4Desc: "Beyond Linux, we research technologies connected to the future of computing and take on new projects.",
+        faqTitle: "FAQ.",
+        faq1Q: "What is Nagisinnra Technology?",
+        faq1A: "It is a technical organization conducting technical activities such as Linux, open source, and system optimization, centered around the independent development and operation of NagisinnraLinux.",
+        faq2Q: "What is the relationship with NagisinnraLinux?",
+        faq2A: "NagisinnraLinux is a flagship project independently developed and operated by Nagisinnra Technology.",
+        faq3Q: "Is technical partnership with companies possible?",
+        faq3A: "We anticipate various forms of cooperation aligned with our activity objectives, such as technical partnerships, hardware provision, development environment provision, and sponsorships.",
+        faq4Q: "How to become a member?",
+        faq4A: "Members are those who agree with our objectives and cooperate in development or operation. Please check future announcements for details.",
+        faq5Q: "Are the rules published?",
+        faq5A: "Nagisinnra Technology defines rules covering the organization's name, purpose, activities, members, accounting, and special provisions regarding minor protection.",
+        contactDesc: "For technical partnerships, inquiries regarding NagisinnraLinux, sponsorships, etc., please contact Nagisinnra Technology.",
+        contactBtn1: "Contact us →",
+        contactBtn2: "Explore technology",
+        footerDesc: "Building the next technology through Linux, open source, and computing technologies.",
+        footerCol1Title: "Company",
+        footerCol2Title: "Technology",
+        footerCol3Title: "Connect",
+        footerEffective: "Effective September 4, 2026"
+    }
+};
+
+let currentLang = "ja";
+
+function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+
+    // ボタンのactive切り替え
+    document.getElementById("btn-en").classList.toggle("active", lang === "en");
+    document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
+
+    // data-i18n のテキスト要素を更新
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+
+    // data-i18n-html のHTML要素を更新
+    document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const key = el.getAttribute("data-i18n-html");
+        if (translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+        }
+    });
+}
 
 /* =========================================================
    SCROLL REVEAL
@@ -5205,7 +5365,7 @@ const year =
 
 document
     .querySelectorAll(
-        ".footer-bottom span:first-child"
+        "#footer-copyright"
     )
     .forEach(
         element => {
@@ -5224,9 +5384,3 @@ document
 </body>
 
 </html>
-```
-
-
-<script defer data-domain="html.cafe" src="https://milkymouse.com/js/script.js"></script>
-
-   
