@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -136,14 +136,14 @@
 <section id="release-archive">
     <div class="archive-header">
         <div>
-            <h2 id="ui-title">Release Archive</h2>
-            <p id="ui-subtitle">Previous releases, changelogs and ISO downloads.</p>
+            <h2 id="ui-title">リリースアーカイブ</h2>
+            <p id="ui-subtitle">過去のリリース、変更履歴、ISOイメージのダウンロード。</p>
         </div>
 
-        <!-- 言語切り替えスイッチ -->
+        <!-- 言語切り替えスイッチ（EN と 日本語 の切り替えが可能） -->
         <div class="lang-switcher" role="group" aria-label="Language switcher">
-            <button type="button" class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
-            <button type="button" class="lang-btn" data-lang="ja" onclick="setLanguage('ja')">日本語</button>
+            <button type="button" class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+            <button type="button" class="lang-btn active" data-lang="ja" onclick="setLanguage('ja')">日本語</button>
         </div>
     </div>
 
@@ -184,6 +184,7 @@
         {
             version: "v1.0.5",
             date: { en: "May 2026", ja: "2026年5月" },
+            title: { en: "v1.0.5", ja: "v1.0.5" },
             status: { en: "Archived", ja: "アーカイブ済み" },
             isLTS: false,
             notes: {
@@ -202,7 +203,7 @@
     ];
 
     /* =========================================================================
-       以下は自動描画・言語切り替え用のプログラム（普段は触らなくてOKです）
+       以下は自動描画・言語切り替え用のプログラム
     ========================================================================= */
     const UI_TEXT = {
         en: {
@@ -219,9 +220,8 @@
         }
     };
 
-    // ブラウザの言語設定を自動判定（日本語環境なら最初から日本語にする場合は下の行を有効化できます）
-    // let currentLang = navigator.language.startsWith('ja') ? 'ja' : 'en';
-    let currentLang = 'en';
+    // 初期言語を日本語（'ja'）に設定
+    let currentLang = 'ja';
 
     function setLanguage(lang) {
         currentLang = lang;
@@ -279,7 +279,7 @@
         });
     }
 
-    // 初回描画
+    // 初回描画（日本語でスタート）
     renderReleases();
 </script>
 
