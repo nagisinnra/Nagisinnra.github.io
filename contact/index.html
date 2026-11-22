@@ -1,1 +1,934 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>お問い合わせ — NagisinnraLinux / Nagisinnra Technology</title>
 
+  <!-- Google Fonts: Inter & Plus Jakarta Sans & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', '"Noto Sans JP"', 'sans-serif'],
+            jp: ['"Noto Sans JP"', '"Inter"', 'sans-serif'],
+          },
+          colors: {
+            canvas: '#F4F5F3',
+            sage: {
+              badge: '#748E75',
+              dot: '#69856A',
+              deep: '#2A362B',
+              mid: '#5C775E',
+              glow: '#D6E0D5',
+            },
+            ink: {
+              primary: '#181A18',
+              muted: '#8D928D',
+              body: '#5E635E',
+            },
+          },
+          boxShadow: {
+            nav: '0 4px 24px rgba(0, 0, 0, 0.04)',
+            pill: '0 2px 12px rgba(0, 0, 0, 0.04)',
+            card: '0 12px 36px -8px rgba(32, 42, 33, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02)',
+            window: '0 20px 50px -12px rgba(28, 38, 29, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03)',
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-canvas text-ink-primary font-sans antialiased selection:bg-[#6E886F]/20 selection:text-[#2A362B] relative overflow-x-hidden min-h-screen flex flex-col">
+
+  <!-- Ambient Soft Sage Radial Glows (Matching Screenshot Atmosphere) -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <!-- Left Soft Radial Glow -->
+    <div
+      class="absolute -left-24 top-20 w-[440px] h-[440px] sm:w-[580px] sm:h-[580px] rounded-full opacity-75 blur-[70px]"
+      style="background: radial-gradient(circle, rgba(196, 211, 195, 0.65) 0%, rgba(214, 224, 213, 0.25) 55%, rgba(244, 245, 243, 0) 75%);"
+    ></div>
+    <!-- Subtle Top-Right Soft Ambient Glow -->
+    <div
+      class="absolute -right-32 top-80 w-[420px] h-[420px] rounded-full opacity-50 blur-[80px]"
+      style="background: radial-gradient(circle, rgba(203, 216, 202, 0.5) 0%, rgba(244, 245, 243, 0) 70%);"
+    ></div>
+  </div>
+
+  <!-- Floating Pill Header (Matching Screenshot Navigation) -->
+  <header class="sticky top-4 z-40 px-4 sm:px-6 pt-1">
+    <nav
+      aria-label="Global Navigation"
+      class="max-w-5xl mx-auto bg-white/85 backdrop-blur-md border border-black/[0.04] rounded-full shadow-nav px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2"
+    >
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 pl-1 group focus:outline-none">
+      <!-- Right Action CTA & Language Switcher -->
+      <div class="flex items-center gap-2">
+        <!-- JP / EN Language Switcher Pill -->
+        <div
+          role="group"
+          aria-label="Language Switcher"
+          class="inline-flex items-center bg-[#F2F4F2] border border-black/[0.05] rounded-full p-0.5 text-[11.5px] font-bold"
+        >
+          <button
+            id="lang-btn-jp"
+            type="button"
+            onclick="setLanguage('jp')"
+            aria-pressed="true"
+            class="px-2.5 py-1 rounded-full transition-all duration-200 bg-white text-ink-primary shadow-sm"
+          >
+            JP
+          </button>
+          <button
+            id="lang-btn-en"
+            type="button"
+            onclick="setLanguage('en')"
+            aria-pressed="false"
+            class="px-2.5 py-1 rounded-full transition-all duration-200 text-ink-muted hover:text-ink-primary"
+          >
+            EN
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="メニューを開く"
+          class="md:hidden p-2 rounded-full text-ink-body hover:text-ink-primary hover:bg-black/[0.04] transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+
+        <a
+          href="#download"
+          class="bg-ink-primary hover:bg-[#2B2F2B] text-white text-[13px] font-semibold px-4 sm:px-5 py-2.5 rounded-full transition-all duration-200 shadow-sm hover:-translate-y-0.5 active:translate-y-0"
+        >
+          Download
+        </a>
+      </div>
+    </nav>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden max-w-5xl mx-auto mt-2 bg-white/95 backdrop-blur-md border border-black/[0.05] rounded-3xl shadow-card p-4"
+    >
+      <div class="grid grid-cols-2 gap-1.5 text-sm font-medium text-ink-body">
+        <a href="#about" class="px-3.5 py-2.5 rounded-2xl hover:bg-[#F4F5F3] hover:text-ink-primary transition-colors">About</a>
+        <a href="#features" class="px-3.5 py-2.5 rounded-2xl hover:bg-[#F4F5F3] hover:text-ink-primary transition-colors">Features</a>
+        <a href="#technology" class="px-3.5 py-2.5 rounded-2xl hover:bg-[#F4F5F3] hover:text-ink-primary transition-colors">Technology</a>
+        <a href="#faq" class="px-3.5 py-2.5 rounded-2xl hover:bg-[#F4F5F3] hover:text-ink-primary transition-colors">FAQ</a>
+        <a href="#links" class="px-3.5 py-2.5 rounded-2xl hover:bg-[#F4F5F3] hover:text-ink-primary transition-colors">Related Links</a>
+        <a href="#contact" class="px-3.5 py-2.5 rounded-2xl bg-[#EEF2EE] text-ink-primary font-semibold">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="contact" class="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20">
+
+    <!-- Hero Section -->
+    <section class="text-center max-w-2xl mx-auto">
+      <!-- Status / Section Pill Badge -->
+      <div
+        class="inline-flex items-center gap-2 bg-white/90 border border-black/[0.04] rounded-full px-4 py-1.5 shadow-pill mb-7"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-sage-dot"></span>
+        <span class="text-xs font-medium text-ink-body tracking-tight">
+          NagisinnraLinux · Nagisinnra Technology
+        </span>
+      </div>
+
+      <!-- Two-Tone Tight-Tracked Display Title -->
+      <h1 class="tracking-[-0.04em] leading-[1.02] font-extrabold text-[42px] sm:text-[62px] md:text-[72px] mb-5">
+        <span data-i18n="heroTitleTop" class="block text-ink-muted">Get in touch.</span>
+        <span
+          data-i18n="heroTitleBottom"
+          class="block bg-clip-text text-transparent pb-1"
+          style="background-image: linear-gradient(100deg, #242E25 0%, #445846 55%, #6D876E 100%);"
+        >
+          お問い合わせ
+        </span>
+      </h1>
+
+      <!-- User Provided Intro & Welcome Description -->
+      <div class="space-y-2.5 text-[14px] sm:text-[15.5px] leading-relaxed text-ink-body font-jp max-w-xl mx-auto mt-6">
+        <p data-i18n="heroLead" class="font-medium text-ink-primary/90">
+          サブメールも用意しているので、こちらからでもお気軽にご連絡ください！
+        </p>
+        <p data-i18n="heroSub">
+          NagisinnraLinuxやWebサービス、共同開発、スポンサー・協力提案なども歓迎しています。
+        </p>
+      </div>
+
+      <!-- Topic Pills (Clickable to select category in composer) -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-6">
+        <button
+          type="button"
+          onclick="selectTopic('linux')"
+          class="text-xs font-medium text-ink-body hover:text-ink-primary bg-white/85 hover:bg-white border border-black/[0.05] hover:border-[#6E886F]/40 rounded-full px-3.5 py-1.5 shadow-pill transition-all"
+        >
+          NagisinnraLinux
+        </button>
+        <button
+          type="button"
+          onclick="selectTopic('web')"
+          data-i18n="topicWeb"
+          class="text-xs font-medium text-ink-body hover:text-ink-primary bg-white/85 hover:bg-white border border-black/[0.05] hover:border-[#6E886F]/40 rounded-full px-3.5 py-1.5 shadow-pill transition-all"
+        >
+          Webサービス
+        </button>
+        <button
+          type="button"
+          onclick="selectTopic('collab')"
+          data-i18n="topicCollab"
+          class="text-xs font-medium text-ink-body hover:text-ink-primary bg-white/85 hover:bg-white border border-black/[0.05] hover:border-[#6E886F]/40 rounded-full px-3.5 py-1.5 shadow-pill transition-all"
+        >
+          共同開発
+        </button>
+        <button
+          type="button"
+          onclick="selectTopic('sponsor')"
+          data-i18n="topicSponsor"
+          class="text-xs font-medium text-ink-body hover:text-ink-primary bg-white/85 hover:bg-white border border-black/[0.05] hover:border-[#6E886F]/40 rounded-full px-3.5 py-1.5 shadow-pill transition-all"
+        >
+          スポンサー・協力提案
+        </button>
+      </div>
+    </section>
+
+    <!-- Direct Email Contact Cards -->
+    <section aria-label="メールアドレス一覧" class="mt-11 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+
+      <!-- Card 1: 個人連絡先 (5 cols on lg) -->
+      <article
+        class="lg:col-span-5 group bg-white/95 backdrop-blur-sm border border-black/[0.05] rounded-[26px] p-6 sm:p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-[#6E886F]/30 flex flex-col justify-between"
+      >
+        <div>
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-[#EEF2EE] text-[#4C644E] flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-muted block">
+                  Personal Contact
+                </span>
+                <h2 data-i18n="personalTitle" class="text-[17px] font-bold text-ink-primary font-jp">
+                  個人連絡先
+                </h2>
+              </div>
+            </div>
+            <span class="text-[11px] font-medium text-[#566F58] bg-[#EEF2EE] px-2.5 py-1 rounded-full shrink-0">
+              Direct
+            </span>
+          </div>
+
+          <p data-i18n="personalDesc" class="text-[13px] text-ink-body font-jp leading-relaxed mb-5">
+            個人的なご質問やカジュアルなご連絡、日常の開発に関するやり取りはこちらのアドレスまでお送りください。
+          </p>
+        </div>
+
+        <div class="pt-4 border-t border-black/[0.05] space-y-3">
+          <!-- Email Display Box -->
+          <div class="bg-[#F6F7F6] border border-black/[0.04] rounded-2xl px-4 py-3 flex items-center justify-between gap-2">
+            <a
+              href="mailto:nagisinnra@icloud.com"
+              class="text-[14px] font-semibold text-ink-primary hover:text-[#4C644E] transition-colors truncate"
+            >
+              nagisinnra@icloud.com
+            </a>
+            <button
+              type="button"
+              onclick="copyEmail('nagisinnra@icloud.com', this)"
+              class="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-ink-primary bg-white hover:bg-[#EEF2EE] border border-black/[0.07] rounded-full px-3 py-1.5 transition-all active:scale-95"
+              aria-label="nagisinnra@icloud.com をコピー"
+            >
+              <svg class="w-3.5 h-3.5 text-ink-body" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              <span data-i18n="copyBtn">コピー</span>
+            </button>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-2">
+            <a
+              href="mailto:nagisinnra@icloud.com"
+              class="flex-1 inline-flex items-center justify-center gap-1.5 bg-ink-primary hover:bg-[#2B2F2B] text-white text-[13px] font-semibold py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm"
+            >
+              <span data-i18n="sendMailBtn">メールを送る</span>
+              <span aria-hidden="true">→</span>
+            </a>
+            <button
+              type="button"
+              onclick="selectRecipient('nagisinnra@icloud.com')"
+              data-i18n="composeBtn"
+              class="inline-flex items-center justify-center bg-white hover:bg-[#F4F5F3] text-ink-primary border border-black/[0.08] text-[13px] font-semibold py-2.5 px-3.5 rounded-full transition-colors shrink-0"
+            >
+              フォーム作成
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Nagisinnra Technology (7 cols on lg, houses both Main & Sub emails) -->
+      <article
+        class="lg:col-span-7 group bg-white/95 backdrop-blur-sm border border-black/[0.05] rounded-[26px] p-6 sm:p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-[#6E886F]/30 flex flex-col justify-between"
+      >
+        <div>
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-[#EEF2EE] text-[#4C644E] flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-muted block">
+                  Project &amp; Business
+                </span>
+                <h2 class="text-[17px] font-bold text-ink-primary">
+                  Nagisinnra Technology
+                </h2>
+              </div>
+            </div>
+            <span class="text-[11px] font-medium text-[#566F58] bg-[#EEF2EE] px-2.5 py-1 rounded-full shrink-0">
+              Official
+            </span>
+          </div>
+
+          <p data-i18n="techDesc" class="text-[13px] text-ink-body font-jp leading-relaxed mb-5">
+            NagisinnraLinux・Webサービスに関するお問い合わせ、共同開発やスポンサー・協力のご提案はこちらへどうぞ。メイン・サブどちらのアドレスでも受け付けています。
+          </p>
+        </div>
+
+        <div class="pt-4 border-t border-black/[0.05] space-y-3">
+          <!-- Primary Email Row: nagisinnra.technology@outlook.jp -->
+          <div class="bg-[#F6F7F6] border border-black/[0.04] rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span data-i18n="primaryTag" class="text-[10.5px] font-bold uppercase tracking-wider text-[#4C644E] bg-[#E5ECE5] px-2 py-0.5 rounded-full">
+                  メイン / Primary
+                </span>
+              </div>
+              <a
+                href="mailto:nagisinnra.technology@outlook.jp"
+                class="text-[14px] font-semibold text-ink-primary hover:text-[#4C644E] transition-colors block truncate"
+              >
+                nagisinnra.technology@outlook.jp
+              </a>
+            </div>
+
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onclick="copyEmail('nagisinnra.technology@outlook.jp', this)"
+                class="inline-flex items-center gap-1 text-xs font-semibold text-ink-primary bg-white hover:bg-[#EEF2EE] border border-black/[0.07] rounded-full px-3 py-1.5 transition-all active:scale-95"
+                aria-label="nagisinnra.technology@outlook.jp をコピー"
+              >
+                <svg class="w-3.5 h-3.5 text-ink-body" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
+                <span data-i18n="copyBtn">コピー</span>
+              </button>
+              <a
+                href="mailto:nagisinnra.technology@outlook.jp"
+                data-i18n="sendShortBtn"
+                class="inline-flex items-center justify-center bg-ink-primary hover:bg-[#2B2F2B] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full transition-colors"
+              >
+                送信
+              </a>
+              <button
+                type="button"
+                onclick="selectRecipient('nagisinnra.technology@outlook.jp')"
+                data-i18n="formShortBtn"
+                class="inline-flex items-center justify-center bg-white hover:bg-[#EEF2EE] text-ink-primary border border-black/[0.07] text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+              >
+                作成
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub Email Row: sinnra.technology@outlook.jp -->
+          <div class="bg-[#F6F7F6] border border-black/[0.04] rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span data-i18n="subTag" class="text-[10.5px] font-bold uppercase tracking-wider text-ink-body bg-white border border-black/[0.06] px-2 py-0.5 rounded-full">
+                  サブメール / Sub
+                </span>
+              </div>
+              <a
+                href="mailto:sinnra.technology@outlook.jp"
+                class="text-[14px] font-semibold text-ink-primary hover:text-[#4C644E] transition-colors block truncate"
+              >
+                sinnra.technology@outlook.jp
+              </a>
+            </div>
+
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onclick="copyEmail('sinnra.technology@outlook.jp', this)"
+                class="inline-flex items-center gap-1 text-xs font-semibold text-ink-primary bg-white hover:bg-[#EEF2EE] border border-black/[0.07] rounded-full px-3 py-1.5 transition-all active:scale-95"
+                aria-label="sinnra.technology@outlook.jp をコピー"
+              >
+                <svg class="w-3.5 h-3.5 text-ink-body" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
+                <span data-i18n="copyBtn">コピー</span>
+              </button>
+              <a
+                href="mailto:sinnra.technology@outlook.jp"
+                data-i18n="sendShortBtn"
+                class="inline-flex items-center justify-center bg-ink-primary hover:bg-[#2B2F2B] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full transition-colors"
+              >
+                送信
+              </a>
+              <button
+                type="button"
+                onclick="selectRecipient('sinnra.technology@outlook.jp')"
+                data-i18n="formShortBtn"
+                class="inline-flex items-center justify-center bg-white hover:bg-[#EEF2EE] text-ink-primary border border-black/[0.07] text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+              >
+                作成
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- macOS-Inspired Window Frame Card (Matching the Bottom Preview Card in Screenshot) -->
+    <section id="composer-section" aria-label="クイックメッセージ作成ウィンドウ" class="mt-10 sm:mt-12">
+      <div class="bg-white/95 backdrop-blur-md border border-black/[0.06] rounded-[28px] shadow-window overflow-hidden">
+        
+        <!-- Window Top Bar -->
+        <div
+          class="px-5 sm:px-7 py-3.5 border-b border-black/[0.05] flex items-center justify-between"
+          style="background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(235,242,235,0.65) 55%, rgba(255,255,255,0.95) 100%);"
+        >
+          <!-- Three Traffic Light Dots -->
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#D5D8D5]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#D5D8D5]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#D5D8D5]"></span>
+          </div>
+
+          <!-- Right Window Label -->
+          <span class="text-[11px] font-medium text-ink-muted tracking-tight">
+            NagisinnraLinux · Message Composer
+          </span>
+        </div>
+
+        <!-- Window Body -->
+        <div class="p-6 sm:p-8 md:p-10">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-7">
+            <div>
+              <h3 data-i18n="composerTitle" class="text-xl sm:text-2xl font-bold tracking-tight text-ink-primary font-jp">
+                クイックお問い合わせ作成
+              </h3>
+              <p data-i18n="composerSubtitle" class="text-[13px] text-ink-body font-jp mt-1">
+                内容を入力すると、お使いのメールアプリを起動するか、整形済みテキストをそのままコピーできます。
+              </p>
+            </div>
+          </div>
+
+          <form id="contact-form" class="space-y-5" onsubmit="handleMailLaunch(event)">
+            <!-- Row 1: Recipient & Category -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="recipient" data-i18n="labelRecipient" class="block text-xs font-semibold text-ink-primary mb-2 font-jp">
+                  送信先メールアドレス
+                </label>
+                <div class="relative">
+                  <select
+                    id="recipient"
+                    name="recipient"
+                    class="w-full appearance-none bg-[#F6F7F6] hover:bg-[#F1F3F1] focus:bg-white border border-black/[0.07] focus:border-[#6E886F] rounded-2xl px-4 py-3 text-[13.5px] font-medium text-ink-primary focus:outline-none transition-colors pr-10"
+                  >
+                    <option value="nagisinnra.technology@outlook.jp">
+                      Nagisinnra Technology (nagisinnra.technology@outlook.jp)
+                    </option>
+                    <option value="sinnra.technology@outlook.jp">
+                      Nagisinnra Technology Sub (sinnra.technology@outlook.jp)
+                    </option>
+                    <option value="nagisinnra@icloud.com">
+                      Personal / 個人連絡先 (nagisinnra@icloud.com)
+                    </option>
+                  </select>
+                  <svg
+                    class="w-4 h-4 text-ink-muted pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              <div>
+                <label for="category" data-i18n="labelCategory" class="block text-xs font-semibold text-ink-primary mb-2 font-jp">
+                  ご用件・カテゴリー
+                </label>
+                <div class="relative">
+                  <select
+                    id="category"
+                    name="category"
+                    class="w-full appearance-none bg-[#F6F7F6] hover:bg-[#F1F3F1] focus:bg-white border border-black/[0.07] focus:border-[#6E886F] rounded-2xl px-4 py-3 text-[13.5px] font-medium text-ink-primary font-jp focus:outline-none transition-colors pr-10"
+                  >
+                    <option value="linux" data-i18n="optLinux">NagisinnraLinuxについて</option>
+                    <option value="web" data-i18n="optWeb">Webサービスについて</option>
+                    <option value="collab" data-i18n="optCollab">共同開発のご相談</option>
+                    <option value="sponsor" data-i18n="optSponsor">スポンサー・協力提案</option>
+                    <option value="other" data-i18n="optOther">その他のお問い合わせ</option>
+                  </select>
+                  <svg
+                    class="w-4 h-4 text-ink-muted pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Sender Name & Subject -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="senderName" data-i18n="labelName" class="block text-xs font-semibold text-ink-primary mb-2 font-jp">
+                  お名前 / ハンドルネーム
+                </label>
+                <input
+                  id="senderName"
+                  name="senderName"
+                  type="text"
+                  data-i18n-placeholder="phName"
+                  placeholder="例：山田 太郎 / @username"
+                  class="w-full bg-[#F6F7F6] focus:bg-white border border-black/[0.07] focus:border-[#6E886F] rounded-2xl px-4 py-3 text-[13.5px] text-ink-primary placeholder:text-ink-muted/70 font-jp focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div>
+                <label for="subject" data-i18n="labelSubject" class="block text-xs font-semibold text-ink-primary mb-2 font-jp">
+                  件名
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  data-i18n-placeholder="phSubject"
+                  placeholder="例：共同開発のご相談について"
+                  class="w-full bg-[#F6F7F6] focus:bg-white border border-black/[0.07] focus:border-[#6E886F] rounded-2xl px-4 py-3 text-[13.5px] text-ink-primary placeholder:text-ink-muted/70 font-jp focus:outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <!-- Row 3: Message Body -->
+            <div>
+              <label for="message" data-i18n="labelMessage" class="block text-xs font-semibold text-ink-primary mb-2 font-jp">
+                お問い合わせ内容
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                data-i18n-placeholder="phMessage"
+                placeholder="NagisinnraLinuxへのフィードバック、Webサービスや共同開発のご相談、スポンサー・協力提案など、お気軽にご記入ください。"
+                class="w-full bg-[#F6F7F6] focus:bg-white border border-black/[0.07] focus:border-[#6E886F] rounded-2xl px-4 py-3.5 text-[13.5px] leading-relaxed text-ink-primary placeholder:text-ink-muted/70 font-jp focus:outline-none transition-colors resize-y"
+              ></textarea>
+            </div>
+
+            <!-- Submit & Secondary Copy Actions -->
+            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <p data-i18n="formNote" class="text-xs text-ink-muted font-jp">
+                ※ 送信ボタンを押すと標準メールアプリが起動します。
+              </p>
+
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <button
+                  type="button"
+                  onclick="copyFormattedMessage()"
+                  class="inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F4F5F3] text-ink-primary border border-black/[0.09] text-[13px] font-semibold px-5 py-3 rounded-full transition-all active:scale-95"
+                >
+                  <svg class="w-4 h-4 text-ink-body" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                  </svg>
+                  <span data-i18n="copyFormattedBtn">内容をコピー</span>
+                </button>
+
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center gap-2 bg-ink-primary hover:bg-[#2B2F2B] text-white text-[13px] font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-sm hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <span data-i18n="launchMailBtn">メールアプリで開く</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="relative z-10 border-t border-black/[0.05] bg-white/50 backdrop-blur-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-muted">
+      <div class="flex items-center gap-2.5">
+        <span class="w-5 h-5 rounded-md bg-[#748E75] text-white font-bold text-[10px] flex items-center justify-center">
+          N
+        </span>
+        <span class="font-semibold text-ink-primary">NagisinnraLinux</span>
+        <span>/</span>
+        <span>Nagisinnra Technology</span>
+      </div>
+      <p class="text-center sm:text-right">
+        Small by nature. Beautiful by design. &copy; Nagisinnra Technology
+      </p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification (Custom non-alert feedback) -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300"
+  >
+    <div class="bg-ink-primary text-white text-xs sm:text-[13px] font-medium px-5 py-3 rounded-full shadow-lg flex items-center gap-2.5">
+      <span class="w-2 h-2 rounded-full bg-[#8AB18B]"></span>
+      <span id="toast-message">コピーしました！</span>
+    </div>
+  </div>
+
+  <!-- Interactive Script -->
+  <script>
+    // Translation Dictionary (JP / EN)
+    const i18n = {
+      jp: {
+        pageTitle: 'お問い合わせ — NagisinnraLinux / Nagisinnra Technology',
+        heroTitleTop: 'Get in touch.',
+        heroTitleBottom: 'お問い合わせ',
+        heroLead: 'サブメールも用意しているので、こちらからでもお気軽にご連絡ください！',
+        heroSub: 'NagisinnraLinuxやWebサービス、共同開発、スポンサー・協力提案なども歓迎しています。',
+        topicWeb: 'Webサービス',
+        topicCollab: '共同開発',
+        topicSponsor: 'スポンサー・協力提案',
+        personalTitle: '個人連絡先',
+        personalDesc: '個人的なご質問やカジュアルなご連絡、日常の開発に関するやり取りはこちらのアドレスまでお送りください。',
+        techDesc: 'NagisinnraLinux・Webサービスに関するお問い合わせ、共同開発やスポンサー・協力のご提案はこちらへどうぞ。メイン・サブどちらのアドレスでも受け付けています。',
+        primaryTag: 'メイン / Primary',
+        subTag: 'サブメール / Sub',
+        copyBtn: 'コピー',
+        copiedShort: '完了',
+        sendMailBtn: 'メールを送る',
+        composeBtn: 'フォーム作成',
+        sendShortBtn: '送信',
+        formShortBtn: '作成',
+        composerTitle: 'クイックお問い合わせ作成',
+        composerSubtitle: '内容を入力すると、お使いのメールアプリを起動するか、整形済みテキストをそのままコピーできます。',
+        labelRecipient: '送信先メールアドレス',
+        labelCategory: 'ご用件・カテゴリー',
+        optLinux: 'NagisinnraLinuxについて',
+        optWeb: 'Webサービスについて',
+        optCollab: '共同開発のご相談',
+        optSponsor: 'スポンサー・協力提案',
+        optOther: 'その他のお問い合わせ',
+        labelName: 'お名前 / ハンドルネーム',
+        phName: '例：山田 太郎 / @username',
+        labelSubject: '件名',
+        phSubject: '例：共同開発のご相談について',
+        labelMessage: 'お問い合わせ内容',
+        phMessage: 'NagisinnraLinuxへのフィードバック、Webサービスや共同開発のご相談、スポンサー・協力提案など、お気軽にご記入ください。',
+        formNote: '※ 送信ボタンを押すと標準メールアプリが起動します。',
+        copyFormattedBtn: '内容をコピー',
+        launchMailBtn: 'メールアプリで開く',
+        toastCopiedEmail: (email) => `${email} をコピーしました`,
+        toastCopyFailed: 'コピーに失敗しました。手動で選択してください。',
+        toastCopiedFormatted: '宛先・件名・本文をクリップボードにコピーしました',
+        toastLaunchingMail: 'メールアプリを起動しています...',
+        toastLangSwitched: '表示言語を日本語に切り替えました',
+        mailAnon: '未記入',
+        mailPrefixInquiry: 'お問い合わせ',
+        mailFieldTo: '宛先',
+        mailFieldName: 'お名前',
+        mailFieldCategory: 'カテゴリー',
+        mailFieldSubject: '件名',
+        mailPlaceholderBody: '（お問い合わせ内容をご記入ください）',
+      },
+      en: {
+        pageTitle: 'Contact — NagisinnraLinux / Nagisinnra Technology',
+        heroTitleTop: 'Get in touch.',
+        heroTitleBottom: 'Contact Us',
+        heroLead: 'We also have sub-email addresses available—feel free to reach out anytime!',
+        heroSub: 'Inquiries regarding NagisinnraLinux, web services, co-development, sponsorships, and partnerships are all warmly welcomed.',
+        topicWeb: 'Web Services',
+        topicCollab: 'Co-development',
+        topicSponsor: 'Sponsorship & Partnership',
+        personalTitle: 'Personal Contact',
+        personalDesc: 'For personal questions, casual messages, or day-to-day development chats, please reach out to this address.',
+        techDesc: 'For inquiries about NagisinnraLinux, web services, co-development, or sponsorships. Both our primary and sub addresses are actively monitored.',
+        primaryTag: 'Primary',
+        subTag: 'Sub Email',
+        copyBtn: 'Copy',
+        copiedShort: 'Copied',
+        sendMailBtn: 'Send Email',
+        composeBtn: 'Compose',
+        sendShortBtn: 'Email',
+        formShortBtn: 'Compose',
+        composerTitle: 'Quick Message Composer',
+        composerSubtitle: 'Fill in the details below to launch your default mail app or copy the formatted message directly.',
+        labelRecipient: 'Recipient Email Address',
+        labelCategory: 'Topic / Category',
+        optLinux: 'About NagisinnraLinux',
+        optWeb: 'About Web Services',
+        optCollab: 'Co-development Inquiry',
+        optSponsor: 'Sponsorship & Partnership',
+        optOther: 'Other Inquiry',
+        labelName: 'Your Name / Handle',
+        phName: 'e.g. Alex Rivera / @username',
+        labelSubject: 'Subject',
+        phSubject: 'e.g. Collaboration proposal for NagisinnraLinux',
+        labelMessage: 'Message',
+        phMessage: 'Share your feedback on NagisinnraLinux, web service ideas, co-development proposals, or sponsorship inquiries...',
+        formNote: '* Clicking the button will open your default mail application.',
+        copyFormattedBtn: 'Copy Message',
+        launchMailBtn: 'Open in Mail App',
+        toastCopiedEmail: (email) => `Copied ${email} to clipboard`,
+        toastCopyFailed: 'Failed to copy. Please select and copy manually.',
+        toastCopiedFormatted: 'Copied recipient, subject, and message to clipboard',
+        toastLaunchingMail: 'Launching your mail app...',
+        toastLangSwitched: 'Switched language to English',
+        mailAnon: 'Anonymous',
+        mailPrefixInquiry: 'Inquiry',
+        mailFieldTo: 'To',
+        mailFieldName: 'Name',
+        mailFieldCategory: 'Category',
+        mailFieldSubject: 'Subject',
+        mailPlaceholderBody: '(Please write your message here)',
+      },
+    };
+
+    let currentLang = 'jp';
+
+    // Apply Language Switch Across Entire Page
+    function setLanguage(lang) {
+      if (!i18n[lang] || currentLang === lang) return;
+      currentLang = lang;
+      const dict = i18n[lang];
+
+      document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
+      document.title = dict.pageTitle;
+
+      // Update Toggle Buttons UI
+      const btnJp = document.getElementById('lang-btn-jp');
+      const btnEn = document.getElementById('lang-btn-en');
+      if (btnJp && btnEn) {
+        if (lang === 'jp') {
+          btnJp.className = 'px-2.5 py-1 rounded-full transition-all duration-200 bg-white text-ink-primary shadow-sm';
+          btnJp.setAttribute('aria-pressed', 'true');
+          btnEn.className = 'px-2.5 py-1 rounded-full transition-all duration-200 text-ink-muted hover:text-ink-primary';
+          btnEn.setAttribute('aria-pressed', 'false');
+        } else {
+          btnEn.className = 'px-2.5 py-1 rounded-full transition-all duration-200 bg-white text-ink-primary shadow-sm';
+          btnEn.setAttribute('aria-pressed', 'true');
+          btnJp.className = 'px-2.5 py-1 rounded-full transition-all duration-200 text-ink-muted hover:text-ink-primary';
+          btnJp.setAttribute('aria-pressed', 'false');
+        }
+      }
+
+      // Update all elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (typeof dict[key] === 'string') {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Update all placeholders with data-i18n-placeholder
+      document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (typeof dict[key] === 'string') {
+          el.setAttribute('placeholder', dict[key]);
+        }
+      });
+
+      showToast(dict.toastLangSwitched);
+    }
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Custom Toast Notification Helper
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      if (!toast || !toastMsg) return;
+
+      toastMsg.textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-3');
+      }, 2600);
+    }
+
+    // Reliable Clipboard Copy Helper (using execCommand fallback for iframe compatibility)
+    function copyTextToClipboard(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      let success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (err) {
+        success = false;
+      }
+      document.body.removeChild(textarea);
+      return success;
+    }
+
+    // Copy Individual Email Address
+    function copyEmail(email, buttonEl) {
+      const dict = i18n[currentLang];
+      const copied = copyTextToClipboard(email);
+      if (copied) {
+        showToast(dict.toastCopiedEmail(email));
+        if (buttonEl) {
+          const labelSpan = buttonEl.querySelector('span');
+          if (labelSpan) {
+            labelSpan.textContent = dict.copiedShort;
+            setTimeout(() => {
+              labelSpan.textContent = i18n[currentLang].copyBtn;
+            }, 1800);
+          }
+        }
+      } else {
+        showToast(dict.toastCopyFailed);
+      }
+    }
+
+    // Select Topic Pill & Scroll to Composer
+    function selectTopic(topicValue) {
+      const categorySelect = document.getElementById('category');
+      const composerSection = document.getElementById('composer-section');
+      const messageInput = document.getElementById('message');
+
+      if (categorySelect) {
+        categorySelect.value = topicValue;
+      }
+      if (composerSection) {
+        composerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      setTimeout(() => {
+        if (messageInput) messageInput.focus();
+      }, 450);
+    }
+
+    // Select Recipient in Composer & Smooth Scroll
+    function selectRecipient(email) {
+      const recipientSelect = document.getElementById('recipient');
+      const composerSection = document.getElementById('composer-section');
+      const messageInput = document.getElementById('message');
+
+      if (recipientSelect) {
+        recipientSelect.value = email;
+      }
+      if (composerSection) {
+        composerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      setTimeout(() => {
+        if (messageInput) messageInput.focus();
+      }, 450);
+    }
+
+    // Build Formatted Email Content in Active Language
+    function buildEmailPayload() {
+      const dict = i18n[currentLang];
+      const recipient = document.getElementById('recipient').value;
+      const categorySelect = document.getElementById('category');
+      const categoryLabel = categorySelect.options[categorySelect.selectedIndex].text;
+      const senderName = document.getElementById('senderName').value.trim() || dict.mailAnon;
+      const rawSubject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const fullSubject = rawSubject
+        ? `[${categoryLabel}] ${rawSubject}`
+        : `[${categoryLabel}] ${dict.mailPrefixInquiry} (${senderName})`;
+
+      const bodyLines = [
+        `${dict.mailFieldName}: ${senderName}`,
+        `${dict.mailFieldCategory}: ${categoryLabel}`,
+        `----------------------------------------`,
+        message || dict.mailPlaceholderBody,
+      ].join('\n');
+
+      return { recipient, fullSubject, bodyLines };
+    }
+
+    // Copy Full Formatted Message to Clipboard
+    function copyFormattedMessage() {
+      const dict = i18n[currentLang];
+      const { recipient, fullSubject, bodyLines } = buildEmailPayload();
+      const formattedText = `${dict.mailFieldTo}: ${recipient}\n${dict.mailFieldSubject}: ${fullSubject}\n\n${bodyLines}`;
+      if (copyTextToClipboard(formattedText)) {
+        showToast(dict.toastCopiedFormatted);
+      }
+    }
+
+    // Open Default Mail Client with Pre-filled Fields
+    function handleMailLaunch(event) {
+      event.preventDefault();
+      const dict = i18n[currentLang];
+      const { recipient, fullSubject, bodyLines } = buildEmailPayload();
+      const mailtoUrl = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(bodyLines)}`;
+      showToast(dict.toastLaunchingMail);
+      window.location.href = mailtoUrl;
+    }
+  </script>
+</body>
+</html>
