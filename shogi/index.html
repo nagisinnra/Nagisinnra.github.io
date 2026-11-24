@@ -3,35 +3,71 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101713">
-<title>NAGI SHOGI — The Art of the Move</title>
+<meta name="theme-color" content="#111a15">
+<title>NAGI SHOGI</title>
 <style>
-:root{color-scheme:dark;--bg:#0c110f;--panel:#151f19;--line:#2b3a30;--text:#edf3ed;--muted:#8b9b8e;--lime:#c9efa5;--wood:#d9bc8a}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0,#263b2c,transparent 36%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Yu Gothic",Meiryo,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}
-.top{height:72px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff15;background:#0c110fce;position:sticky;top:0;z-index:5}.brand{font-weight:800;letter-spacing:.18em;font-size:14px}.brand b{color:var(--lime);font-size:23px;margin-right:10px}.brand small{display:block;font:9px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:.2em}.top a{color:var(--lime);text-decoration:none;font:10px "DM Mono";border:1px solid #c9efa566;padding:10px 14px;border-radius:7px}
-.hero{padding:48px 5vw 24px;max-width:1400px;margin:auto;display:flex;justify-content:space-between;align-items:end;gap:20px}.eyebrow{font:10px "DM Mono";letter-spacing:.25em;color:var(--lime)}h1{font-size:clamp(42px,7vw,80px);line-height:.98;letter-spacing:-.07em;margin:18px 0 12px}.hero p{color:var(--muted);font-size:13px;line-height:1.9}.stat{text-align:right;font:10px "DM Mono";color:var(--muted);white-space:nowrap}.stat strong{display:block;font:700 27px system-ui;color:white;margin-top:8px}
-.app{max-width:1400px;margin:auto;padding:18px 5vw 70px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px}.panel,.card{background:linear-gradient(145deg,#19251d,#111914);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 70px #0006;overflow:hidden}.head{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.muted,.cardtitle{font:10px "DM Mono";letter-spacing:.15em;color:var(--muted)}.turn{font:10px "DM Mono";color:var(--lime);border:1px solid #c9efa544;padding:7px 10px;border-radius:6px}
-.stage{padding:22px 22px 26px;display:grid;grid-template-columns:58px minmax(0,1fr) 58px;gap:12px;align-items:center;background:radial-gradient(ellipse at center,#2b3c2e,transparent 75%)}.hand{display:flex;flex-direction:column;align-items:center;gap:9px;min-height:280px}.hand-label{writing-mode:vertical-rl;font:9px "DM Mono";color:var(--muted)}.handpieces{display:flex;flex-direction:column;gap:5px}.handpiece{width:46px;height:42px;clip-path:polygon(50% 0,94% 13%,88% 100%,12% 100%,6% 13%);border:0;background:linear-gradient(145deg,#f3dfb8,#c9a56d);color:#342719;font:800 17px "Yu Gothic",Meiryo,sans-serif;position:relative}.handpiece small{position:absolute;right:5px;bottom:2px;font:9px "DM Mono"}.handpiece.selected{outline:2px solid var(--lime);filter:brightness(1.15)}.boardwrap{position:relative;min-width:0;filter:drop-shadow(0 16px 26px #0009)}.files{display:grid;grid-template-columns:repeat(9,1fr);text-align:center;color:#c6aa7b;font:10px "DM Mono";margin-bottom:5px}.ranks{position:absolute;right:-18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;color:#c6aa7b;font:10px "DM Mono"}.board{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));aspect-ratio:1;background:var(--wood);border:5px solid #9c7848}.cell{border:0;border-right:1px solid #87663d;border-bottom:1px solid #87663d;display:grid;place-items:center;min-width:0;position:relative;background:transparent;padding:0}.cell:nth-child(9n){border-right:0}.cell:nth-child(n+73){border-bottom:0}.cell.last{background:#f4df9b77}.cell.selected{background:#e6ca70}.cell.hint:after{content:"";position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:#42613aaa}.cell.capture:after{width:70%;border:2px solid #984c3e;background:transparent}.piece{z-index:1;width:85%;height:91%;display:grid;place-items:center;clip-path:polygon(50% 0,94% 13%,88% 100%,12% 100%,6% 13%);background:linear-gradient(145deg,#f4e2bd,#cda972);color:#342719;font:800 clamp(12px,2.3vw,27px) "Noto Sans JP";text-shadow:0 1px #fff8}.piece.gote{transform:rotate(180deg)}.piece.promoted{color:#a3412c}
-.actions{padding:13px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.group{display:flex;gap:7px;flex-wrap:wrap}.btn{background:#ffffff09;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:9px 12px;font-size:10px}.btn:hover{border-color:#c9efa5aa}.btn.primary{background:var(--lime);color:#172018;border-color:var(--lime);font-weight:800}.btn:disabled{opacity:.35;cursor:not-allowed}
-.side{display:flex;flex-direction:column;gap:14px}.card{padding:17px}.cardtitle{margin-bottom:14px;display:flex;justify-content:space-between}.status{font-size:18px;font-weight:800}.sub{font-size:11px;color:var(--muted);margin-top:5px;min-height:17px}.player{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #ffffff12;font-size:11px}.player:last-child{border:0}.avatar{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#2a3e2e;color:var(--lime);margin-right:8px}.moves{max-height:260px;overflow:auto;font:11px "DM Mono"}.move{display:grid;grid-template-columns:28px 1fr 1fr;padding:8px;border-radius:5px}.move:nth-child(odd){background:#ffffff08}.note{font-size:10px;line-height:1.7;color:var(--muted)}.pref{display:flex;justify-content:space-between;padding:7px 0;font-size:11px;color:var(--muted)}input[type=checkbox]{accent-color:var(--lime)}footer{border-top:1px solid #ffffff15;padding:24px 5vw;display:flex;justify-content:space-between;color:#77877a;font:9px "DM Mono";letter-spacing:.12em}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;background:#e7f5d8;color:#182018;padding:12px 18px;border-radius:8px;font-size:11px;font-weight:700;transition:.2s;pointer-events:none;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.side .card:last-child{grid-column:1/-1}}@media(max-width:600px){.hero{padding-top:32px}.stage{grid-template-columns:36px minmax(0,1fr) 36px;gap:6px;padding:14px 7px}.hand{min-height:0}.handpiece{width:32px;height:31px;font-size:13px}.piece{font-size:clamp(11px,4vw,21px)}.side{grid-template-columns:1fr}.side .card:last-child{grid-column:auto}.stat{font-size:8px}.stat strong{font-size:19px}footer{flex-direction:column;gap:10px}}
+:root{color-scheme:dark;--bg:#101713;--panel:#1a251e;--line:#344338;--text:#edf2eb;--muted:#9aa99b;--accent:#c8e6a5;--wood:#dfc397;--woodline:#8f7047}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Yu Gothic",Meiryo,sans-serif}
+button{font:inherit;cursor:pointer}
+header{height:60px;padding:0 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:13px;font-weight:800;letter-spacing:.2em}.brand span{color:var(--accent);font-size:20px;margin-right:9px}
+header small{font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:.12em}
+main{width:min(100% - 24px,760px);margin:28px auto 50px}
+.intro{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px;gap:12px}
+h1{font-size:clamp(24px,5vw,36px);margin:0;letter-spacing:-.04em}
+.intro p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.turn{color:var(--accent);font:11px ui-monospace,monospace;border:1px solid #c8e6a566;border-radius:6px;padding:8px 10px;white-space:nowrap}
+.table{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:clamp(12px,3vw,22px);box-shadow:0 18px 55px #0005}
+.player{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
+.player.bottom{margin:12px 0 0}
+.player-name{font-size:12px;font-weight:700}.player-name small{display:block;color:var(--muted);font-size:10px;font-weight:400;margin-top:3px}
+.hand{display:flex;gap:6px;flex-wrap:wrap;min-height:40px;align-items:center}
+.handpiece{width:40px;height:37px;border:1px solid #ad8b5b;border-radius:5px;background:linear-gradient(145deg,#f1dfbd,#c9a66e);color:#342719;font-weight:800;font-size:17px;position:relative}
+.handpiece small{position:absolute;right:3px;bottom:1px;font:9px ui-monospace,monospace}.handpiece.selected{outline:2px solid var(--accent)}.handpiece:disabled{opacity:.45;cursor:default}
+.board-wrap{width:min(100%,620px);margin:auto}
+.files{display:grid;grid-template-columns:repeat(9,1fr);text-align:center;color:#d3b582;font:10px ui-monospace,monospace;margin:0 0 4px}
+.board{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));aspect-ratio:1;background:var(--wood);border:5px solid #9c7848}
+.cell{border:0;border-right:1px solid var(--woodline);border-bottom:1px solid var(--woodline);display:grid;place-items:center;min-width:0;position:relative;background:transparent;padding:0}
+.cell:nth-child(9n){border-right:0}.cell:nth-child(n+73){border-bottom:0}
+.cell.last{background:#f5df9b88}.cell.selected{background:#e6ca70}
+.cell.hint:after{content:"";position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:#42613aaa}
+.cell.capture:after{width:70%;border:2px solid #984c3e;background:transparent}
+.piece{z-index:1;width:86%;height:91%;display:grid;place-items:center;clip-path:polygon(50% 0,94% 13%,88% 100%,12% 100%,6% 13%);background:linear-gradient(145deg,#f4e2bd,#cda972);color:#342719;font:800 clamp(13px,3vw,27px) "Yu Gothic",Meiryo,sans-serif;text-shadow:0 1px #fff8}
+.piece.gote{transform:rotate(180deg)}.piece.promoted{color:#a3412c}
+.controls{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.group{display:flex;gap:7px;flex-wrap:wrap}
+.btn{background:#ffffff0a;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:8px 12px;font-size:11px}
+.btn:hover{border-color:var(--accent)}.btn.primary{background:var(--accent);color:#172018;border-color:var(--accent);font-weight:800}.btn:disabled{opacity:.35;cursor:not-allowed}
+.below{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.info{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px;min-width:0}
+.info-title{font:10px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted);margin-bottom:9px}
+.status{font-size:14px;font-weight:700}.sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;min-height:16px}
+.moves{max-height:130px;overflow:auto;font:11px ui-monospace,monospace}.move{display:grid;grid-template-columns:28px 1fr 1fr;padding:5px 7px}.move:nth-child(odd){background:#ffffff08}
+.settings{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:11px}.settings label{display:flex;gap:6px;align-items:center}input{accent-color:var(--accent)}
+footer{text-align:center;color:#758478;font:9px ui-monospace,monospace;letter-spacing:.12em;padding:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;background:#e7f5d8;color:#182018;padding:10px 16px;border-radius:7px;font-size:11px;font-weight:700;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){header{height:52px;padding:0 14px}main{margin-top:18px}.intro{align-items:center}.intro p{font-size:11px}.table{padding:10px}.handpiece{width:34px;height:33px}.below{grid-template-columns:1fr}.controls{gap:8px}.btn{padding:8px 9px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><b>王</b>NAGI SHOGI<small>OFFLINE EDITION</small></div><a href="#board">PLAY LOCALLY ↗</a></header>
-<section class="hero"><div><div class="eyebrow">A QUIET PLACE FOR SHOGI</div><h1>One move.<br><span style="color:var(--lime)">Infinite</span> stories.</h1><p>静かな集中。研ぎ澄まされた一手。<br>盤上のすべてが、あなたの物語になる。</p></div><div class="stat">● SHOGI ENGINE READY<strong id="count">00 MOVES</strong></div></section>
-<main class="app" id="board">
-<section class="panel"><div class="head"><div><div class="muted">01 / THE BOARD</div><b style="display:block;margin-top:5px;font-size:13px">対局盤 — Standard 9 × 9</b></div><span class="turn" id="turn">● SENTE TO MOVE</span></div>
-<div class="stage"><div class="hand"><div class="hand-label">GOTE HAND</div><div class="handpieces" id="hand1"></div></div><div class="boardwrap"><div class="files">９　８　７　６　５　４　３　２　１</div><div class="board" id="grid" role="group" aria-label="将棋盤"></div><div class="ranks">一　二　三　四　五　六　七　八　九</div></div><div class="hand"><div class="hand-label">SENTE HAND</div><div class="handpieces" id="hand0"></div></div></div>
-<div class="actions"><div class="group"><button class="btn" id="undo">↶ UNDO</button><button class="btn" id="flip">⇅ FLIP</button><button class="btn" id="resign">RESIGN</button></div><div class="group"><button class="btn" id="new">NEW GAME</button><button class="btn primary" id="reset">RESET BOARD</button></div></div></section>
-<aside class="side">
-<section class="card"><div class="cardtitle">02 / MATCH STATUS <span>● READY</span></div><div class="status" id="status">対局開始前</div><div class="sub" id="sub">駒を選択して、移動先をクリック。</div><div class="player"><span><i class="avatar">先</i>先手 <small id="sname">PLAYER 01</small></span><b>∞</b></div><div class="player"><span><i class="avatar">後</i>後手 <small id="gname">PLAYER 02</small></span><b>∞</b></div></section>
-<section class="card"><div class="cardtitle">03 / MOVE HISTORY <span id="plies">0 PLIES</span></div><div class="moves" id="moves">最初の一手をお待ちしています。</div></section>
-<section class="card" id="localTable"><div class="cardtitle">04 / LOCAL TABLE <span>OFFLINE</span></div><div class="status">2 PLAYERS · 1 DEVICE</div><p class="note">通信・アカウント・サーバー接続は一切不要。この端末ひとつで、先手と後手を交互に操作して対局できます。</p><button class="btn primary" style="width:100%" id="start">NEW LOCAL MATCH</button></section>
-<section class="card"><div class="cardtitle">05 / PREFERENCES</div><label class="pref" for="rotate">盤面を反転 <input type="checkbox" id="rotate"></label><label class="pref" for="hints">移動可能マスを表示 <input type="checkbox" id="hints" checked></label><label class="pref" for="sound">効果音 <input type="checkbox" id="sound" checked></label><div class="note" style="margin-top:12px">ALL GAME DATA STAYS IN THIS BROWSER.</div></section>
-</aside></main>
-<footer><span>© 2026 NAGI SHOGI / INDEPENDENT PROJECT</span><span>BUILT FOR THE LOVE OF THE GAME.</span></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<header><div class="brand"><span>王</span>NAGI SHOGI</div><small>LOCAL · TWO PLAYERS</small></header>
+<main>
+<div class="intro"><div><h1>将棋</h1><p>ひとつの盤を囲んで、2人で対局。</p></div><div class="turn" id="turn">先手の番</div></div>
+<section class="table">
+<div class="player"><div class="player-name">後手 <small>PLAYER 02 · 向かい側</small></div><div class="hand" id="hand1" aria-label="後手の持ち駒"></div></div>
+<div class="board-wrap"><div class="files">９　８　７　６　５　４　３　２　１</div><div class="board" id="grid" role="group" aria-label="将棋盤"></div></div>
+<div class="player bottom"><div class="player-name">先手 <small>PLAYER 01 · 手前側</small></div><div class="hand" id="hand0" aria-label="先手の持ち駒"></div></div>
+<div class="controls"><div class="group"><button class="btn" id="undo">↶ 一手戻す</button><button class="btn" id="flip">⇅ 盤面反転</button><button class="btn" id="resign">投了</button></div><div class="group"><button class="btn primary" id="new">新しい対局</button><button class="btn" id="reset">初期配置</button></div></div>
+</section>
+<div class="below">
+<section class="info"><div class="info-title">対局状況</div><div class="status" id="status">対局開始</div><div class="sub" id="sub">駒を選び、移動先を選択してください。</div></section>
+<section class="info"><div class="info-title">棋譜 <span id="plies">0手</span></div><div class="moves" id="moves">まだ指し手はありません。</div></section>
 </div>
+<div class="settings"><label><input type="checkbox" id="rotate"> 盤面反転</label><label><input type="checkbox" id="hints" checked> 移動先を表示</label><label><input type="checkbox" id="sound" checked> 効果音</label></div>
+</main>
+<footer>© 2026 NAGI SHOGI · OFFLINE · NO ACCOUNT · NO SERVER</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
 (() => {
@@ -140,7 +176,7 @@ function render(){
     const x=flipped?8-vx:vx,y=flipped?8-vy:vy,p=board[y][x],cell=document.createElement("button");
     cell.type="button";cell.className="cell";cell.setAttribute("aria-label",RANKS[y]+" "+FILES[x]+" "+(p?GLYPHS[p.t]:"空"));
     if(selection&&!selection.drop&&selection.x===x&&selection.y===y)cell.classList.add("selected");
-    if(targets.some(m=>m.x===x&&m.y===y)){cell.classList.add("hint");if(p)cell.classList.add("capture");}
+    if($("hints").checked&&targets.some(m=>m.x===x&&m.y===y)){cell.classList.add("hint");if(p)cell.classList.add("capture");}
     const last=history[history.length-1];if(last&&last.to.x===x&&last.to.y===y)cell.classList.add("last");
     if(p){const piece=document.createElement("span");piece.className="piece"+(p.s===1?" gote":"")+(isPromoted(p.t)?" promoted":"");piece.textContent=GLYPHS[p.t];cell.append(piece);}
     cell.addEventListener("click",()=>onCellClick(x,y));grid.append(cell);
