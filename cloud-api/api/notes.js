@@ -1,4 +1,4 @@
-import { db,schema,cors,send,currentUser } from "./_lib.js";
+import { db,schema,cors,send,currentUser } from "../lib/auth.js";
 export default async function handler(req,res){
   if(!cors(req,res))return send(res,403,{error:"Origin not allowed"});
   if(req.method==="OPTIONS"){res.statusCode=204;return res.end();}
