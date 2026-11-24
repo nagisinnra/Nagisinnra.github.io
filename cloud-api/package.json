@@ -1,0 +1,9 @@
+{
+  "name": "nagisinnra-cloud-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@libsql/client": "^0.15.15"
+  }
+}
