@@ -4,7 +4,7 @@ import { del, get, put } from "@vercel/blob";
 import { db, schema, cors, send, currentUser } from "../lib/auth.js";
 
 export const config = { api: { bodyParser: false } };
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const MAX_FILE_SIZE = 8 * 1024 * 1024;
 
 function safeFilename(value) {
   const name = String(value || "file").replace(/\\/g, "/").split("/").pop()
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       const filename = safeFilename(decodeURIComponent(String(req.headers["x-file-name"] || "file")));
       const contentType = String(req.headers["content-type"] || "application/octet-stream").slice(0, 120);
       const declared = Number(req.headers["content-length"] || 0);
-      if (declared > MAX_FILE_SIZE) return send(res, 413, { error: "File is too large. Maximum size is 4 MB." });
+      if (declared > MAX_FILE_SIZE) return send(res, 413, { error: "File is too large. Maximum size is 8 MB." });
       const buffer = await readLimited(req);
       if (!buffer.length) return send(res, 400, { error: "The selected file is empty." });
       const id = randomUUID();
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "private, no-store");
     Readable.fromWeb(result.stream).pipe(res);
   } catch (error) {
-    if (error.message === "FILE_TOO_LARGE") return send(res, 413, { error: "File is too large. Maximum size is 4 MB." });
+    if (error.message === "FILE_TOO_LARGE") return send(res, 413, { error: "File is too large. Maximum size is 8 MB." });
     console.error("Cloud files error:", error);
     return send(res, 500, { error: "File operation failed" });
   } finally {
