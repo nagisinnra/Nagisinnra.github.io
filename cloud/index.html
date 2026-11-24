@@ -31,7 +31,7 @@ footer{max-width:1080px;margin:30px auto;padding:0 28px 42px;color:#999;font-siz
 </aside></div><section class="panel files-panel"><div class="panel-head"><strong>Files</strong><span class="count" id="fileCount">0 FILES</span></div><div class="files-toolbar"><input id="fileInput" type="file" multiple hidden><button class="primary" id="uploadBtn">↑ Upload files</button><span class="hint">Private storage · maximum 8 MB per file</span></div><div id="fileList"><div class="empty"><b>No files yet.</b>Upload your first file.</div></div><div id="fileMessage" class="message" style="padding:0 19px 12px"></div></section></section></main><footer><span>NAGISINNRA CLOUD · EXPERIMENTAL</span><span>GitHub Pages × Vercel × Turso</span></footer>
 <script>
 const $=id=>document.getElementById(id);
-const API="https://nagisinnra-cloud-api-asaito2411-4870s-projects.vercel.app/api";
+const API="https://nagisinnra-cloud-api.vercel.app/api";
 let token=localStorage.getItem("nagisinnra_cloud_session")||"",user=null,notes=[],selected=null;
 async function request(path,method="GET",data=null,auth=true){
  const headers={"Content-Type":"application/json"};
