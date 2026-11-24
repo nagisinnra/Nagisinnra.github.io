@@ -24,52 +24,25 @@ button{border:1px solid var(--line);background:var(--panel);color:var(--text);pa
 <div class="layout">
 <section class="panel"><div class="panel-head"><strong>All notes</strong><span class="count" id="count">0 NOTES</span></div><div id="notes"><div class="empty"><b>Nothing here yet.</b>Connect your database to get started.</div></div></section>
 <section class="panel"><div class="panel-head"><strong id="editorLabel">New note</strong><span class="count" id="saveState">LOCAL EDITOR</span></div><div class="editor"><input id="title" placeholder="Untitled note" maxlength="120"><textarea id="body" placeholder="Start writing..."></textarea><div class="editor-actions"><button id="deleteBtn" disabled>Delete</button><button class="primary" id="saveBtn" disabled>Save note</button></div><div class="message" id="editorMessage"></div></div></section>
-<aside class="panel side"><h3>Database connection</h3><div class="field"><label for="dbUrl">Turso Database URL</label><input id="dbUrl" value="libsql://nagisinnra-nagisinnra.aws-ap-northeast-1.turso.io"></div><div class="field"><label for="token">Auth Token</label><input id="token" type="password" placeholder="Paste your database token"></div><button class="primary" id="connectBtn" style="width:100%">Connect database</button><div class="message" id="connectMessage">Credentials stay in this tab's memory and are not saved.</div><div class="divider"></div><h3>First-time setup</h3><p class="hint">Create this table in the Turso SQL console once, then connect above.</p><button id="copySql" style="width:100%">Copy setup SQL</button><div class="divider"></div><p class="hint">Prototype note: this static GitHub Pages app connects directly to Turso. Anyone who enters a token can use its permissions, so use a dedicated, restricted database token and keep this as a private single-user prototype. Do not publish a shared admin token.</p></aside>
+<aside class="panel side"><h3>Database connection</h3><div class="field"><label for="dbUrl">Turso Database URL</label><input id="dbUrl" value="libsql://nagisinnra-nagisinnra.aws-ap-northeast-1.turso.io"></div><div class="field"><label for="unused">Database access</label><p class="hint">Your database credentials stay on the server.</p>></div><button class="primary" id="connectBtn" style="width:100%">Connect database</button><div class="message" id="connectMessage">Access key is stored in this browser only.</div><div class="divider"></div><h3>Private by design</h3><p class="hint">GitHub Pages serves the interface. A private API connects to Turso, and database credentials never reach your browser.</p></aside>
 </div>
 </main>
 <footer><span>NAGISINNRA CLOUD · EXPERIMENTAL</span><span>GitHub Pages × Turso</span></footer>
 <script>
 const $=id=>document.getElementById(id);
-const setupSQL="CREATE TABLE IF NOT EXISTS cloud_notes (id TEXT PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL DEFAULT '', updated_at TEXT NOT NULL);";
-let dbUrl="",authToken="",notes=[],selected=null;
+const API="https://nagisinnra-cloud-api-asaito2411-4870s-projects.vercel.app/api/notes";
+let accessKey=localStorage.getItem("nagisinnra_cloud_key")||"",notes=[],selected=null;
+$("accessKey").value=accessKey;
 function setConnection(ok,msg){$("connection").textContent=msg;$("dot").style.background=ok?"#3fb950":"#8b949e";$("saveBtn").disabled=!ok;}
-function sqlValue(v){return {type:"text",value:String(v)}}
-async function query(sql,args=[]){
- const response=await fetch(dbUrl.replace(/\/$/,"")+"/v2/pipeline",{method:"POST",headers:{"Authorization":"Bearer "+authToken,"Content-Type":"application/json"},body:JSON.stringify({requests:[{type:"execute",stmt:{sql,args:args.map(sqlValue)}},{type:"close"}]})});
- if(!response.ok)throw new Error("Turso HTTP "+response.status+" — check URL and token.");
- const data=await response.json();const result=data.results?.[0];
- if(result?.type==="error")throw new Error(result.error?.message||"SQL query failed.");
- if(data.results?.some(x=>x.type==="error"))throw new Error(data.results.find(x=>x.type==="error").error?.message||"Database error.");
- return result?.response?.result||result?.result||{};
-}
-function cell(v){return v?.value??v??""}
-async function connect(){
- const rawUrl=$("dbUrl").value.trim(),token=$("token").value.trim();
- const url=rawUrl.replace(/^libsql:\/\//i,"https://").replace(/\/+$/,"");
- if(!url||!token){$("connectMessage").textContent="Enter both the database URL and token.";return;}
- try{$("dbUrl").value=url;dbUrl=url;authToken=token;await query("SELECT id FROM cloud_notes LIMIT 1");await loadNotes();setConnection(true,"Connected");$("connectMessage").textContent="Database connection established.";$("connectMessage").className="message ok";}
- catch(e){dbUrl="";authToken="";setConnection(false,"Not connected");$("connectMessage").textContent=e.message;$("connectMessage").className="message error";}
-}
-async function loadNotes(){
- const r=await query("SELECT id,title,body,updated_at FROM cloud_notes ORDER BY updated_at DESC");
- notes=(r.rows||[]).map(row=>({id:cell(row[0]),title:cell(row[1]),body:cell(row[2]),updated_at:cell(row[3])}));
- renderNotes();
-}
-function renderNotes(){
- $("count").textContent=notes.length+" NOTES";const root=$("notes");root.innerHTML="";
- if(!notes.length){root.innerHTML='<div class="empty"><b>No notes yet.</b>Create your first note.</div>';return;}
- notes.forEach(n=>{const el=document.createElement("div");el.className="note"+(n.id===selected?" active":"");const t=document.createElement("div");t.className="note-title";t.textContent=n.title||"Untitled note";const m=document.createElement("div");m.className="note-meta";m.textContent=new Date(n.updated_at).toLocaleString();el.append(t,m);el.onclick=()=>selectNote(n.id);root.append(el);});
-}
+async function api(method="GET",data){const response=await fetch(API,{method,headers:{"X-Cloud-Key":accessKey,"Content-Type":"application/json"},...(data?{body:JSON.stringify(data)}:{})});const result=await response.json().catch(()=>({error:"Invalid API response"}));if(!response.ok)throw new Error(result.error||"API request failed ("+response.status+")");return result;}
+async function connect(){accessKey=$("accessKey").value.trim();if(!accessKey){$("connectMessage").textContent="Enter your private access key.";return;}try{await api("GET");localStorage.setItem("nagisinnra_cloud_key",accessKey);await loadNotes();setConnection(true,"Connected");$("connectMessage").textContent="Private cloud connected.";$("connectMessage").className="message ok";}catch(e){setConnection(false,"Not connected");$("connectMessage").textContent=e.message;$("connectMessage").className="message error";}}
+async function loadNotes(){const result=await api("GET");notes=result.notes||[];renderNotes();}
+function renderNotes(){$("count").textContent=notes.length+" NOTES";const root=$("notes");root.innerHTML="";if(!notes.length){root.innerHTML='<div class="empty"><b>No notes yet.</b>Create your first note.</div>';return;}notes.forEach(n=>{const el=document.createElement("div");el.className="note"+(n.id===selected?" active":"");const t=document.createElement("div");t.className="note-title";t.textContent=n.title||"Untitled note";const m=document.createElement("div");m.className="note-meta";m.textContent=new Date(n.updated_at).toLocaleString();el.append(t,m);el.onclick=()=>selectNote(n.id);root.append(el);});}
 function selectNote(id){selected=id;const n=notes.find(x=>x.id===id);$("title").value=n?.title||"";$("body").value=n?.body||"";$("editorLabel").textContent="Edit note";$("deleteBtn").disabled=false;$("saveBtn").disabled=false;$("editorMessage").textContent="";$("saveState").textContent="EDITING";renderNotes();}
-function newNote(){selected=null;$("title").value="";$("body").value="";$("editorLabel").textContent="New note";$("deleteBtn").disabled=true;$("saveBtn").disabled=!authToken;$("editorMessage").textContent="";$("saveState").textContent="NEW NOTE";renderNotes();}
-async function saveNote(){
- const title=$("title").value.trim()||"Untitled note",body=$("body").value,id=selected||crypto.randomUUID(),now=new Date().toISOString();
- try{if(selected)await query("UPDATE cloud_notes SET title=?, body=?, updated_at=? WHERE id=?",[title,body,now,id]);else await query("INSERT INTO cloud_notes (id,title,body,updated_at) VALUES (?,?,?,?)",[id,title,body,now]);selected=id;await loadNotes();selectNote(id);$("editorMessage").textContent="Saved to Turso.";$("editorMessage").className="message ok";$("saveState").textContent="SAVED";}
- catch(e){$("editorMessage").textContent=e.message;$("editorMessage").className="message error";}
-}
-async function deleteNote(){if(!selected||!confirm("Delete this note?"))return;try{await query("DELETE FROM cloud_notes WHERE id=?",[selected]);newNote();await loadNotes();}catch(e){$("editorMessage").textContent=e.message;$("editorMessage").className="message error";}}
+function newNote(){selected=null;$("title").value="";$("body").value="";$("editorLabel").textContent="New note";$("deleteBtn").disabled=true;$("saveBtn").disabled=!accessKey;$("editorMessage").textContent="";$("saveState").textContent="NEW NOTE";renderNotes();}
+async function saveNote(){const title=$("title").value.trim()||"Untitled note",body=$("body").value,id=selected||crypto.randomUUID();try{await api("POST",{id,title,body});selected=id;await loadNotes();selectNote(id);$("editorMessage").textContent="Saved to Turso.";$("editorMessage").className="message ok";$("saveState").textContent="SAVED";}catch(e){$("editorMessage").textContent=e.message;$("editorMessage").className="message error";}}
+async function deleteNote(){if(!selected||!confirm("Delete this note?"))return;try{await api("DELETE",{id:selected});newNote();await loadNotes();}catch(e){$("editorMessage").textContent=e.message;$("editorMessage").className="message error";}}
 $("connectBtn").onclick=connect;$("newBtn").onclick=newNote;$("saveBtn").onclick=saveNote;$("deleteBtn").onclick=deleteNote;
-$("copySql").onclick=async()=>{try{await navigator.clipboard.writeText(setupSQL);$("connectMessage").textContent="Setup SQL copied.";}catch{$("connectMessage").textContent=setupSQL;}};
 setConnection(false,"Not connected");
 </script>
 </body></html>
