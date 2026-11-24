@@ -36,6 +36,10 @@ export async function schema(client){
     id TEXT PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL DEFAULT '',
     updated_at TEXT NOT NULL, user_id TEXT
   )`);
+  await client.execute(`CREATE TABLE IF NOT EXISTS cloud_files(
+    id TEXT PRIMARY KEY, user_id TEXT NOT NULL, blob_path TEXT NOT NULL UNIQUE,
+    filename TEXT NOT NULL, size INTEGER NOT NULL, content_type TEXT NOT NULL, created_at TEXT NOT NULL
+  )`);
   const cols=await client.execute("PRAGMA table_info(cloud_notes)");
   if(!cols.rows.some(r=>r.name==="user_id")) await client.execute("ALTER TABLE cloud_notes ADD COLUMN user_id TEXT");
   const count=await client.execute("SELECT COUNT(*) AS n FROM cloud_users");
