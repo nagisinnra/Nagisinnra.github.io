@@ -5,6 +5,7 @@ import { db, schema, cors, send, currentUser } from "../lib/auth.js";
 
 export const config = { api: { bodyParser: false } };
 const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const STORAGE_LIMIT = 980_000_000; // 0.98 GB (decimal)
 
 function safeFilename(value) {
   const name = String(value || "file").replace(/\\/g, "/").split("/").pop()
@@ -35,6 +36,9 @@ export default async function handler(req, res) {
   const client = db();
   try {
     await schema(client);
+    await client.execute(`CREATE TABLE IF NOT EXISTS cloud_upload_reservations(
+      id TEXT PRIMARY KEY, size INTEGER NOT NULL, created_at TEXT NOT NULL
+    )`);
     const user = await currentUser(req, client);
     if (!user) return send(res, 401, { error: "Please sign in" });
     const url = new URL(req.url, "https://cloud-api.invalid");
@@ -44,7 +48,8 @@ export default async function handler(req, res) {
         sql: "SELECT id,filename,size,content_type,created_at FROM cloud_files WHERE user_id=? ORDER BY created_at DESC",
         args: [user.id]
       });
-      return send(res, 200, { files: result.rows });
+      const usage = await client.execute({ sql: "SELECT COALESCE(SUM(size),0) AS used FROM cloud_files", args: [] });
+      return send(res, 200, { files: result.rows, usedBytes: Number(usage.rows[0].used), limitBytes: STORAGE_LIMIT });
     }
 
     if (req.method === "POST") {
@@ -56,12 +61,39 @@ export default async function handler(req, res) {
       if (!buffer.length) return send(res, 400, { error: "The selected file is empty." });
       const id = randomUUID();
       const pathname = user.id + "/" + id + "/" + filename;
-      const blob = await put(pathname, buffer, { access: "private", addRandomSuffix: false, contentType });
       const createdAt = new Date().toISOString();
-      await client.execute({
-        sql: "INSERT INTO cloud_files(id,user_id,blob_path,filename,size,content_type,created_at) VALUES(?,?,?,?,?,?,?)",
-        args: [id, user.id, blob.pathname, filename, buffer.length, contentType, createdAt]
+
+      // Remove abandoned reservations, then atomically reserve space before uploading.
+      await client.execute({ sql: "DELETE FROM cloud_upload_reservations WHERE julianday(created_at) < julianday('now','-15 minutes')", args: [] });
+      const reservation = await client.execute({
+        sql: `INSERT INTO cloud_upload_reservations(id,size,created_at)
+          SELECT ?,?,? WHERE
+          (SELECT COALESCE(SUM(size),0) FROM cloud_files) +
+          (SELECT COALESCE(SUM(size),0) FROM cloud_upload_reservations) + ? <= ?`,
+        args: [id, buffer.length, createdAt, buffer.length, STORAGE_LIMIT]
       });
+      if (reservation.rowsAffected !== 1) {
+        const usage = await client.execute({ sql: "SELECT COALESCE(SUM(size),0) AS used FROM cloud_files", args: [] });
+        return send(res, 413, { error: "Nagisinnra Cloud storage limit reached (0.98 GB). Delete files to upload more.", usedBytes: Number(usage.rows[0].used), limitBytes: STORAGE_LIMIT });
+      }
+
+      let blob = null;
+      let metadataSaved = false;
+      try {
+        blob = await put(pathname, buffer, { access: "private", addRandomSuffix: false, contentType });
+        await client.execute({
+          sql: "INSERT INTO cloud_files(id,user_id,blob_path,filename,size,content_type,created_at) VALUES(?,?,?,?,?,?,?)",
+          args: [id, user.id, blob.pathname, filename, buffer.length, contentType, createdAt]
+        });
+        metadataSaved = true;
+        await client.execute({ sql: "DELETE FROM cloud_upload_reservations WHERE id=?", args: [id] });
+      } catch (error) {
+        if (blob && !metadataSaved) {
+          try { await del(blob.pathname, { access: "private" }); } catch {}
+        }
+        try { await client.execute({ sql: "DELETE FROM cloud_upload_reservations WHERE id=?", args: [id] }); } catch {}
+        throw error;
+      }
       return send(res, 201, { ok: true, file: { id, filename, size: buffer.length, content_type: contentType, created_at: createdAt } });
     }
 
