@@ -39,6 +39,12 @@ export default async function handler(req, res) {
   });
 
   try {
+    await client.execute(`CREATE TABLE IF NOT EXISTS cloud_notes (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      body TEXT NOT NULL DEFAULT '',
+      updated_at TEXT NOT NULL
+    )`);
     if (req.method === "GET") {
       const result = await client.execute(
         "SELECT id, title, body, updated_at FROM cloud_notes ORDER BY updated_at DESC"
@@ -48,16 +54,18 @@ export default async function handler(req, res) {
       })) });
     }
 
-    const chunks = [];
-    let total = 0;
-    for await (const chunk of req) {
-      total += chunk.length;
-      if (total > 64 * 1024) return json(res, 413, { error: "Request too large" });
-      chunks.push(chunk);
+    let body = req.body;
+    if (!body || typeof body !== "object") {
+      const chunks = [];
+      let total = 0;
+      for await (const chunk of req) {
+        total += chunk.length;
+        if (total > 64 * 1024) return json(res, 413, { error: "Request too large" });
+        chunks.push(chunk);
+      }
+      try { body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}"); }
+      catch { return json(res, 400, { error: "Invalid JSON" }); }
     }
-    let body;
-    try { body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}"); }
-    catch { return json(res, 400, { error: "Invalid JSON" }); }
 
     if (req.method === "POST") {
       const id = String(body.id || "");
