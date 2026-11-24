@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { Readable } from "node:stream";
 import { del, get, put } from "@vercel/blob";
 import { db, schema, cors, send, currentUser } from "../lib/auth.js";
 
@@ -87,7 +88,7 @@ export default async function handler(req, res) {
     res.setHeader("Content-Length", String(file.size));
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Cache-Control", "private, no-store");
-    result.stream.pipe(res);
+    Readable.fromWeb(result.stream).pipe(res);
   } catch (error) {
     if (error.message === "FILE_TOO_LARGE") return send(res, 413, { error: "File is too large. Maximum size is 4 MB." });
     console.error("Cloud files error:", error);
