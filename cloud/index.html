@@ -24,7 +24,7 @@ button{border:1px solid var(--line);background:var(--panel);color:var(--text);pa
 <div class="layout">
 <section class="panel"><div class="panel-head"><strong>All notes</strong><span class="count" id="count">0 NOTES</span></div><div id="notes"><div class="empty"><b>Nothing here yet.</b>Connect your database to get started.</div></div></section>
 <section class="panel"><div class="panel-head"><strong id="editorLabel">New note</strong><span class="count" id="saveState">LOCAL EDITOR</span></div><div class="editor"><input id="title" placeholder="Untitled note" maxlength="120"><textarea id="body" placeholder="Start writing..."></textarea><div class="editor-actions"><button id="deleteBtn" disabled>Delete</button><button class="primary" id="saveBtn" disabled>Save note</button></div><div class="message" id="editorMessage"></div></div></section>
-<aside class="panel side"><h3>Database connection</h3><div class="field"><label for="dbUrl">Turso Database URL</label><input id="dbUrl" placeholder="https://your-db.turso.io"></div><div class="field"><label for="token">Auth Token</label><input id="token" type="password" placeholder="Paste your database token"></div><button class="primary" id="connectBtn" style="width:100%">Connect database</button><div class="message" id="connectMessage">Credentials stay in this tab's memory and are not saved.</div><div class="divider"></div><h3>First-time setup</h3><p class="hint">Create this table in the Turso SQL console once, then connect above.</p><button id="copySql" style="width:100%">Copy setup SQL</button><div class="divider"></div><p class="hint">Prototype note: this static GitHub Pages app connects directly to Turso. Anyone who enters a token can use its permissions, so use a dedicated, restricted database token and keep this as a private single-user prototype. Do not publish a shared admin token.</p></aside>
+<aside class="panel side"><h3>Database connection</h3><div class="field"><label for="dbUrl">Turso Database URL</label><input id="dbUrl" value="libsql://nagisinnra-nagisinnra.aws-ap-northeast-1.turso.io"></div><div class="field"><label for="token">Auth Token</label><input id="token" type="password" placeholder="Paste your database token"></div><button class="primary" id="connectBtn" style="width:100%">Connect database</button><div class="message" id="connectMessage">Credentials stay in this tab's memory and are not saved.</div><div class="divider"></div><h3>First-time setup</h3><p class="hint">Create this table in the Turso SQL console once, then connect above.</p><button id="copySql" style="width:100%">Copy setup SQL</button><div class="divider"></div><p class="hint">Prototype note: this static GitHub Pages app connects directly to Turso. Anyone who enters a token can use its permissions, so use a dedicated, restricted database token and keep this as a private single-user prototype. Do not publish a shared admin token.</p></aside>
 </div>
 </main>
 <footer><span>NAGISINNRA CLOUD · EXPERIMENTAL</span><span>GitHub Pages × Turso</span></footer>
@@ -44,9 +44,10 @@ async function query(sql,args=[]){
 }
 function cell(v){return v?.value??v??""}
 async function connect(){
- const url=$("dbUrl").value.trim(),token=$("token").value.trim();
+ const rawUrl=$("dbUrl").value.trim(),token=$("token").value.trim();
+ const url=rawUrl.replace(/^libsql:\/\//i,"https://").replace(/\/+$/,"");
  if(!url||!token){$("connectMessage").textContent="Enter both the database URL and token.";return;}
- try{dbUrl=url.replace(/\/$/,"");authToken=token;await query("SELECT id FROM cloud_notes LIMIT 1");await loadNotes();setConnection(true,"Connected");$("connectMessage").textContent="Database connection established.";$("connectMessage").className="message ok";}
+ try{$("dbUrl").value=url;dbUrl=url;authToken=token;await query("SELECT id FROM cloud_notes LIMIT 1");await loadNotes();setConnection(true,"Connected");$("connectMessage").textContent="Database connection established.";$("connectMessage").className="message ok";}
  catch(e){dbUrl="";authToken="";setConnection(false,"Not connected");$("connectMessage").textContent=e.message;$("connectMessage").className="message error";}
 }
 async function loadNotes(){
