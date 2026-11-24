@@ -53,7 +53,7 @@ footer{text-align:center;color:#758478;font:9px ui-monospace,monospace;letter-sp
 <body>
 <header><div class="brand"><span>王</span>NAGI SHOGI</div><small>LOCAL · TWO PLAYERS</small></header>
 <main>
-<div class="intro"><div><h1>将棋</h1><p>ひとつの盤を囲んで、2人で対局。</p></div><div class="turn" id="turn">先手の番</div></div>
+<div class="intro"><div><h1>将棋</h1><p>ひとつの盤を囲んで、2人で対局。</p></div><div style="text-align:right"><div class="turn" id="turn">先手の番</div><small id="count" style="display:block;color:#9aa99b;text-align:right;margin-top:6px;font:10px ui-monospace,monospace">00手</small></div></div>
 <section class="table">
 <div class="player"><div class="player-name">後手 <small>PLAYER 02 · 向かい側</small></div><div class="hand" id="hand1" aria-label="後手の持ち駒"></div></div>
 <div class="board-wrap"><div class="files">９　８　７　６　５　４　３　２　１</div><div class="board" id="grid" role="group" aria-label="将棋盤"></div></div>
@@ -197,7 +197,6 @@ $("rotate").addEventListener("change",e=>{flipped=e.target.checked;render();});
 $("hints").addEventListener("change",render);
 $("reset").addEventListener("click",()=>{startGame();toast("盤面を初期化しました");});
 $("new").addEventListener("click",()=>{if(window.confirm("新しい対局を開始しますか？"))startGame();});
-$("start").addEventListener("click",()=>{startGame();toast("新しいローカル対局を開始しました");});
 $("resign").addEventListener("click",()=>{if(window.confirm("投了しますか？"))setStatus("投了 — 対局終了","NEW GAMEで再開できます。");});
 startGame();
 })();
