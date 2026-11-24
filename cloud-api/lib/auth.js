@@ -42,12 +42,23 @@ export async function schema(client){
   )`);
   const cols=await client.execute("PRAGMA table_info(cloud_notes)");
   if(!cols.rows.some(r=>r.name==="user_id")) await client.execute("ALTER TABLE cloud_notes ADD COLUMN user_id TEXT");
-  const count=await client.execute("SELECT COUNT(*) AS n FROM cloud_users");
-  if(Number(count.rows[0].n)===0 && process.env.INITIAL_ADMIN_USERNAME && process.env.INITIAL_ADMIN_PASSWORD){
-    const id=randomBytes(16).toString("hex");
-    await client.execute({sql:"INSERT INTO cloud_users(id,username,password_hash,role,created_at) VALUES(?,?,?,?,?)",
-      args:[id,process.env.INITIAL_ADMIN_USERNAME,hashPassword(process.env.INITIAL_ADMIN_PASSWORD),"admin",new Date().toISOString()]});
-    await client.execute({sql:"UPDATE cloud_notes SET user_id=? WHERE user_id IS NULL",args:[id]});
+  const adminName=String(process.env.INITIAL_ADMIN_USERNAME||"").trim().toLowerCase();
+  const adminPassword=String(process.env.INITIAL_ADMIN_PASSWORD||"");
+  if(adminName && adminPassword.length>=10 && adminPassword.length<=128){
+    const admins=await client.execute("SELECT id FROM cloud_users WHERE role='admin' LIMIT 1");
+    if(admins.rows.length===0){
+      const existing=await client.execute({sql:"SELECT id FROM cloud_users WHERE username=?",args:[adminName]});
+      if(existing.rows.length){
+        await client.execute({sql:"UPDATE cloud_users SET password_hash=?,role='admin' WHERE id=?",
+          args:[hashPassword(adminPassword),existing.rows[0].id]});
+        await client.execute({sql:"UPDATE cloud_notes SET user_id=? WHERE user_id IS NULL",args:[existing.rows[0].id]});
+      }else{
+        const id=randomBytes(16).toString("hex");
+        await client.execute({sql:"INSERT INTO cloud_users(id,username,password_hash,role,created_at) VALUES(?,?,?,?,?)",
+          args:[id,adminName,hashPassword(adminPassword),"admin",new Date().toISOString()]});
+        await client.execute({sql:"UPDATE cloud_notes SET user_id=? WHERE user_id IS NULL",args:[id]});
+      }
+    }
   }
 }
 export function hashPassword(password){
