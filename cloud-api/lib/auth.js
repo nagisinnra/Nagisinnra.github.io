@@ -6,7 +6,7 @@ export function cors(req,res) {
   const origin=req.headers.origin||"";
   if(origin===allowedOrigin){
     res.setHeader("Access-Control-Allow-Origin",allowedOrigin);
-    res.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, X-File-Name");
     res.setHeader("Access-Control-Allow-Methods","GET, POST, DELETE, OPTIONS");
     res.setHeader("Vary","Origin");
   }
