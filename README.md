@@ -147,7 +147,7 @@ GitHub:
 https://github.com/nagisinnra/NagisinnraLinux
 
 Official website:
-https://nagisinnra.github.io/
+https://nagisinnra.f5.si/
 
 Development blog:
 https://zenn.dev/nagisinnra
